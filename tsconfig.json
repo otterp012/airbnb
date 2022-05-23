@@ -16,36 +16,8 @@
     "moduleResolution": "node", 
     "resolveJsonModule": true, 
     "isolatedModules": true,
-    // 아래에 새로 추가한 것
     "noFallthroughCasesInSwitch": true,
     }, 
     "include": ["src"] 
   }
   
-//   {
-//     "compilerOptions": {
-//       "target": "es5",
-//       "lib": [
-//         "dom",
-//         "dom.iterable",
-//         "esnext"
-//       ],
-//       "allowJs": true,
-//       "skipLibCheck": true,
-//       "esModuleInterop": true,
-//.       es6 import 가능하게
-//       "allowSyntheticDefaultImports": true,
-//       "strict": true,
-//       "forceConsistentCasingInFileNames": true,
-//       "noFallthroughCasesInSwitch": true,
-//       "module": "esnext",
-//       "moduleResolution": "node",
-//       "resolveJsonModule": true,
-//       "isolatedModules": true,
-//       "noEmit": true,
-//       "jsx": "react-jsx"
-//     },
-//     "include": [
-//       "src"
-//     ]
-//   }
