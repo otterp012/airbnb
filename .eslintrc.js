@@ -14,7 +14,10 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
-    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -26,6 +29,14 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-var-requires': 0,
+    'react/jsx-props-no-spreading': 'off',
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
   },
   settings: {
     'import/resolver': {
