@@ -2,8 +2,7 @@
 { "compilerOptions": { 
     "outDir": "./dist",
     "target": "es5", 
-    // exnext -> commonjs
-    "module": "commonjs", 
+    "module": "esnext", 
     "jsx": "react-jsx", 
     "noImplicitAny": true, 
     "allowSyntheticDefaultImports": true, 
