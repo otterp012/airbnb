@@ -1,34 +1,43 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import CloseIcon from '@mui/icons-material/Close';
 
-const InputContainer = styled.div<{ width: string }>`
-  position: relative;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')}
-  width: ${({ width }) => width};
+const InputContainer = styled.div<{ isLast?: boolean }>`
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
+  ${({ isLast }) =>
+    !isLast &&
+    css`
+      border-right: 1px solid ${({ theme }) => theme.colors.lightGrey};
+    `}
+  padding-right: 35px;
   span {
     display: block;
   }
 `;
 
 const InputInfoContainer = styled.div<{ inputInfoLength: number }>`
-  width: ${({ inputInfoLength }) =>
-    `calc( (100% / ${inputInfoLength}) - 15px)`};
+  width: 110px;
+  margin-left: 24px;
+  cursor: pointer;
 `;
 
 const InputName = styled.span`
+  margin-bottom: 5px;
   font-size: 12px;
   font-weight: 700;
-  margin-bottom: 5px;
 `;
 
 const InputValue = styled.span`
-  font-size: 16px;
   color: #4f4f4f;
+  line-height: 16px;
 `;
 
-const DeleteButton = styled.button`
-  position: absolute;
-  right: 26px;
+const DeleteButton = styled(CloseIcon)`
+  background: ${({ theme }) => theme.colors.grey};
+  padding: 4px;
+  border-radius: 100%;
+  margin-left: 26px;
+  cursor: pointer;
 `;
 
 type InputTypes = {
@@ -36,21 +45,18 @@ type InputTypes = {
   value: string;
 };
 
-const Input: React.FC<{ InputInfoArray: InputTypes[]; width: string }> = ({
+const Input: React.FC<{ InputInfoArray: InputTypes[]; isLast?: boolean }> = ({
   InputInfoArray,
-  width,
+  isLast,
 }) => (
-  <InputContainer width={width}>
-    {InputInfoArray.map((inputInfo) => (
-      <InputInfoContainer
-        key={inputInfo.name}
-        inputInfoLength={InputInfoArray.length}
-      >
-        <InputName>{inputInfo.name}</InputName>
-        <InputValue>{inputInfo.value}</InputValue>
+  <InputContainer isLast={isLast}>
+    {InputInfoArray.map(({ name, value }) => (
+      <InputInfoContainer key={name} inputInfoLength={InputInfoArray.length}>
+        <InputName>{name}</InputName>
+        <InputValue>{value}</InputValue>
       </InputInfoContainer>
     ))}
-    <DeleteButton />
+    <DeleteButton fontSize='small' />
   </InputContainer>
 );
 

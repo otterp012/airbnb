@@ -1,29 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import SearchIcon from '@mui/icons-material/Search';
 import Period from './Period';
-
-// import Price from './Price';
-// import Personnel from './Personnel';
+import Price from './Price';
+import Personnel from './Personnel';
 
 const SearchBarContainer = styled.form`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')};
-  width: calc(916px - 40px);
-  padding: 0 20px;
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-around')};
+  width: 916px;
   height: 76px;
-  background: blue;
+  padding: 0 16px;
   border-radius: 60px;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
-const SearchBar = () => {
-  //   const [priceRange, setPriceRange] = useState();
+const SearchButton = styled.div`
+  heigth: 32px;
+  border-radius: 30px;
+  padding: 8px 16px 8px 8px;
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')};
+  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.orange};
 
-  return (
-    <SearchBarContainer>
-      <Period />
-      {/* <Price />
-      <Personnel /> */}
-    </SearchBarContainer>
-  );
-};
+  span {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-left: 5px;
+  }
+`;
+
+const SearchBar = () => (
+  <SearchBarContainer>
+    <Period />
+    <Price />
+    <Personnel />
+    <SearchButton>
+      <SearchIcon />
+      <span>검색</span>
+    </SearchButton>
+  </SearchBarContainer>
+);
 
 export default SearchBar;

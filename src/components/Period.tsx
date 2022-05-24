@@ -1,23 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
 import Input from '../UI/Input';
+import Container from '../UI/Container';
 
-const PeriodContainer = styled.div`
-  width: 360px;
-  background: red;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-around')}
-`;
+// price, period, personnel 하나 컴포넌트로 합칠 수 있을 것 같음
+// 고려해보기
 
 const Period = () => (
-  <PeriodContainer>
+  <Container>
     <Input
-      width="360px"
       InputInfoArray={[
         { name: '체크인', value: '날짜 입력' },
         { name: '체크아웃', value: '날짜 입력' },
       ]}
     />
-  </PeriodContainer>
+  </Container>
 );
 
 export default Period;

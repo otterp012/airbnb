@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import Input from '../UI/Input';
+import Container from '../UI/Container';
 
-const Price = () => <Input />;
+const Price = () => (
+  <Container>
+    <Input InputInfoArray={[{ name: '요금', value: '금액대 설정' }]} />
+  </Container>
+);
 
-
-
-const PriceContainer = 
 export default Price;
