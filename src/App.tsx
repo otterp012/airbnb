@@ -23,7 +23,7 @@ const App = () => (
         <Backdrop />
         <Header />
         <SearchBar />
-        <Calendar year={2022} month={5} />
+        <Calendar year={2022} month={6} />
       </AppContainer>
     </ThemeProvider>
   </>
