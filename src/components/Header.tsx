@@ -49,21 +49,21 @@ const PersonIcon = styled(PersonOutlineOutlinedIcon)`
   font-size: 8px;
 `;
 
-export default function Header() {
-  return (
-    <HeaderContainer>
-      <Logo>OL-bnb</Logo>
-      <GNB>
-        <ul>
-          <li>숙소</li>
-          <li>체험</li>
-          <li>온라인 체험</li>
-        </ul>
-      </GNB>
-      <SideMenuContainer>
-        <MenuIcon />
-        <PersonIcon />
-      </SideMenuContainer>
-    </HeaderContainer>
-  );
-}
+const Header = () => (
+  <HeaderContainer>
+    <Logo>OL-bnb</Logo>
+    <GNB>
+      <ul>
+        <li>숙소</li>
+        <li>체험</li>
+        <li>온라인 체험</li>
+      </ul>
+    </GNB>
+    <SideMenuContainer>
+      <MenuIcon />
+      <PersonIcon />
+    </SideMenuContainer>
+  </HeaderContainer>
+);
+
+export default Header;

@@ -12,6 +12,6 @@ const BackdropContainer = styled.div`
   background-size: cover;
 `;
 
-export default function Backdrop() {
-  return <BackdropContainer />;
-}
+const Backdrop = () => <BackdropContainer />;
+
+export default Backdrop;
