@@ -1,6 +1,6 @@
 import React from 'react';
-import Input from '../UI/Input';
-import Container from '../UI/Container';
+import Input from '../../UI/Input';
+import Container from '../../UI/Container';
 
 const Price = () => (
   <Container>

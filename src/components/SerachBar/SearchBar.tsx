@@ -30,6 +30,7 @@ const SearchButton = styled.div`
   }
 `;
 
+// price, period, personnel 하나 컴포넌트로 합칠 수 있을 것 같음
 const SearchBar = () => (
   <SearchBarContainer>
     <Period />

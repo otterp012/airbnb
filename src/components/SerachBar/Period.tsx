@@ -1,9 +1,6 @@
 import React from 'react';
-import Input from '../UI/Input';
-import Container from '../UI/Container';
-
-// price, period, personnel 하나 컴포넌트로 합칠 수 있을 것 같음
-// 고려해보기
+import Input from '../../UI/Input';
+import Container from '../../UI/Container';
 
 const Period = () => (
   <Container>
