@@ -45,9 +45,12 @@ type InputTypes = {
   value: string;
 };
 
-const Input: React.FC<{ InputInfoArray: InputTypes[]; isLast?: boolean }> = ({
+const Input = ({
   InputInfoArray,
-  isLast,
+  isLast = false,
+}: {
+  InputInfoArray: InputTypes[];
+  isLast: boolean;
 }) => (
   <InputContainer isLast={isLast}>
     {InputInfoArray.map(({ name, value }) => (
