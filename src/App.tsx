@@ -6,7 +6,7 @@ import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import GlobalStyle from './style/GlobalStyle';
 import theme from './style/theme';
-import Calendar from './components/calendar/Calendar';
+import MonthTable from './components/calendar/MonthTable';
 
 const AppContainer = styled.div`
   position: relative;
@@ -23,7 +23,7 @@ const App = () => (
         <Backdrop />
         <Header />
         <SearchBar />
-        <Calendar year={2022} month={6} />
+        <MonthTable year={2022} month={6} />
       </AppContainer>
     </ThemeProvider>
   </>

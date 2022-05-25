@@ -8,4 +8,19 @@ const getLastDate = (year: number, month: number): number => {
   return lastDate.getDate();
 };
 
-export { getFirstDayIdx, getLastDate };
+const splitDatesToWeeks = (firstDayIdx: number, lastDate: number) => {
+  const weeks = [];
+  let week = [];
+
+  for (let i = 1 - firstDayIdx; i <= lastDate; i += 1) {
+    week.push(i);
+    if ((firstDayIdx + i) % 7 === 0) {
+      weeks.push(week);
+      week = [];
+    }
+    if (i === lastDate) weeks.push(week);
+  }
+  return weeks;
+};
+
+export { getFirstDayIdx, getLastDate, splitDatesToWeeks };
