@@ -18,6 +18,7 @@ const DateData = styled.div`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
   font-weigth: 800;
   font-size: 0.75rem;
+  cursor: pointer;
 
   :hover {
     border: 1px solid ${({ theme }) => theme.colors.black};

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -20,7 +20,7 @@ const StyledModal = styled.div`
 const ForwardArrow = styled(ArrowForwardIosIcon)`
   position: absolute;
   top: 10%;
-  left: 90%;
+  right: 10%;
   cursor: pointer;
   z-index: 2;
 `;
@@ -46,12 +46,13 @@ const Items = styled.div<{ currentTranslateX: string }>`
   height: 100%;
   z-index: -1;
   width: calc(100% * 2);
-  ${({ theme }) => theme.mixin.flexMixin('row', 'flex-start', 'space-between')}
+  ${({ theme }) => theme.mixin.flexMixin('row', 'flex-start', 'space-around')}
   transform: translateX(${({ currentTranslateX }) => currentTranslateX});
+  transition: 0.2s;
 `;
 
 const CalendarModal = () => {
-  const [cardListTranslateX, setCardListTranslateX] = useState(0);
+  const [cardListTranslateX, setCardListTranslateX] = useState(-380);
 
   const onClickForwardHandler = () => {
     setCardListTranslateX((prev) => prev - 380);
@@ -60,16 +61,17 @@ const CalendarModal = () => {
   const onClickBackwardHandler = () => {
     setCardListTranslateX((prev) => prev + 380);
   };
+
   return (
     <StyledModal>
       <BackwardArrow onClick={onClickBackwardHandler} fontSize='small' />
       <ForwardArrow onClick={onClickForwardHandler} fontSize='small' />
       <Slide>
         <Items currentTranslateX={`${cardListTranslateX.toString()}px`}>
+          <MonthTable year={2022} month={4} />
           <MonthTable year={2022} month={5} />
           <MonthTable year={2022} month={6} />
           <MonthTable year={2022} month={7} />
-          <MonthTable year={2022} month={8} />
         </Items>
       </Slide>
     </StyledModal>
