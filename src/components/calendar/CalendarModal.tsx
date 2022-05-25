@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { v4 as uuidv4 } from 'uuid';
 import MonthTable from './MonthTable';
+import {
+  YearMonthType,
+  getCurrentYearMonth,
+  calYearMonth,
+} from '../../util/calenderUtil';
 
 const StyledModal = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  top: 202px;
+  top: 182px;
   left: 250px;
   width: 916px;
   height: 512px;
   background: #fff;
   border-radius: 40px;
 `;
+
+//Todo: Arrow 하나의 컴포넌트로 합치기(props로 구체화)
 
 const ForwardArrow = styled(ArrowForwardIosIcon)`
   position: absolute;
@@ -35,43 +41,84 @@ const BackwardArrow = styled(ArrowBackIosIcon)`
 
 const Slide = styled.div`
   position: absolute;
-  overflow: hidden;
   top: 10%;
   width: 760px;
-  height: 400px;
+  height: 420px;
+  overflow: hidden;
 `;
 
-const Items = styled.div<{ currentTranslateX: string }>`
+type TransformInfoType = {
+  translateX: number;
+  direction: 'FORWARD' | 'BACKWARD' | null;
+};
+
+const Items = styled.div<TransformInfoType>`
   display: flex;
+  ${({ theme }) => theme.mixin.flexMixin('row', 'flex-start', 'space-around')};
+  transform: translateX(${({ translateX }) => translateX});
+  ${({ direction }) => direction && 'transition: 0.2s'};
   height: 100%;
-  z-index: -1;
   width: calc(100% * 2);
-  ${({ theme }) => theme.mixin.flexMixin('row', 'flex-start', 'space-around')}
-  transform: translateX(${({ currentTranslateX }) => currentTranslateX});
-  transition: 0.2s;
+  margin-top: 5px;
+  z-index: -1;
 `;
 
 const CalendarModal = () => {
-  const [cardListTranslateX, setCardListTranslateX] = useState(-380);
+  const currYearMonth = getCurrentYearMonth();
+  const initialTransformInfo: TransformInfoType = {
+    translateX: -380,
+    direction: null,
+  };
+  const [baseYearMonth, setBaseYearMonth] = useState(currYearMonth);
+  const [transformInfo, setTransformInfo] = useState(initialTransformInfo);
+
+  const calYearMonthByBaseYearMonth = calYearMonth(baseYearMonth);
+
+  const getSlideYearMonthArr = (
+    rangeMin: number,
+    rangeMax: number,
+  ): YearMonthType[] => {
+    const slideYearMonthArr = [];
+    for (let i = rangeMin; i <= rangeMax; i += 1) {
+      slideYearMonthArr.push(calYearMonthByBaseYearMonth(i));
+    }
+    return slideYearMonthArr;
+  };
 
   const onClickForwardHandler = () => {
-    setCardListTranslateX((prev) => prev - 380);
+    setTransformInfo((prev) => {
+      return { translateX: prev.translateX - 380, direction: 'FORWARD' };
+    });
   };
 
   const onClickBackwardHandler = () => {
-    setCardListTranslateX((prev) => prev + 380);
+    setTransformInfo((prev) => {
+      return { translateX: prev.translateX + 380, direction: 'BACKWARD' };
+    });
+  };
+
+  const onTransitionEndHandler = () => {
+    const direction = transformInfo.direction === 'FORWARD' ? 1 : -1;
+    setBaseYearMonth(calYearMonthByBaseYearMonth(direction));
+    setTransformInfo({ translateX: -380, direction: null });
   };
 
   return (
     <StyledModal>
-      <BackwardArrow onClick={onClickBackwardHandler} fontSize='small' />
-      <ForwardArrow onClick={onClickForwardHandler} fontSize='small' />
+      <BackwardArrow onClick={onClickBackwardHandler} fontSize="small" />
+      <ForwardArrow onClick={onClickForwardHandler} fontSize="small" />
       <Slide>
-        <Items currentTranslateX={`${cardListTranslateX.toString()}px`}>
-          <MonthTable year={2022} month={4} />
-          <MonthTable year={2022} month={5} />
-          <MonthTable year={2022} month={6} />
-          <MonthTable year={2022} month={7} />
+        <Items
+          translateX={`${transformInfo.translateX.toString()}px`}
+          direction={transformInfo.direction}
+          onTransitionEnd={onTransitionEndHandler}
+        >
+          {getSlideYearMonthArr(-1, 2).map((yearMonth) => (
+            <MonthTable
+              key={String(yearMonth.year) + String(yearMonth.month)}
+              {...yearMonth}
+            />
+          ))}
         </Items>
       </Slide>
     </StyledModal>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const MonthTableHead = styled.thead`
   font-weight: 700;
+  height: 52px;
 `;
 
 const MonthTHead = ({ year, month }: { year: number; month: number }) => {
