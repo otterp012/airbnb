@@ -11,7 +11,7 @@ const CalendarMonthTable = ({ year, month }: { year: number; month: number }) =>
   return (
     <tbody>
       {weekArr.map((week) => (
-        <WeekTableRow week={week} key={uuidv4()} />
+        <WeekTableRow year={year} month={month} week={week} key={uuidv4()} />
       ))}
     </tbody>
   );

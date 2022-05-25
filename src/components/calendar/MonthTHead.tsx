@@ -1,13 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const MonthTableHead = styled.thead`
+  font-weight: 700;
+`;
 
 const MonthTHead = ({ year, month }: { year: number; month: number }) => {
   const monthTitle = `${year}년 ${month}월`;
   return (
-    <thead>
+    <MonthTableHead>
       <tr>
         <th colSpan={7}>{monthTitle}</th>
       </tr>
-    </thead>
+    </MonthTableHead>
   );
 };
 
