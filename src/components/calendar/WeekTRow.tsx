@@ -25,7 +25,6 @@ const DateData = styled.div`
   }
 `;
 
-//가능한 상태 4가지: 체크인으로 선택됨, 체크아웃으로 선택됨, 이미 지난 날짜임, 체크인 체크아웃 사이의 날짜임
 const WeekTableRow = ({ year, month, week }: { year: number; month: number; week: number[] }) => {
   const today = new Date();
 
