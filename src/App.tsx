@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
-import Backdrop from './components/Backdrop';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
+import Backdrop from './components/Header/Backdrop';
+import Header from './components/Header/Header';
+import SearchBar from './components/SerachBar/SearchBar';
 import GlobalStyle from './style/GlobalStyle';
 import theme from './style/theme';
 import CalendarModal from './components/calendar/CalendarModal';
