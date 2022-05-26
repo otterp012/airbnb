@@ -55,7 +55,7 @@ type TransformInfoType = {
 const Items = styled.div<TransformInfoType>`
   display: flex;
   ${({ theme }) => theme.mixin.flexMixin('row', 'flex-start', 'space-around')};
-  transform: translateX(${({ translateX }) => translateX});
+  transform: translateX(${({ translateX }) => `${translateX}px`});
   ${({ direction }) => direction && 'transition: 0.2s'};
   height: 100%;
   width: calc(100% * 2);
@@ -109,7 +109,7 @@ const CalendarModal = () => {
       <ForwardArrow onClick={onClickForwardHandler} fontSize="small" />
       <Slide>
         <Items
-          translateX={`${transformInfo.translateX.toString()}px`}
+          translateX={transformInfo.translateX}
           direction={transformInfo.direction}
           onTransitionEnd={onTransitionEndHandler}
         >

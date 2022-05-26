@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
+// todo Input 컴포넌트 이름 바꾸기
 
 const InputContainer = styled.div<{ isLast?: boolean }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
@@ -59,7 +60,7 @@ const Input = ({
         <InputValue>{value}</InputValue>
       </InputInfoContainer>
     ))}
-    <DeleteButton fontSize='small' />
+    <DeleteButton fontSize="small" />
   </InputContainer>
 );
 
