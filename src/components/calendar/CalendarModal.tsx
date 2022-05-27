@@ -100,6 +100,7 @@ const StyledModal = styled.div`
   height: 452px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 40px;
+  box-shadow: ${({ theme }) => theme.boxShadow.noraml};
 `;
 
 const ForwardArrow = styled(ArrowForwardIosIcon)`
