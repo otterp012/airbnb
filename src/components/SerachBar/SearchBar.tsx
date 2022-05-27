@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import Period from './Period';
@@ -6,17 +6,18 @@ import Price from './Price';
 import Personnel from './Personnel';
 import CalendarModal from '../calendar/CalendarModal';
 
-// type ModalType = 'CALENDAR' | 'PRICE' | 'PERSONNEL' | null;
-const SearchBar = () => (
+type ModalType = 'CALENDAR' | 'PRICE' | 'PERSONNEL' | null;
+
+const SearchBar = ({ openedModalType, switchModalType }) => (
   <SearchBarContainer>
-    <Period />
-    <Price />
-    <Personnel />
+    <Period switchModalType={switchModalType} />
+    <Price switchModalType={switchModalType} />
+    <Personnel switchModalType={switchModalType} />
     <SearchButton>
       <SearchIcon />
       <span>검색</span>
     </SearchButton>
-    <CalendarModal />
+    {openedModalType === 'CALENDAR' && <CalendarModal />}
   </SearchBarContainer>
 );
 
@@ -28,6 +29,7 @@ const SearchBarContainer = styled.form`
   border-radius: 60px;
   background: ${({ theme }) => theme.colors.white};
   -webkit-user-select: none;
+  box-shadow: ${({ theme }) => theme.boxShadow.noraml};
 `;
 
 const SearchButton = styled.div`
