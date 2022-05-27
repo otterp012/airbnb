@@ -26,6 +26,15 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-var-requires': 0,
+    'react/jsx-props-no-spreading': 'off',
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
+    'react/require-default-props': 'warn',
   },
   settings: {
     'import/resolver': {
