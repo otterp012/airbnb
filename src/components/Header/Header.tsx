@@ -2,6 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import HeaderBackdrop from './/HeaderBackdrop';
+
+const Header = () => (
+  <HeaderContainer>
+    <Logo>OL-bnb</Logo>
+    <GNB>
+      <ul>
+        <li>숙소</li>
+        <li>체험</li>
+        <li>온라인 체험</li>
+      </ul>
+    </GNB>
+    <SideMenuContainer>
+      <MenuIcon />
+      <PersonIcon />
+    </SideMenuContainer>
+    <HeaderBackdrop />
+  </HeaderContainer>
+);
+
+export default Header;
 
 const HeaderContainer = styled.div`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')};
@@ -33,9 +54,9 @@ const GNB = styled.nav`
 const SideMenuContainer = styled.span`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
   width: 66px;
-  padding: 0 5px;
   height: 40px;
-  background: #fff;
+  background:  ${({ theme }) => theme.colors.white}
+  padding: 0 5px;
   border-radius: 20px;
 `;
 
@@ -47,22 +68,3 @@ const PersonIcon = styled(PersonOutlineOutlinedIcon)`
   padding: 3px;
   font-size: 8px;
 `;
-
-const Header = () => (
-  <HeaderContainer>
-    <Logo>OL-bnb</Logo>
-    <GNB>
-      <ul>
-        <li>숙소</li>
-        <li>체험</li>
-        <li>온라인 체험</li>
-      </ul>
-    </GNB>
-    <SideMenuContainer>
-      <MenuIcon />
-      <PersonIcon />
-    </SideMenuContainer>
-  </HeaderContainer>
-);
-
-export default Header;
