@@ -3,6 +3,13 @@ export type YearMonthType = {
   month: number;
 };
 
+const isTwoDateSame = (date1: Date | undefined, date2: Date | undefined) => {
+  if (date1 && date2) {
+    return date1.toLocaleDateString() === date2.toLocaleDateString();
+  }
+  return false;
+};
+
 const getCurrentYearMonth = (): YearMonthType => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
@@ -10,6 +17,14 @@ const getCurrentYearMonth = (): YearMonthType => {
     year,
     month,
   };
+};
+
+const isDateBigger = (date1: Date | null) => (date2: Date | null) => {
+  const baseDate = date1;
+  const comparedDate = date2;
+
+  if (baseDate > comparedDate) return true;
+  return false;
 };
 
 const getFirstDayIdx = (year: number, month: number): number => {
@@ -58,4 +73,6 @@ export {
   getLastDate,
   splitDatesToWeeks,
   calYearMonth,
+  isTwoDateSame,
+  isDateBigger,
 };

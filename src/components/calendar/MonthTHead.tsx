@@ -1,11 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MonthTableHead = styled.thead`
-  font-weight: 700;
-  height: 52px;
-`;
-
 const MonthTHead = ({ year, month }: { year: number; month: number }) => {
   const monthTitle = `${year}년 ${month}월`;
   return (
@@ -18,3 +13,8 @@ const MonthTHead = ({ year, month }: { year: number; month: number }) => {
 };
 
 export default MonthTHead;
+
+const MonthTableHead = styled.thead`
+  font-weight: 700;
+  height: 52px;
+`;
