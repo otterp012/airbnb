@@ -17,21 +17,22 @@ const SearchBarSection = ({
 }) => {
   const { dispatchCheckedDate } = useContext(CalendarContext);
   const onClickHandler = () => {
-    const clasified = SearchBarSectionInfo.pop()?.name;
+    const classified =
+      SearchBarSectionInfo[SearchBarSectionInfo.length - 1].name;
 
-    if (clasified === '체크아웃') {
+    if (classified === '체크아웃') {
       dispatchCheckedDate({ type: 'DELETE' });
     }
   };
   return (
     <SearchBarSectionContainer isLast={isLast}>
       {SearchBarSectionInfo.map(({ name, value }) => (
-        <SearchBarSectionItemContainer key={name} inputInfoLength={SearchBarSectionInfo.length}>
+        <SearchBarSectionItemContainer key={name}>
           <SearchBarName>{name}</SearchBarName>
           <SearchBarValue>{value}</SearchBarValue>
         </SearchBarSectionItemContainer>
       ))}
-      <InitButton fontSize='small' onClick={onClickHandler} />
+      <InitButton fontSize="small" onClick={onClickHandler} />
     </SearchBarSectionContainer>
   );
 };
@@ -48,7 +49,7 @@ const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
   }
 `;
 
-const SearchBarSectionItemContainer = styled.div<{ inputInfoLength: number }>`
+const SearchBarSectionItemContainer = styled.div`
   width: 110px;
   margin-left: 24px;
   cursor: pointer;

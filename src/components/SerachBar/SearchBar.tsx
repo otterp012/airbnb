@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import Period from './Period';
@@ -29,7 +29,7 @@ const SearchBarContainer = styled.form`
   border-radius: 60px;
   background: ${({ theme }) => theme.colors.white};
   -webkit-user-select: none;
-  box-shadow: ${({ theme }) => theme.boxShadow.noraml};
+  box-shadow: ${({ theme }) => theme.boxShadow.normal};
 `;
 
 const SearchButton = styled.div`

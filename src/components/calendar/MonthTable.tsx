@@ -5,9 +5,10 @@ import MonthTBody from './MonthTBody';
 import CalendarContext from '../../store/CalendarContext';
 
 const MonthTable = ({ year, month }: { year: number; month: number }) => {
-  const { dispatchCheckedDate } = useContext(CalendarContext);
+  const { checkedDate, dispatchCheckedDate } = useContext(CalendarContext);
 
   const onMouseLeaveHandler = () => {
+    if (checkedDate.checkOut) return;
     dispatchCheckedDate({ type: 'HOVER', payload: null });
   };
 

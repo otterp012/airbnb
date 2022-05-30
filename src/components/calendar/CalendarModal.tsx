@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { v4 as uuidv4 } from 'uuid';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DayLabel from './DayLabel';
 import MonthTable from './MonthTable';
 import {
   YearMonthType,
@@ -54,6 +55,8 @@ const CalendarModal = () => {
 
   return (
     <StyledModal>
+      <DayLabel side="LEFT" />
+      <DayLabel side="RIGHT" />
       <BackwardArrow
         onClick={() => onClickArrowHandler('BACKWARD')}
         fontSize="small"
@@ -100,7 +103,7 @@ const StyledModal = styled.div`
   height: 452px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 40px;
-  box-shadow: ${({ theme }) => theme.boxShadow.noraml};
+  box-shadow: ${({ theme }) => theme.boxShadow.normal};
 `;
 
 const ForwardArrow = styled(ArrowForwardIosIcon)`

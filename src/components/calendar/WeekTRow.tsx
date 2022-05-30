@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import CalendarContext from '../../store/CalendarContext';
-import { isTwoDateSame } from '../../util/calenderUtil';
+import { isTwoDateSame, getIsPast } from '../../util/calenderUtil';
 
 type WeekRowInfoType = {
   year: number;
@@ -10,20 +10,32 @@ type WeekRowInfoType = {
 };
 
 type DateStyleType = 'CHECK_IN' | 'CHECK_OUT' | 'BETWEEN' | null;
-
 const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
   const { checkedDate, dispatchCheckedDate } = useContext(CalendarContext);
-
   const onClickHandler = (event: React.MouseEvent) => {
     const clicked = (event.target as HTMLDivElement).dataset.date;
-    dispatchCheckedDate({
-      type: 'CLICK',
-      payload: new Date(clicked),
-    });
+    const clickedDate = new Date(clicked);
+    if (!checkedDate.checkIn || checkedDate.checkIn > clickedDate) {
+      dispatchCheckedDate({
+        type: 'CHECK_IN',
+        payload: clickedDate,
+      });
+    } else {
+      dispatchCheckedDate({
+        type: 'CHECK_OUT',
+        payload: clickedDate,
+      });
+    }
   };
 
   const onMouseHandler = (event: React.MouseEvent) => {
     if (!checkedDate?.checkIn) return;
+    if (checkedDate.checkOut)
+      return dispatchCheckedDate({
+        type: 'HOVER',
+        payload: checkedDate.checkOut,
+      });
+
     const hovered = (event.target as HTMLDivElement).dataset.date;
     dispatchCheckedDate({
       type: 'HOVER',
@@ -52,11 +64,13 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
         const currDateString = `${year}-${month}-${date}`;
         const currDateObj = new Date(currDateString);
         const styleType = decideStyleType(currDateObj);
+        const isPast = getIsPast(new Date(), currDateObj);
         return (
           <DateBox date={date} key={currDateString} boxStyle={styleType}>
             <DateData
               data-date={currDateObj}
               dateStyle={styleType}
+              isPast={isPast}
               onClick={onClickHandler}
               onMouseEnter={onMouseHandler}
             >
@@ -88,6 +102,7 @@ const DateBox = styled.td<{ date: number; boxStyle: DateStyleType }>`
 
 const DateData = styled.div<{
   dateStyle: DateStyleType;
+  isPast: boolean;
 }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
   width: 100%;
@@ -103,7 +118,12 @@ const DateData = styled.div<{
       background: ${({ theme }) => theme.colors.black};
       color: ${({ theme }) => theme.colors.white};
     `}
-
+  ${({ isPast }) =>
+    isPast &&
+    css`
+      color: ${({ theme }) => theme.colors.lightGrey2};
+      pointer-events: none;
+    `}
   :hover {
     border: 1px solid ${({ theme }) => theme.colors.black};
     box-sizing: border-box;

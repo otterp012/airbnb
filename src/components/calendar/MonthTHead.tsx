@@ -16,5 +16,5 @@ export default MonthTHead;
 
 const MonthTableHead = styled.thead`
   font-weight: 700;
-  height: 52px;
+  height: 70px;
 `;

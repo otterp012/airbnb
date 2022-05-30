@@ -14,7 +14,10 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
-    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -35,6 +38,10 @@ module.exports = {
       },
     ],
     'react/require-default-props': 'warn',
+    'no-use-before-define': [
+      'error',
+      { functions: false, classes: true, variables: false },
+    ],
   },
   settings: {
     'import/resolver': {

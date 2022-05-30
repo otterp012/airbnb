@@ -67,6 +67,12 @@ const calYearMonth =
     return { year: tempYear, month: tempMonth };
   };
 
+const getIsPast = (now, target) => {
+  if (target >= now) return false;
+  if (isTwoDateSame(target, now)) return false;
+  return true;
+};
+
 export {
   getCurrentYearMonth,
   getFirstDayIdx,
@@ -75,4 +81,5 @@ export {
   calYearMonth,
   isTwoDateSame,
   isDateBigger,
+  getIsPast,
 };

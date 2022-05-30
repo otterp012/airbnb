@@ -18,6 +18,7 @@ const colors = {
   black: '#333',
   grey: '#F5F5F7',
   lightGrey: '#E0E0E0',
+  lightGrey2: '#BDBDBD',
   white: '#FFF',
   orange: '#F66B0E',
 };
