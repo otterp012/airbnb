@@ -59,7 +59,7 @@ const Graph = () => {
   return (
     <Wrapper>
       <GraphSvg width="400" height="100" viewBox="0 0 400 100">
-        <defs></defs>
+        <defs>
           {/* width는 path의 width 가져와서 등록하기 */}
           <mask id="mask">
             <rect x="0" y="0" width="350" height="100" fill="red" />
@@ -94,7 +94,6 @@ const Graph = () => {
           onMouseDown={mouseDownHandler}
           onMouseMove={mouseMoveHandler}
           onMouseUp={mouseUpHandler}
-          // todo 공통로직 커스텀 훅 생각하기
           onDragStart={() => false}
           left={left2}
         />
