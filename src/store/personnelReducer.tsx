@@ -1,6 +1,6 @@
 import { PersonnelStateType, PersonnelType } from '../types/types';
 
-type PersonnelActionType =
+export type PersonnelActionType =
   | { type: 'INCREASE'; payload: PersonnelType }
   | { type: 'DECREASE'; payload: PersonnelType };
 
