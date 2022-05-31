@@ -1,31 +1,37 @@
 import { PersonnelStateType } from '../types/types';
 
 type PersonnelActionType =
-  | { type: 'INCREASE_ADULT' }
-  | { type: 'DECREASE_ADULT' }
-  | { type: 'INCREASE_CHILD' }
-  | { type: 'DECREASE_CHILD' }
-  | { type: 'INCREASE_INFANT' }
-  | { type: 'DECREASE_INFANT' };
+  | { type: 'INCREASE'; payload: 'ADULT' | 'CHILD' | 'INFANT' }
+  | { type: 'DECREASE'; payload: 'ADULT' | 'CHILD' | 'INFANT' };
 
-//todo: decrease,increase 함수로 합칠 수 있을듯
-const personnelStateType = (
+const personnelReducer = (
   state: PersonnelStateType,
   action: PersonnelActionType,
 ): PersonnelStateType => {
-  if (action.type === 'INCREASE_ADULT') return { ...state, adult: Math.max(state.adult - 1, 0) };
-  if (action.type === 'DECREASE_ADULT') return { ...state, adult: Math.min(state.adult - 1, 8) };
-  if (action.type === 'INCREASE_CHILD') return { ...state, child: Math.max(state.child - 1, 0) };
-  if (action.type === 'DECREASE_CHILD') return { ...state, child: Math.min(state.child - 1, 8) };
-  if (action.type === 'INCREASE_INFANT') return { ...state, infant: Math.max(state.infant - 1, 0) };
-  if (action.type === 'DECREASE_INFANT') return { ...state, infant: Math.min(state.infant + 1, 8) };
+  if (action.type === 'INCREASE') return handleIncreseAction(state, action.payload);
+  if (action.type === 'DECREASE') return handleDecreaseAction(state, action.payload);
   return state;
 };
 
-export const initialPersonnelState: PersonnelStateType = {
-  adult: 0,
-  child: 0,
-  infant: 0,
+const handleIncreseAction = (state: PersonnelStateType, target: 'ADULT' | 'CHILD' | 'INFANT') => {
+  const newState = { ...state };
+  if (['CHILD', 'INFANT'].includes(target) && state.ADULT === 0) {
+    newState.ADULT = 1;
+  }
+  newState[target] = Math.min(state[target] + 1, 8);
+  return newState;
 };
 
-export default personnelStateType;
+const handleDecreaseAction = (state: PersonnelStateType, target: 'ADULT' | 'CHILD' | 'INFANT') => {
+  const newState = { ...state };
+  newState[target] = Math.max(state[target] - 1, 0);
+  return newState;
+};
+
+export const initialPersonnelState: PersonnelStateType = {
+  ADULT: 0,
+  CHILD: 0,
+  INFANT: 0,
+};
+
+export default personnelReducer;

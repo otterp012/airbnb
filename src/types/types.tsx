@@ -5,7 +5,7 @@ export type CalendarStateType = {
 };
 
 export type PersonnelStateType = {
-  adult: number;
-  child: number;
-  infant: number;
+  ADULT: number;
+  CHILD: number;
+  INFANT: number;
 };
