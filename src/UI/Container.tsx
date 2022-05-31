@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 
 type FlexTypes = [
   'row' | 'column',
-  'center' | 'flex-start' | 'flex-end',
-  'center' | 'space-between' | 'space-around',
+  'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around',
+  'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around',
   'wrap' | 'no-wrap',
 ];
 

@@ -2,8 +2,8 @@ import React from 'react';
 import SearchBarSection from '../../UI/SearchBarSection';
 import Container from '../../UI/Container';
 
-const Personnel = () => (
-  <Container>
+const Personnel = ({ setOpenedModal }) => (
+  <Container onClick={() => setOpenedModal('PERSONNEL')}>
     <SearchBarSection SearchBarSectionInfo={[{ name: '인원', value: '게스트 추가' }]} isLast />
   </Container>
 );
