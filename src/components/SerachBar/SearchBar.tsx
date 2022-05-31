@@ -7,8 +7,8 @@ import Personnel from './Personnel';
 import CalendarModal from '../calendar/CalendarModal';
 import PersonnelModal from '../Personnel/PersonnelModal';
 import CustomModal from '../../UI/Modal';
-
-type ModalType = 'CALENDAR' | 'PRICE' | 'PERSONNEL' | null;
+import PriceModal from '../Price/PriceModal';
+import { ModalType } from '../../types/types';
 
 const SearchBar = () => {
   const [openedModal, setOpenedModal] = useState<ModalType>(null);
@@ -20,19 +20,19 @@ const SearchBar = () => {
   const ModalContents = {
     CALENDAR: <CalendarModal />,
     PERSONNEL: <PersonnelModal />,
-    // PRICE: <PriceModal />,
+    PRICE: <PriceModal />,
   };
 
   const ModalStyles = {
     CALENDAR: CalendarModalStyle,
     PERSONNEL: PersonnelModalStyle,
-    // PRICE: PriceModalStyle,
+    PRICE: PriceModalStyle,
   };
 
   return (
     <SearchBarContainer>
       <Period setOpenedModal={setOpenedModal} />
-      <Price />
+      <Price setOpenedModal={setOpenedModal} />
       <Personnel setOpenedModal={setOpenedModal} />
       <SearchButton>
         <SearchIcon />
@@ -91,6 +91,13 @@ const CalendarModalStyle = css`
 const PersonnelModalStyle = css`
   top: 182px;
   right: 250px;
+  ${CommonModalStyle};
+`;
+
+const PriceModalStyle = css`
+  display: flex;
+  top: 182px;
+  left: 40vw;
   ${CommonModalStyle};
 `;
 

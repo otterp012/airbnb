@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
-import CalendarContext from '../store/CalendarContext';
+import CalendarContext from '../store/calendarStore/CalendarContext';
 
 type SearchBarSectionTypes = {
   name: string;
@@ -10,7 +10,7 @@ type SearchBarSectionTypes = {
 
 const SearchBarSection = ({
   SearchBarSectionInfo,
-  isLast = false,
+  isLast,
 }: {
   SearchBarSectionInfo: SearchBarSectionTypes[];
   isLast: boolean;

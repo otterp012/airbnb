@@ -3,6 +3,8 @@ export type YearMonthType = {
   month: number;
 };
 
+const isValidDate = (date: Date | undefined) => date instanceof Date;
+
 const isTwoDateSame = (date1: Date | undefined, date2: Date | undefined) => {
   if (date1 && date2) {
     return date1.toLocaleDateString() === date2.toLocaleDateString();
@@ -79,6 +81,7 @@ export {
   getLastDate,
   splitDatesToWeeks,
   calYearMonth,
+  isValidDate,
   isTwoDateSame,
   isDateBigger,
   getIsPast,

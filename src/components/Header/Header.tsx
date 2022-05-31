@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import HeaderBackdrop from './/HeaderBackdrop';
+import HeaderBackdrop from './HeaderBackdrop';
 
 const Header = () => (
   <HeaderContainer>

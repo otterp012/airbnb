@@ -1,5 +1,5 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import {
   getFirstDayIdx,
@@ -22,7 +22,7 @@ const CalendarMonthTable = ({
   return (
     <tbody>
       {weekArr.map((week) => (
-        <WeekTableRow year={year} month={month} week={week} key={uuidv4()} />
+        <WeekTableRow year={year} month={month} week={week} key={uuid()} />
       ))}
     </tbody>
   );

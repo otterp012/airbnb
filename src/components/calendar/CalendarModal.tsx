@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DayLabel from './DayLabel';
 import MonthTable from './MonthTable';
@@ -30,14 +30,21 @@ const CalendarModal = () => {
 
   const calYearMonthByBaseYearMonth = calYearMonth(baseYearMonth);
 
-  const getSlideYearMonthArr = (rangeMin: number, rangeMax: number): YearMonthType[] => {
-    const rangeArr = Array.from({ length: rangeMax - rangeMin + 1 }, (_, i) => rangeMin + i);
+  const getSlideYearMonthArr = (
+    rangeMin: number,
+    rangeMax: number,
+  ): YearMonthType[] => {
+    const rangeArr = Array.from(
+      { length: rangeMax - rangeMin + 1 },
+      (_, i) => rangeMin + i,
+    );
     return rangeArr.map((n) => calYearMonthByBaseYearMonth(n));
   };
 
   const onClickArrowHandler = (direction: DirectionType) =>
     setTransformInfo((prev) => ({
-      translateX: direction === 'FORWARD' ? prev.translateX - 380 : prev.translateX + 380,
+      translateX:
+        direction === 'FORWARD' ? prev.translateX - 380 : prev.translateX + 380,
       direction,
     }));
 
@@ -48,11 +55,21 @@ const CalendarModal = () => {
   };
 
   return (
-    <Container width='943px' height='452px' flexInfo={['row', 'center']}>
-      <DayLabel side='LEFT' />
-      <DayLabel side='RIGHT' />
-      <BackwardArrow onClick={() => onClickArrowHandler('BACKWARD')} fontSize='small' />
-      <ForwardArrow onClick={() => onClickArrowHandler('FORWARD')} fontSize='small' />
+    <Container
+      width="943px"
+      height="452px"
+      flexInfo={['row', 'center', 'center', 'wrap']}
+    >
+      <DayLabel side="LEFT" />
+      <DayLabel side="RIGHT" />
+      <BackwardArrow
+        onClick={() => onClickArrowHandler('BACKWARD')}
+        fontSize="small"
+      />
+      <ForwardArrow
+        onClick={() => onClickArrowHandler('FORWARD')}
+        fontSize="small"
+      />
       <Slide>
         <Items
           translateX={transformInfo.translateX}
@@ -60,7 +77,7 @@ const CalendarModal = () => {
           onTransitionEnd={onTransitionEndHandler}
         >
           {getSlideYearMonthArr(-1, 2).map((yearMonth) => (
-            <MonthTable key={uuidv4()} {...yearMonth} />
+            <MonthTable key={uuid()} {...yearMonth} />
           ))}
         </Items>
       </Slide>

@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../components/Header/Header';
 import SearchBar from '../components/SerachBar/SearchBar';
-import CalendarProvider from '../store/CalendarProvider';
-import PersonnelProvider from '../store/PersonnelProvider';
+import CalendarProvider from '../store/calendarStore/CalendarProvider';
+import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
 import Container from '../UI/Container';
 
 const MainPage = () => (

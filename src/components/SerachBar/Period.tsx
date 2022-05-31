@@ -1,12 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, Dispatch } from 'react';
 import SearchBarSection from '../../UI/SearchBarSection';
-import CalendarContext from '../../store/CalendarContext';
+import CalendarContext from '../../store/calendarStore/CalendarContext';
 import Container from '../../UI/Container';
+import { ModalType } from '../../types/types';
 
-const Period = ({ setOpenedModal }) => {
+const Period = ({
+  setOpenedModal,
+}: {
+  setOpenedModal: Dispatch<React.SetStateAction<ModalType>>;
+}) => {
   const { checkedDate } = useContext(CalendarContext);
-  const checkInDateString = checkedDate.checkIn?.toLocaleDateString() || '날짜 입력';
-  const checkOutDateString = checkedDate.checkOut?.toLocaleDateString() || '날짜 입력';
+  const checkInDateString =
+    checkedDate.checkIn?.toLocaleDateString() || '날짜 입력';
+  const checkOutDateString =
+    checkedDate.checkOut?.toLocaleDateString() || '날짜 입력';
 
   return (
     <Container onClick={() => setOpenedModal('CALENDAR')}>
@@ -18,6 +25,7 @@ const Period = ({ setOpenedModal }) => {
           },
           { name: '체크아웃', value: checkOutDateString },
         ]}
+        isLast={false}
       />
     </Container>
   );

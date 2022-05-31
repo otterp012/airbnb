@@ -2,29 +2,41 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import PersonnelContext from '../../store/PersonnelContext';
+import PersonnelContext from '../../store/personnelStore/PersonnelContext';
 import Container from '../../UI/Container';
+import {
+  PersonnelSelectOptionType,
+  PersonnelContextType,
+} from '../../types/types';
 
-const PersonnelSelectSection = ({ type, title, description }) => {
+const PersonnelSelectSection = ({
+  target,
+  title,
+  description,
+}: PersonnelSelectOptionType) => {
   const { personnel, dispatchPersonnel } = useContext(PersonnelContext);
 
   return (
     <Container
-      width='calc(100% - 128px)'
-      height='calc(100% - 128px)'
-      flexInfo={['row', 'space-between', 'space-between']}
+      width="calc(100% - 128px)"
+      height="calc(100% - 128px)"
+      flexInfo={['row', 'space-between', 'space-between', 'wrap']}
     >
-      <Container flexInfo={['column', 'space-between', 'center']}>
+      <Container flexInfo={['column', 'space-between', 'center', 'wrap']}>
         <Title>{title}</Title>
         <Description>{description}</Description>
       </Container>
-      <Container flexInfo={['row', 'center', 'space-between']}>
+      <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
-          onClick={() => dispatchPersonnel({ type: 'DECREASE', payload: type })}
+          onClick={() =>
+            dispatchPersonnel({ type: 'DECREASE', payload: target })
+          }
         />
-        <SelectionNumber>{personnel[type]}</SelectionNumber>
+        <SelectionNumber>{personnel[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
-          onClick={() => dispatchPersonnel({ type: 'INCREASE', payload: type })}
+          onClick={() =>
+            dispatchPersonnel({ type: 'INCREASE', payload: target })
+          }
         />
       </Container>
     </Container>
