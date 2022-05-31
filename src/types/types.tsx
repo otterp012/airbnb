@@ -9,3 +9,5 @@ export type PersonnelStateType = {
   CHILD: number;
   INFANT: number;
 };
+
+export type PersonnelType = 'ADULT' | 'CHILD' | 'INFANT';

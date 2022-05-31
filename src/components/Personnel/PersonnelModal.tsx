@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '../../UI/Container';
 import PersonnelSelectSection from './PersonnelSelectSection';
+import { PersonnelType } from '../../types/types';
 
 type SelectOptionType = {
-  type: 'ADULT' | 'CHILD' | 'INFANT';
+  type: PersonnelType;
   title: string;
   description: string;
 };
