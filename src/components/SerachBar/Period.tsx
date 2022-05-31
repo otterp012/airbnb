@@ -3,13 +3,13 @@ import SearchBarSection from '../../UI/SearchBarSection';
 import CalendarContext from '../../store/CalendarContext';
 import Container from '../../UI/Container';
 
-const Period = ({ switchModalType }) => {
+const Period = ({ setOpenedModal }) => {
   const { checkedDate } = useContext(CalendarContext);
   const checkInDateString = checkedDate.checkIn?.toLocaleDateString() || '날짜 입력';
   const checkOutDateString = checkedDate.checkOut?.toLocaleDateString() || '날짜 입력';
 
   return (
-    <Container onClick={() => switchModalType('CALENDAR')}>
+    <Container onClick={() => setOpenedModal('CALENDAR')}>
       <SearchBarSection
         SearchBarSectionInfo={[
           {

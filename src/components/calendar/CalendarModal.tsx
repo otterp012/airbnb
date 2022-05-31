@@ -10,6 +10,7 @@ import {
   getCurrentYearMonth,
   calYearMonth,
 } from '../../util/calenderUtil';
+import Container from '../../UI/Container';
 
 type DirectionType = 'FORWARD' | 'BACKWARD' | null;
 
@@ -29,21 +30,14 @@ const CalendarModal = () => {
 
   const calYearMonthByBaseYearMonth = calYearMonth(baseYearMonth);
 
-  const getSlideYearMonthArr = (
-    rangeMin: number,
-    rangeMax: number,
-  ): YearMonthType[] => {
-    const rangeArr = Array.from(
-      { length: rangeMax - rangeMin + 1 },
-      (_, i) => rangeMin + i,
-    );
+  const getSlideYearMonthArr = (rangeMin: number, rangeMax: number): YearMonthType[] => {
+    const rangeArr = Array.from({ length: rangeMax - rangeMin + 1 }, (_, i) => rangeMin + i);
     return rangeArr.map((n) => calYearMonthByBaseYearMonth(n));
   };
 
   const onClickArrowHandler = (direction: DirectionType) =>
     setTransformInfo((prev) => ({
-      translateX:
-        direction === 'FORWARD' ? prev.translateX - 380 : prev.translateX + 380,
+      translateX: direction === 'FORWARD' ? prev.translateX - 380 : prev.translateX + 380,
       direction,
     }));
 
@@ -54,17 +48,11 @@ const CalendarModal = () => {
   };
 
   return (
-    <StyledModal>
-      <DayLabel side="LEFT" />
-      <DayLabel side="RIGHT" />
-      <BackwardArrow
-        onClick={() => onClickArrowHandler('BACKWARD')}
-        fontSize="small"
-      />
-      <ForwardArrow
-        onClick={() => onClickArrowHandler('FORWARD')}
-        fontSize="small"
-      />
+    <Container width='943px' height='452px' flexInfo={['row', 'center']}>
+      <DayLabel side='LEFT' />
+      <DayLabel side='RIGHT' />
+      <BackwardArrow onClick={() => onClickArrowHandler('BACKWARD')} fontSize='small' />
+      <ForwardArrow onClick={() => onClickArrowHandler('FORWARD')} fontSize='small' />
       <Slide>
         <Items
           translateX={transformInfo.translateX}
@@ -76,7 +64,7 @@ const CalendarModal = () => {
           ))}
         </Items>
       </Slide>
-    </StyledModal>
+    </Container>
   );
 };
 
@@ -91,19 +79,6 @@ const Items = styled.div<TransformInfoType>`
   width: calc(100% * 2);
   margin-top: 5px;
   z-index: -1;
-`;
-
-const StyledModal = styled.div`
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 182px;
-  left: 250px;
-  width: 943px;
-  height: 452px;
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 40px;
-  box-shadow: ${({ theme }) => theme.boxShadow.normal};
 `;
 
 const ForwardArrow = styled(ArrowForwardIosIcon)`

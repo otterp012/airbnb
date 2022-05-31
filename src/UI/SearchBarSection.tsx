@@ -36,6 +36,7 @@ const SearchBarSection = ({
     </SearchBarSectionContainer>
   );
 };
+
 const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
   ${({ isLast }) =>

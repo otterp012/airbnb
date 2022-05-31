@@ -1,25 +1,53 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import Period from './Period';
 import Price from './Price';
 import Personnel from './Personnel';
 import CalendarModal from '../calendar/CalendarModal';
+import PersonnelModal from '../Personnel/PersonnelModal';
+import CustomModal from '../../UI/Modal';
 
 type ModalType = 'CALENDAR' | 'PRICE' | 'PERSONNEL' | null;
 
-const SearchBar = ({ openedModalType, switchModalType }) => (
-  <SearchBarContainer>
-    <Period switchModalType={switchModalType} />
-    <Price switchModalType={switchModalType} />
-    <Personnel switchModalType={switchModalType} />
-    <SearchButton>
-      <SearchIcon />
-      <span>검색</span>
-    </SearchButton>
-    {openedModalType === 'CALENDAR' && <CalendarModal />}
-  </SearchBarContainer>
-);
+const SearchBar = () => {
+  const [openedModal, setOpenedModal] = useState<ModalType>(null);
+
+  const closeModal = () => {
+    setOpenedModal(null);
+  };
+
+  const ModalContents = {
+    CALENDAR: <CalendarModal />,
+    PERSONNEL: <PersonnelModal />,
+    // PRICE: <PriceModal />,
+  };
+
+  const ModalStyles = {
+    CALENDAR: CalendarModalStyle,
+    PERSONNEL: PersonnelModalStyle,
+    // PRICE: PriceModalStyle,
+  };
+
+  return (
+    <SearchBarContainer>
+      <Period setOpenedModal={setOpenedModal} />
+      <Price />
+      <Personnel setOpenedModal={setOpenedModal} />
+      <SearchButton>
+        <SearchIcon />
+        <span>검색</span>
+      </SearchButton>
+      {openedModal && (
+        <CustomModal
+          children={ModalContents[openedModal]}
+          style={ModalStyles[openedModal]}
+          closeModal={closeModal}
+        />
+      )}
+    </SearchBarContainer>
+  );
+};
 
 const SearchBarContainer = styled.form`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-around')};
@@ -46,6 +74,24 @@ const SearchButton = styled.div`
     font-weight: 700;
     margin-left: 5px;
   }
+`;
+
+const CommonModalStyle = css`
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: 40px;
+  box-shadow: ${({ theme }) => theme.boxShadow.normal};
+`;
+
+const CalendarModalStyle = css`
+  top: 182px;
+  left: 250px;
+  ${CommonModalStyle};
+`;
+
+const PersonnelModalStyle = css`
+  top: 182px;
+  right: 250px;
+  ${CommonModalStyle};
 `;
 
 export default SearchBar;
