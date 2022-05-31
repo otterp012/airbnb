@@ -3,3 +3,11 @@ export type CalendarStateType = {
   checkOut: Date | null;
   hoveredDate: Date | null;
 };
+
+export type PersonnelStateType = {
+  ADULT: number;
+  CHILD: number;
+  INFANT: number;
+};
+
+export type PersonnelType = 'ADULT' | 'CHILD' | 'INFANT';

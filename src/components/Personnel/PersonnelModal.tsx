@@ -2,42 +2,41 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '../../UI/Container';
 import PersonnelSelectSection from './PersonnelSelectSection';
+import { PersonnelType } from '../../types/types';
 
 type SelectOptionType = {
-  type: 'ADULT' | 'CHILD' | 'INFANT';
+  type: PersonnelType;
   title: string;
   description: string;
 };
 
-const PersonnelModal = () => {
-  const selectOptions: SelectOptionType[] = [
-    {
-      type: 'ADULT',
-      title: '성인',
-      description: '만 13세 이상',
-    },
-    {
-      type: 'CHILD',
-      title: '어린이',
-      description: '만 2~12세',
-    },
-    {
-      type: 'INFANT',
-      title: '유아',
-      description: '만 2세 미만',
-    },
-  ];
+const selectOptions: SelectOptionType[] = [
+  {
+    type: 'ADULT',
+    title: '성인',
+    description: '만 13세 이상',
+  },
+  {
+    type: 'CHILD',
+    title: '어린이',
+    description: '만 2~12세',
+  },
+  {
+    type: 'INFANT',
+    title: '유아',
+    description: '만 2세 미만',
+  },
+];
 
-  return (
-    <Container width='400px' height='355px' flexInfo={['column', 'center']}>
-      <>
-        {selectOptions.map((selectOption) => (
-          <PersonnelSelectSection key={selectOption.type} {...selectOption} />
-        ))}
-      </>
-    </Container>
-  );
-};
+const PersonnelModal = () => (
+  <Container width='400px' height='355px' flexInfo={['column', 'center']}>
+    <SelectSectionWrapper>
+      {selectOptions.map((selectOption) => (
+        <PersonnelSelectSection key={selectOption.type} {...selectOption} />
+      ))}
+    </SelectSectionWrapper>
+  </Container>
+);
 
 export default PersonnelModal;
 
