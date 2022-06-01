@@ -1,14 +1,11 @@
 import { createContext, useContext, Dispatch } from 'react';
 import { CalendarStateType } from '../calendarStore/calendarType';
 import { PersonnelStateType } from '../personnelStore/personnelTypes';
-// import { PriceStateType } from '../priceStore/priceTypes';
+import { PriceStateType } from '../priceStore/priceTypes';
 
 export type SearchDataStateType = {
   calendar: CalendarStateType;
-  price: {
-    minPrice: number | null;
-    maxPrice: number | null;
-  };
+  price: PriceStateType;
   personnel: PersonnelStateType;
 };
 

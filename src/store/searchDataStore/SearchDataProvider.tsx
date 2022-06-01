@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import { SearchDataStateContext, SearchDataDispatchContext } from './SearchDataContext';
-import { SearchDataStateType } from './SearchDataContext';
+import {
+  SearchDataStateContext,
+  SearchDataDispatchContext,
+  SearchDataStateType,
+} from './SearchDataContext';
+import { initialCalendarState, initialPriceState, initialPersonnelState } from '../initialValues';
 
 const initialSearchData: SearchDataStateType = {
-  calendar: {
-    checkIn: null,
-    hoveredDate: null,
-    checkOut: null,
-  },
-  price: {
-    minPrice: null,
-    maxPrice: null,
-  },
-  personnel: {
-    ADULT: 0,
-    CHILD: 0,
-    INFANT: 0,
-  },
+  calendar: initialCalendarState,
+  price: initialPriceState,
+  personnel: initialPersonnelState,
 };
 
 const SearchDataProvider = ({ children }: { children: React.ReactNode }) => {

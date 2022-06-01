@@ -1,4 +1,5 @@
 import { CalendarStateType, CalendarActionType } from './calendarType';
+import { initialCalendarState } from '../initialValues';
 
 const calendarReducer = (
   state: CalendarStateType,
@@ -22,17 +23,11 @@ const handleCheckOutAction = (state: CalendarStateType, payload: Date): Calendar
   checkOut: payload,
 });
 
-const handleHoverAction = (state: CalendarStateType, payload: Date): CalendarStateType => ({
+const handleHoverAction = (state: CalendarStateType, payload: Date | null): CalendarStateType => ({
   ...state,
   hoveredDate: payload,
 });
 
 const handleDeleteAction = (): CalendarStateType => initialCalendarState;
-
-export const initialCalendarState: CalendarStateType = {
-  checkIn: null,
-  checkOut: null,
-  hoveredDate: null,
-};
 
 export default calendarReducer;

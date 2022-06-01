@@ -1,4 +1,5 @@
 import { PersonnelStateType, PersonnelType, PersonnelActionType } from './personnelTypes';
+import { initialPersonnelState } from '../initialValues';
 
 const personnelReducer = (
   state: PersonnelStateType,
@@ -29,12 +30,6 @@ const handleDecreaseAction = (state: PersonnelStateType, target: PersonnelType) 
   const newState = { ...state };
   newState[target] = Math.max(state[target] - 1, 0);
   return newState;
-};
-
-export const initialPersonnelState: PersonnelStateType = {
-  ADULT: 0,
-  CHILD: 0,
-  INFANT: 0,
 };
 
 export default personnelReducer;
