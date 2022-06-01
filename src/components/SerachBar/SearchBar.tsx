@@ -97,7 +97,7 @@ const PersonnelModalStyle = css`
 const PriceModalStyle = css`
   display: flex;
   top: 182px;
-  left: 40vw;
+  left: 500px;
   ${CommonModalStyle};
 `;
 
