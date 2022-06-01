@@ -1,6 +1,9 @@
 import React, { Dispatch } from 'react';
 import SearchBarSection from '../../UI/SearchBarSection';
-import { usePersonnelStateContext } from '../../store/personnelStore/PersonnelContext';
+import {
+  usePersonnelStateContext,
+  usePersonnelDispatchContext,
+} from '../../store/personnelStore/PersonnelContext';
 import Container from '../../UI/Container';
 import { ModalType } from '../../types/types';
 
@@ -10,8 +13,11 @@ const Personnel = ({
   setOpenedModal: Dispatch<React.SetStateAction<ModalType>>;
 }) => {
   const personnelState = usePersonnelStateContext();
+  const dispatchPersonnel = usePersonnelDispatchContext();
+
+  const totalPersonnel = personnelState.ADULT + personnelState.CHILD + personnelState.INFANT;
   const personnelValue =
-    personnelState.ADULT + personnelState.CHILD + personnelState.INFANT !== 0
+    totalPersonnel !== 0
       ? `게스트 ${personnelState.ADULT + personnelState.CHILD}명, 유아 ${personnelState.INFANT}명`
       : undefined;
 
@@ -20,6 +26,7 @@ const Personnel = ({
       <SearchBarSection
         searchBarSectionInfo={[{ name: '인원', placeholder: '게스트 추가', value: personnelValue }]}
         isLast
+        initSection={() => dispatchPersonnel({ type: 'DELETE' })}
       />
     </Container>
   );

@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
-import { useCalendarDispatchContext } from '../store/calendarStore/CalendarContext';
 
 type SearchBarSectionTypes = {
   name: string;
@@ -12,21 +11,12 @@ type SearchBarSectionTypes = {
 const SearchBarSection = ({
   searchBarSectionInfo,
   isLast,
+  initSection,
 }: {
   searchBarSectionInfo: SearchBarSectionTypes[];
   isLast: boolean;
+  initSection: () => void;
 }) => {
-  const dispatchCalendar = useCalendarDispatchContext();
-  const onClickHandler = () => {
-    const classified = searchBarSectionInfo[searchBarSectionInfo.length - 1].name;
-
-    if (classified === '체크아웃') {
-      dispatchCalendar({ type: 'DELETE' });
-    }
-  };
-
-  const handleInitButtonClick = () => {};
-
   const isAnyValueInputed = () => searchBarSectionInfo.some(({ value }) => value);
 
   return (
@@ -37,7 +27,7 @@ const SearchBarSection = ({
           <SearchBarValue data-placeholder={placeholder}>{value}</SearchBarValue>
         </SearchBarSectionItemContainer>
       ))}
-      {isAnyValueInputed() && <InitButton fontSize='small' onClick={handleInitButtonClick} />}
+      {isAnyValueInputed() && <InitButton fontSize='small' onClick={initSection} />}
     </SearchBarSectionContainer>
   );
 };

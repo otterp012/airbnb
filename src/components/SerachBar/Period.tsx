@@ -29,7 +29,7 @@ const Period = ({
           { name: '체크아웃', placeholder: '날짜 입력', value: checkOutDateString },
         ]}
         isLast={false}
-        initSection={() => dispatchCalendar({ type: 'DELETE', payload: null })}
+        initSection={() => dispatchCalendar({ type: 'DELETE' })}
       />
     </Container>
   );

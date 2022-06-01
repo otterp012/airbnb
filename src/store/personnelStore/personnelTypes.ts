@@ -10,7 +10,8 @@ export type PersonnelStateType = {
 
 export type PersonnelActionType =
   | { type: 'INCREASE'; payload: PersonnelType }
-  | { type: 'DECREASE'; payload: PersonnelType };
+  | { type: 'DECREASE'; payload: PersonnelType }
+  | { type: 'DELETE' };
 
 export type PersonnelDispatchType = Dispatch<PersonnelActionType>;
 

@@ -10,6 +10,9 @@ const personnelReducer = (
   if (action.type === 'DECREASE') {
     return handleDecreaseAction(state, action.payload);
   }
+  if (action.type === 'DELETE') {
+    return initialPersonnelState;
+  }
   throw new Error('invalid action');
 };
 

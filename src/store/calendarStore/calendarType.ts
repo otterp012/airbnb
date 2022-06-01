@@ -10,6 +10,6 @@ export type CalendarActionType =
   | { type: 'CHECK_IN'; payload: Date }
   | { type: 'CHECK_OUT'; payload: Date }
   | { type: 'HOVER'; payload: Date | null }
-  | { type: 'DELETE'; payload: null };
+  | { type: 'DELETE' };
 
 export type CalendarDispatchType = Dispatch<CalendarActionType>;
