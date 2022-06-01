@@ -33,13 +33,16 @@ const SearchBarSection = ({
 };
 
 const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
+  position: relative;
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
   ${({ isLast }) =>
     !isLast &&
     css`
       border-right: 1px solid ${({ theme }) => theme.colors.lightGrey};
     `}
-  padding-right: 35px;
+    
+  padding-right: 63px;
+
   span {
     display: block;
   }
@@ -47,7 +50,7 @@ const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
 
 const SearchBarSectionItemContainer = styled.div`
   width: 110px;
-  margin-left: 24px;
+  margin: 0px 24px;
   cursor: pointer;
 `;
 
@@ -60,6 +63,9 @@ const SearchBarName = styled.span`
 const SearchBarValue = styled.span`
   color: #4f4f4f;
   line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :empty:before {
     content: attr(data-placeholder);
@@ -68,6 +74,8 @@ const SearchBarValue = styled.span`
 `;
 
 const InitButton = styled(CloseIcon)`
+  position: absolute;
+  right: 30px;
   background: ${({ theme }) => theme.colors.grey};
   padding: 4px;
   border-radius: 100%;

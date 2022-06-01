@@ -47,7 +47,7 @@ const SearchBar = () => {
 };
 
 const SearchBarContainer = styled.form`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-around')};
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
   width: 916px;
   height: 76px;
   padding: 0 16px;
