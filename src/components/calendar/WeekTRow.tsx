@@ -4,7 +4,7 @@ import {
   useCalendarStateContext,
   useCalendarDispatchContext,
 } from '../../store/calendarStore/CalendarContext';
-import { isTwoDateSame, getIsPast } from '../../util/calenderUtil';
+import { isTwoDateSame, getIsPastDate } from '../../util/calenderUtil';
 
 type WeekRowInfoType = {
   year: number;
@@ -74,7 +74,7 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
         const currDateString = `${year}-${month}-${date}`;
         const currDateObj = new Date(currDateString);
         const styleType = decideStyleType(currDateObj);
-        const isPast = getIsPast(new Date(), currDateObj);
+        const isPast = getIsPastDate(new Date(), currDateObj);
         return (
           <DateBox date={date} key={currDateString} boxStyle={styleType}>
             <DateData

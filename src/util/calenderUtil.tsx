@@ -3,25 +3,12 @@ export type YearMonthType = {
   month: number;
 };
 
-const isTwoDateSame = (date1: Date, date2: Date) => {
-  return date1?.toLocaleDateString() === date2?.toLocaleDateString();
-};
+const isTwoDateSame = (d1: Date, d2: Date) => d1.toLocaleDateString() === d2.toLocaleDateString();
 
 const getCurrentYearMonth = (): YearMonthType => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
-  return {
-    year,
-    month,
-  };
-};
-
-const isDateBigger = (date1: Date | null) => (date2: Date | null) => {
-  const baseDate = date1;
-  const comparedDate = date2;
-
-  if (baseDate > comparedDate) return true;
-  return false;
+  return { year, month };
 };
 
 const getFirstDayIdx = (year: number, month: number): number => {
@@ -49,26 +36,21 @@ const splitDatesToWeeks = (firstDayIdx: number, lastDate: number) => {
   return weeks;
 };
 
-const calYearMonth =
-  (baseYearMonth: YearMonthType) => (changedMonth: number) => {
-    let tempYear = baseYearMonth.year;
-    let tempMonth = baseYearMonth.month + changedMonth;
-    if (tempMonth <= 0) {
-      tempYear -= 1;
-      tempMonth += 12;
-    } else if (tempMonth >= 13) {
-      tempMonth -= 12;
-      tempYear += 1;
-    }
+const calYearMonth = (baseYearMonth: YearMonthType) => (changedMonth: number) => {
+  let tempYear = baseYearMonth.year;
+  let tempMonth = baseYearMonth.month + changedMonth;
+  if (tempMonth <= 0) {
+    tempYear -= 1;
+    tempMonth += 12;
+  } else if (tempMonth >= 13) {
+    tempMonth -= 12;
+    tempYear += 1;
+  }
 
-    return { year: tempYear, month: tempMonth };
-  };
-
-const getIsPast = (now, target) => {
-  if (target >= now) return false;
-  if (isTwoDateSame(target, now)) return false;
-  return true;
+  return { year: tempYear, month: tempMonth };
 };
+
+const getIsPastDate = (now: Date, target: Date) => target < now && !isTwoDateSame(target, now);
 
 export {
   getCurrentYearMonth,
@@ -77,6 +59,5 @@ export {
   splitDatesToWeeks,
   calYearMonth,
   isTwoDateSame,
-  isDateBigger,
-  getIsPast,
+  getIsPastDate,
 };

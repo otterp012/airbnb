@@ -1,7 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSProp } from 'styled-components';
 
-const CustomModal = ({ children, style, closeModal }) => (
+const CustomModal = ({
+  children,
+  style,
+  closeModal,
+}: {
+  children: React.ReactNode;
+  style: CSSProp;
+  closeModal: () => void;
+}) => (
   <StyledModal modalStyle={style}>
     {children}
     <ModalBackground onClick={closeModal} />
@@ -10,7 +18,7 @@ const CustomModal = ({ children, style, closeModal }) => (
 
 export default CustomModal;
 
-const StyledModal = styled.div`
+const StyledModal = styled.div<{ modalStyle: CSSProp }>`
   position: absolute;
   ${({ theme }) => theme.mixin.flexMixin('row', 'center')};
   ${({ modalStyle }) => modalStyle};

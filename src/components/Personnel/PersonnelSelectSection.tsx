@@ -10,10 +10,14 @@ import Container from '../../UI/Container';
 import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 import { personnelRange } from '../../constants/constants';
 
-const PersonnelSelectSection = (
-  { isLast }: { isLast: boolean },
-  { target, title, description }: PersonnelSelectOptionType,
-) => {
+const PersonnelSelectSection = ({
+  isLast,
+  selectOption,
+}: {
+  isLast: boolean;
+  selectOption: PersonnelSelectOptionType;
+}) => {
+  const { target, title, description } = selectOption;
   const personnelState = usePersonnelStateContext();
   const dispatchPersonnel = usePersonnelDispatchContext();
 

@@ -36,11 +36,9 @@ const SearchBar = () => {
       <Personnel setOpenedModal={setOpenedModal} />
       <SearchButton />
       {openedModal && (
-        <CustomModal
-          children={ModalContents[openedModal]}
-          style={ModalStyles[openedModal]}
-          closeModal={closeModal}
-        />
+        <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
+          {ModalContents[openedModal]}
+        </CustomModal>
       )}
     </SearchBarContainer>
   );

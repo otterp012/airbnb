@@ -29,7 +29,7 @@ const PersonnelModal = () => (
         <PersonnelSelectSection
           key={selectOption.target}
           isLast={idx === selectOptions.length - 1}
-          {...selectOption}
+          selectOption={selectOption}
         />
       ))}
     </SelectSectionWrapper>
