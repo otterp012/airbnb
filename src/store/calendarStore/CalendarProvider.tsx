@@ -1,25 +1,18 @@
-import React, { useReducer, useMemo } from 'react';
-import CalendarContext from './CalendarContext';
-import calendarReducer, { initialCalendarState } from './calendarReducer';
+import React, { useReducer } from 'react';
+import { CalendarStateContext, CalendarDispatchContext } from './CalendarContext';
+import calendarReducer from './calendarReducer';
+import { useSearchDataStateContext } from '../searchDataStore/SearchDataContext';
 
 const CalendarProvider = ({ children }: { children: React.ReactNode }) => {
-  const [checkedDate, dispatchCheckedDate] = useReducer(
-    calendarReducer,
-    initialCalendarState,
-  );
-
-  const calendarValue = useMemo(
-    () => ({
-      checkedDate,
-      dispatchCheckedDate,
-    }),
-    [checkedDate],
-  );
+  const initialCalendarState = useSearchDataStateContext().calendar;
+  const [calendarState, dispatchCalendar] = useReducer(calendarReducer, initialCalendarState);
 
   return (
-    <CalendarContext.Provider value={calendarValue}>
-      {children}
-    </CalendarContext.Provider>
+    <CalendarStateContext.Provider value={calendarState}>
+      <CalendarDispatchContext.Provider value={dispatchCalendar}>
+        {children}
+      </CalendarDispatchContext.Provider>
+    </CalendarStateContext.Provider>
   );
 };
 

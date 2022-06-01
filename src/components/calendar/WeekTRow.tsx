@@ -1,7 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import CalendarContext from '../../store/calendarStore/CalendarContext';
-import { isValidDate, isTwoDateSame, getIsPast } from '../../util/calenderUtil';
+import {
+  useCalendarStateContext,
+  useCalendarDispatchContext,
+} from '../../store/calendarStore/CalendarContext';
+import { isTwoDateSame, getIsPastDate } from '../../util/calenderUtil';
 
 type WeekRowInfoType = {
   year: number;
@@ -12,18 +15,19 @@ type WeekRowInfoType = {
 type DateStyleType = 'CHECK_IN' | 'CHECK_OUT' | 'BETWEEN' | null;
 
 const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
-  const { checkedDate, dispatchCheckedDate } = useContext(CalendarContext);
+  const calendarState = useCalendarStateContext();
+  const dispatchCalendar = useCalendarDispatchContext();
   const onClickHandler = (event: React.MouseEvent) => {
     const clicked = (event.target as HTMLDivElement).dataset.date;
     if (!clicked) return;
     const clickedDate = new Date(clicked);
-    if (!checkedDate.checkIn || checkedDate.checkIn > clickedDate) {
-      dispatchCheckedDate({
+    if (!calendarState.checkIn || calendarState.checkIn > clickedDate) {
+      dispatchCalendar({
         type: 'CHECK_IN',
         payload: clickedDate,
       });
     } else {
-      dispatchCheckedDate({
+      dispatchCalendar({
         type: 'CHECK_OUT',
         payload: clickedDate,
       });
@@ -31,38 +35,36 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
   };
 
   const onMouseHandler = (event: React.MouseEvent) => {
-    if (!checkedDate?.checkIn) return;
-    if (checkedDate.checkOut) {
-      dispatchCheckedDate({
+    const { checkIn, checkOut } = calendarState;
+    if (!checkIn) return;
+
+    if (!checkOut) {
+      const currHovered = (event.target as HTMLDivElement).dataset.date;
+      if (!currHovered) return;
+      dispatchCalendar({
         type: 'HOVER',
-        payload: checkedDate.checkOut,
+        payload: new Date(currHovered),
       });
+      return;
     }
 
-    const hovered = (event.target as HTMLDivElement).dataset.date;
-    if (!hovered) return;
-    dispatchCheckedDate({
+    dispatchCalendar({
       type: 'HOVER',
-      payload: new Date(hovered),
+      payload: checkOut,
     });
   };
 
   const decideStyleType = (date: Date): DateStyleType => {
-    if (
-      isValidDate(checkedDate?.checkIn) &&
-      isTwoDateSame(date, checkedDate.checkIn)
-    ) {
-      return 'CHECK_IN';
-    }
-    if (
-      isValidDate(checkedDate?.checkIn) &&
-      isTwoDateSame(date, checkedDate.checkOut)
-    ) {
-      return 'CHECK_OUT';
-    }
-    if (checkedDate?.checkIn < date && checkedDate?.hoveredDate > date) {
-      return 'BETWEEN';
-    }
+    const { checkIn, hoveredDate, checkOut } = calendarState;
+    if (!checkIn) return null;
+    if (isTwoDateSame(date, checkIn)) return 'CHECK_IN';
+
+    if (!hoveredDate) return null;
+    if (checkIn < date && hoveredDate > date) return 'BETWEEN';
+
+    if (!checkOut) return null;
+    if (isTwoDateSame(date, checkOut)) return 'CHECK_OUT';
+
     return null;
   };
 
@@ -72,7 +74,7 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
         const currDateString = `${year}-${month}-${date}`;
         const currDateObj = new Date(currDateString);
         const styleType = decideStyleType(currDateObj);
-        const isPast = getIsPast(new Date(), currDateObj);
+        const isPast = getIsPastDate(new Date(), currDateObj);
         return (
           <DateBox date={date} key={currDateString} boxStyle={styleType}>
             <DateData
@@ -99,8 +101,7 @@ const DateBox = styled.td<{ date: number; boxStyle: DateStyleType }>`
   visibility: ${({ date }) => (date <= 0 ? 'hidden' : 'visible')};
   width: 48px;
   height: 48px;
-  background: ${({ boxStyle, theme }) =>
-    boxStyle ? theme.colors.grey : theme.colors.white};
+  background: ${({ boxStyle, theme }) => (boxStyle ? theme.colors.grey : theme.colors.white)};
   border-radius: ${({ boxStyle }) => {
     if (boxStyle === 'CHECK_IN') return '50% 0 0 50%';
     if (boxStyle === 'CHECK_OUT') return '0 50% 50% 0';

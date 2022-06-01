@@ -1,48 +1,79 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import PersonnelContext from '../../store/personnelStore/PersonnelContext';
-import Container from '../../UI/Container';
 import {
-  PersonnelSelectOptionType,
-  PersonnelContextType,
-} from '../../types/types';
+  usePersonnelStateContext,
+  usePersonnelDispatchContext,
+} from '../../store/personnelStore/PersonnelContext';
+import Container from '../../UI/Container';
+import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
+import { personnelRange } from '../../constants/constants';
 
 const PersonnelSelectSection = ({
-  target,
-  title,
-  description,
-}: PersonnelSelectOptionType) => {
-  const { personnel, dispatchPersonnel } = useContext(PersonnelContext);
+  isLast,
+  selectOption,
+}: {
+  isLast: boolean;
+  selectOption: PersonnelSelectOptionType;
+}) => {
+  const { target, title, description } = selectOption;
+  const personnelState = usePersonnelStateContext();
+  const dispatchPersonnel = usePersonnelDispatchContext();
+
+  const getMinimumPersonnel = () => {
+    if (target === 'ADULT' && (personnelState.CHILD || personnelState.INFANT)) {
+      return personnelRange.minPersonnel + 1;
+    }
+    return personnelRange.minPersonnel;
+  };
+
+  const isDecreaseButtonActive = () => {
+    const minimum = getMinimumPersonnel();
+    return personnelState[target] > minimum;
+  };
+  const isIncreaseButtonActive = () => personnelState[target] < personnelRange.maxPersonnel;
+
+  const handleDecreaseButtonClick = () => {
+    if (!isDecreaseButtonActive()) return;
+    dispatchPersonnel({ type: 'DECREASE', payload: target });
+  };
+
+  const handleIncreaseButtonClick = () => {
+    if (!isIncreaseButtonActive()) return;
+    dispatchPersonnel({ type: 'INCREASE', payload: target });
+  };
 
   return (
-    <Container
-      width="calc(100% - 128px)"
-      height="calc(100% - 128px)"
-      flexInfo={['row', 'space-between', 'space-between', 'wrap']}
-    >
+    <SelectSectionContainer isLast={isLast}>
       <Container flexInfo={['column', 'space-between', 'center', 'wrap']}>
         <Title>{title}</Title>
         <Description>{description}</Description>
       </Container>
       <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
-          onClick={() =>
-            dispatchPersonnel({ type: 'DECREASE', payload: target })
-          }
+          fontSize='large'
+          color={isDecreaseButtonActive() ? 'primary' : 'disabled'}
+          onClick={handleDecreaseButtonClick}
         />
-        <SelectionNumber>{personnel[target]}</SelectionNumber>
+        <SelectionNumber>{personnelState[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
-          onClick={() =>
-            dispatchPersonnel({ type: 'INCREASE', payload: target })
-          }
+          fontSize='large'
+          color={isIncreaseButtonActive() ? 'primary' : 'disabled'}
+          onClick={handleIncreaseButtonClick}
         />
       </Container>
-    </Container>
+    </SelectSectionContainer>
   );
 };
 export default PersonnelSelectSection;
+
+const SelectSectionContainer = styled.div<{ isLast: boolean }>`
+  width: 250px;
+  height: calc(100% - 128px);
+  ${({ theme }) => theme.mixin.flexMixin('row', 'space-between', 'space-between')};
+  ${({ isLast, theme }) => !isLast && `border-bottom: 1px solid ${theme.colors.lightGrey}`};
+`;
 
 const Title = styled.span`
   display: block;

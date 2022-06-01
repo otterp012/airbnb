@@ -1,50 +1,43 @@
-import React, { useContext } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
-import CalendarContext from '../store/calendarStore/CalendarContext';
 
 type SearchBarSectionTypes = {
   name: string;
-  value: string;
+  placeholder: string;
+  value: string | undefined;
 };
 
 const SearchBarSection = ({
-  SearchBarSectionInfo,
+  searchBarSectionInfo,
   isLast,
+  initSection,
 }: {
-  SearchBarSectionInfo: SearchBarSectionTypes[];
+  searchBarSectionInfo: SearchBarSectionTypes[];
   isLast: boolean;
+  initSection: () => void;
 }) => {
-  const { dispatchCheckedDate } = useContext(CalendarContext);
-  const onClickHandler = () => {
-    const classified =
-      SearchBarSectionInfo[SearchBarSectionInfo.length - 1].name;
+  const isAnyValueInputed = () => searchBarSectionInfo.some(({ value }) => value);
 
-    if (classified === '체크아웃') {
-      dispatchCheckedDate({ type: 'DELETE' });
-    }
-  };
   return (
     <SearchBarSectionContainer isLast={isLast}>
-      {SearchBarSectionInfo.map(({ name, value }) => (
+      {searchBarSectionInfo.map(({ name, placeholder, value }) => (
         <SearchBarSectionItemContainer key={name}>
           <SearchBarName>{name}</SearchBarName>
-          <SearchBarValue>{value}</SearchBarValue>
+          <SearchBarValue data-placeholder={placeholder}>{value}</SearchBarValue>
         </SearchBarSectionItemContainer>
       ))}
-      <InitButton fontSize="small" onClick={onClickHandler} />
+      {isAnyValueInputed() && <InitButton fontSize='small' onClick={initSection} />}
     </SearchBarSectionContainer>
   );
 };
 
-const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
-  ${({ isLast }) =>
-    !isLast &&
-    css`
-      border-right: 1px solid ${({ theme }) => theme.colors.lightGrey};
-    `}
-  padding-right: 35px;
+const SearchBarSectionContainer = styled.div<{ isLast: boolean }>`
+  position: relative;
+  padding-right: 63px;
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
+  ${({ isLast, theme }) => !isLast && `border-right: 1px solid ${theme.colors.lightGrey}`};
+
   span {
     display: block;
   }
@@ -52,7 +45,7 @@ const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
 
 const SearchBarSectionItemContainer = styled.div`
   width: 110px;
-  margin-left: 24px;
+  margin: 0px 24px;
   cursor: pointer;
 `;
 
@@ -65,9 +58,19 @@ const SearchBarName = styled.span`
 const SearchBarValue = styled.span`
   color: #4f4f4f;
   line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  :empty:before {
+    content: attr(data-placeholder);
+    color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 const InitButton = styled(CloseIcon)`
+  position: absolute;
+  right: 30px;
   background: ${({ theme }) => theme.colors.grey};
   padding: 4px;
   border-radius: 100%;

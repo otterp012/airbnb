@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import SearchIcon from '@mui/icons-material/Search';
 import Period from './Period';
 import Price from './Price';
 import Personnel from './Personnel';
+import SearchButton from './SearchButton';
 import CalendarModal from '../calendar/CalendarModal';
 import PersonnelModal from '../Personnel/PersonnelModal';
 import CustomModal from '../../UI/Modal';
@@ -34,23 +34,18 @@ const SearchBar = () => {
       <Period setOpenedModal={setOpenedModal} />
       <Price setOpenedModal={setOpenedModal} />
       <Personnel setOpenedModal={setOpenedModal} />
-      <SearchButton>
-        <SearchIcon />
-        <span>검색</span>
-      </SearchButton>
+      <SearchButton />
       {openedModal && (
-        <CustomModal
-          children={ModalContents[openedModal]}
-          style={ModalStyles[openedModal]}
-          closeModal={closeModal}
-        />
+        <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
+          {ModalContents[openedModal]}
+        </CustomModal>
       )}
     </SearchBarContainer>
   );
 };
 
 const SearchBarContainer = styled.form`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-around')};
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
   width: 916px;
   height: 76px;
   padding: 0 16px;
@@ -58,22 +53,6 @@ const SearchBarContainer = styled.form`
   background: ${({ theme }) => theme.colors.white};
   -webkit-user-select: none;
   box-shadow: ${({ theme }) => theme.boxShadow.normal};
-`;
-
-const SearchButton = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')};
-  height: 32px;
-  background: ${({ theme }) => theme.colors.orange};
-  border-radius: 30px;
-  padding: 8px 16px 8px 8px;
-  color: ${({ theme }) => theme.colors.white};
-
-  span {
-    color: ${({ theme }) => theme.colors.white};
-    font-size: 1.125rem;
-    font-weight: 700;
-    margin-left: 5px;
-  }
 `;
 
 const CommonModalStyle = css`

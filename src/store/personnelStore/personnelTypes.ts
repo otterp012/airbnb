@@ -1,13 +1,5 @@
 import { Dispatch } from 'react';
 
-export type ModalType = 'CALENDAR' | 'PRICE' | 'PERSONNEL' | null;
-
-export type CalendarStateType = {
-  checkIn: Date | null;
-  checkOut: Date | null;
-  hoveredDate: Date | null;
-};
-
 export type PersonnelType = 'ADULT' | 'CHILD' | 'INFANT';
 
 export type PersonnelStateType = {
@@ -18,12 +10,10 @@ export type PersonnelStateType = {
 
 export type PersonnelActionType =
   | { type: 'INCREASE'; payload: PersonnelType }
-  | { type: 'DECREASE'; payload: PersonnelType };
+  | { type: 'DECREASE'; payload: PersonnelType }
+  | { type: 'DELETE' };
 
-export type PersonnelContextType = {
-  personnel: PersonnelStateType;
-  dispatchPersonnel: Dispatch<PersonnelActionType>;
-};
+export type PersonnelDispatchType = Dispatch<PersonnelActionType>;
 
 export type PersonnelSelectOptionType = {
   target: PersonnelType;

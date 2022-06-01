@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '../../UI/Container';
 import PersonnelSelectSection from './PersonnelSelectSection';
-import { PersonnelSelectOptionType } from '../../types/types';
+import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 
 const selectOptions: PersonnelSelectOptionType[] = [
   {
@@ -23,14 +23,14 @@ const selectOptions: PersonnelSelectOptionType[] = [
 ];
 
 const PersonnelModal = () => (
-  <Container
-    width="400px"
-    height="355px"
-    flexInfo={['column', 'center', 'flex-start', 'wrap']}
-  >
+  <Container width='400px' height='355px' flexInfo={['column', 'center', 'flex-start', 'wrap']}>
     <SelectSectionWrapper>
-      {selectOptions.map((selectOption) => (
-        <PersonnelSelectSection key={selectOption.target} {...selectOption} />
+      {selectOptions.map((selectOption, idx) => (
+        <PersonnelSelectSection
+          key={selectOption.target}
+          isLast={idx === selectOptions.length - 1}
+          selectOption={selectOption}
+        />
       ))}
     </SelectSectionWrapper>
   </Container>
@@ -40,7 +40,7 @@ export default PersonnelModal;
 
 const SelectSectionWrapper = styled.div`
   ${({ theme }) => theme.mixin.flexMixin('column', 'center', 'center')}
-  padding: 64px 0px;
+  padding: 30px 0px;
   width: 100%;
   height: 100%;
 `;
