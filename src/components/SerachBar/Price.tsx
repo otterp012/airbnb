@@ -1,5 +1,6 @@
 import React, { Dispatch } from 'react';
 import SearchBarSection from '../../UI/SearchBarSection';
+import { usePriceStateContext, usePriceDispatchContext } from '../../store/priceStore/PriceContext';
 import Container from '../../UI/Container';
 import { ModalType } from '../../types/types';
 
@@ -7,14 +8,23 @@ const Price = ({
   setOpenedModal,
 }: {
   setOpenedModal: Dispatch<React.SetStateAction<ModalType>>;
-}) => (
-  <Container onClick={() => setOpenedModal('PRICE')}>
-    <SearchBarSection
-      searchBarSectionInfo={[{ name: '요금', placeholder: '금액대 설정', value: '설정 결과 값' }]}
-      isLast={false}
-    />
-  </Container>
-);
+}) => {
+  const priceState = usePriceStateContext();
+  const dispatchPrice = usePriceDispatchContext();
+
+  const priceValue =
+    priceState.minPrice && priceState.minPrice
+      ? `${priceState.minPrice} ~ ${priceState.maxPrice}`
+      : undefined;
+  return (
+    <Container onClick={() => setOpenedModal('PRICE')}>
+      <SearchBarSection
+        searchBarSectionInfo={[{ name: '요금', placeholder: '금액대 설정', value: priceValue }]}
+        isLast={false}
+        initSection={() => dispatchPrice({ minPrice: null, maxPrice: null })}
+      />
+    </Container>
+  );
+};
 
 export default Price;
-

@@ -3,6 +3,7 @@ import Header from '../components/Header/Header';
 import SearchBar from '../components/SerachBar/SearchBar';
 import CalendarProvider from '../store/calendarStore/CalendarProvider';
 import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
+import PriceProvider from '../store/priceStore/PriceProvider';
 import Container from '../UI/Container';
 
 const MainPage = () => (
@@ -10,7 +11,9 @@ const MainPage = () => (
     <Header />
     <CalendarProvider>
       <PersonnelProvider>
-        <SearchBar />
+        <PriceProvider>
+          <SearchBar />
+        </PriceProvider>
       </PersonnelProvider>
     </CalendarProvider>
   </Container>
