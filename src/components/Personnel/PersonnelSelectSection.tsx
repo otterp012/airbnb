@@ -10,7 +10,10 @@ import Container from '../../UI/Container';
 import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 import { personnelRange } from '../../constants/constants';
 
-const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectOptionType) => {
+const PersonnelSelectSection = (
+  { isLast }: { isLast: boolean },
+  { target, title, description }: PersonnelSelectOptionType,
+) => {
   const personnelState = usePersonnelStateContext();
   const dispatchPersonnel = usePersonnelDispatchContext();
 
@@ -38,30 +41,35 @@ const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectO
   };
 
   return (
-    <Container
-      width='calc(100% - 128px)'
-      height='calc(100% - 128px)'
-      flexInfo={['row', 'space-between', 'space-between', 'wrap']}
-    >
+    <SelectSectionContainer isLast={isLast}>
       <Container flexInfo={['column', 'space-between', 'center', 'wrap']}>
         <Title>{title}</Title>
         <Description>{description}</Description>
       </Container>
       <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
+          fontSize='large'
           color={isDecreaseButtonActive() ? 'primary' : 'disabled'}
           onClick={handleDecreaseButtonClick}
         />
         <SelectionNumber>{personnelState[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
+          fontSize='large'
           color={isIncreaseButtonActive() ? 'primary' : 'disabled'}
           onClick={handleIncreaseButtonClick}
         />
       </Container>
-    </Container>
+    </SelectSectionContainer>
   );
 };
 export default PersonnelSelectSection;
+
+const SelectSectionContainer = styled.div<{ isLast: boolean }>`
+  width: 250px;
+  height: calc(100% - 128px);
+  ${({ theme }) => theme.mixin.flexMixin('row', 'space-between', 'space-between')};
+  ${({ isLast, theme }) => !isLast && `border-bottom: 1px solid ${theme.colors.lightGrey}`};
+`;
 
 const Title = styled.span`
   display: block;

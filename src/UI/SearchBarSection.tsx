@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
 
 type SearchBarSectionTypes = {
@@ -32,16 +32,11 @@ const SearchBarSection = ({
   );
 };
 
-const SearchBarSectionContainer = styled.div<{ isLast?: boolean }>`
+const SearchBarSectionContainer = styled.div<{ isLast: boolean }>`
   position: relative;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
-  ${({ isLast }) =>
-    !isLast &&
-    css`
-      border-right: 1px solid ${({ theme }) => theme.colors.lightGrey};
-    `}
-    
   padding-right: 63px;
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
+  ${({ isLast, theme }) => !isLast && `border-right: 1px solid ${theme.colors.lightGrey}`};
 
   span {
     display: block;
