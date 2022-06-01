@@ -4,7 +4,7 @@ import {
   useCalendarStateContext,
   useCalendarDispatchContext,
 } from '../../store/calendarStore/CalendarContext';
-import { isValidDate, isTwoDateSame, getIsPast } from '../../util/calenderUtil';
+import { isTwoDateSame, getIsPast } from '../../util/calenderUtil';
 
 type WeekRowInfoType = {
   year: number;
@@ -35,19 +35,22 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
   };
 
   const onMouseHandler = (event: React.MouseEvent) => {
-    if (!calendarState.checkIn) return;
-    if (calendarState.checkOut) {
+    const { checkIn, checkOut } = calendarState;
+    if (!checkIn) return;
+
+    if (!checkOut) {
+      const currHovered = (event.target as HTMLDivElement).dataset.date;
+      if (!currHovered) return;
       dispatchCalendar({
         type: 'HOVER',
-        payload: calendarState.checkOut,
+        payload: new Date(currHovered),
       });
+      return;
     }
 
-    const hovered = (event.target as HTMLDivElement).dataset.date;
-    if (!hovered) return;
     dispatchCalendar({
       type: 'HOVER',
-      payload: new Date(hovered),
+      payload: checkOut,
     });
   };
 
@@ -64,19 +67,6 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
 
     return null;
   };
-
-  // const decideStyleType = (date: Date): DateStyleType => {
-  //   if (isValidDate(calendarState.checkIn) && isTwoDateSame(date, calendarState.checkIn)) {
-  //     return 'CHECK_IN';
-  //   }
-  //   if (isValidDate(calendarState.checkIn) && isTwoDateSame(date, calendarState.checkOut)) {
-  //     return 'CHECK_OUT';
-  //   }
-  //   if (calendarState.checkIn < date && calendarState.hoveredDate > date) {
-  //     return 'BETWEEN';
-  //   }
-  //   return null;
-  // };
 
   return (
     <WeekRow>
