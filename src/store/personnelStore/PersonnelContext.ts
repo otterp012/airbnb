@@ -11,7 +11,7 @@ export const usePersonnelStateContext = () => {
 };
 
 export const usePersonnelDispatchContext = () => {
-  const personnelDispatch = useContext(PersonnelDispatchContext);
-  if (!personnelDispatch) throw new Error('Cannot use Personnel provider.');
-  return personnelDispatch;
+  const dispatchPersonnel = useContext(PersonnelDispatchContext);
+  if (!dispatchPersonnel) throw new Error('Cannot use Personnel provider.');
+  return dispatchPersonnel;
 };

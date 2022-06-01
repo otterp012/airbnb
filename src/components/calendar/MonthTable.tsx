@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import MonthTHead from './MonthTHead';
 import MonthTBody from './MonthTBody';
-import CalendarContext from '../../store/calendarStore/CalendarContext';
+import {
+  useCalendarStateContext,
+  useCalendarDispatchContext,
+} from '../../store/calendarStore/CalendarContext';
 
 const MonthTable = ({ year, month }: { year: number; month: number }) => {
-  const { checkedDate, dispatchCheckedDate } = useContext(CalendarContext);
+  const calendarState = useCalendarStateContext();
+  const dispatchCalendar = useCalendarDispatchContext();
 
   const onMouseLeaveHandler = () => {
-    if (checkedDate.checkOut) return;
-    dispatchCheckedDate({ type: 'HOVER', payload: null });
+    if (calendarState.checkOut) return;
+    dispatchCalendar({ type: 'HOVER', payload: null });
   };
 
   return (

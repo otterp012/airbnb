@@ -1,10 +1,4 @@
-import { CalendarStateType } from '../../types/types';
-
-type CalendarActionType =
-  | { type: 'CHECK_IN'; payload: Date }
-  | { type: 'CHECK_OUT'; payload: Date }
-  | { type: 'HOVER'; payload: Date }
-  | { type: 'DELETE'; payload: null };
+import { CalendarStateType, CalendarActionType } from './calendarType';
 
 const calendarReducer = (
   state: CalendarStateType,

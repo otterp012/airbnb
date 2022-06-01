@@ -1,6 +1,9 @@
-import React, { useContext, Dispatch } from 'react';
+import React, { Dispatch } from 'react';
 import SearchBarSection from '../../UI/SearchBarSection';
-import CalendarContext from '../../store/calendarStore/CalendarContext';
+import {
+  useCalendarStateContext,
+  useCalendarDispatchContext,
+} from '../../store/calendarStore/CalendarContext';
 import Container from '../../UI/Container';
 import { ModalType } from '../../types/types';
 
@@ -9,10 +12,10 @@ const Period = ({
 }: {
   setOpenedModal: Dispatch<React.SetStateAction<ModalType>>;
 }) => {
-  const { checkedDate, dispatchCheckedDate } = useContext(CalendarContext);
-  const checkInDateString = checkedDate.checkIn?.toLocaleDateString();
-  const checkOutDateString = checkedDate.checkOut?.toLocaleDateString();
-  const test = () => dispatchCheckedDate({ type: 'DELETE' });
+  const calendarState = useCalendarStateContext();
+  const dispatchCalendar = useCalendarDispatchContext();
+  const checkInDateString = calendarState.checkIn?.toLocaleDateString();
+  const checkOutDateString = calendarState.checkOut?.toLocaleDateString();
 
   return (
     <Container onClick={() => setOpenedModal('CALENDAR')}>
@@ -26,7 +29,7 @@ const Period = ({
           { name: '체크아웃', placeholder: '날짜 입력', value: checkOutDateString },
         ]}
         isLast={false}
-        initSection={() => dispatchCheckedDate({ type: 'DELETE' })}
+        initSection={() => dispatchCalendar({ type: 'DELETE', payload: null })}
       />
     </Container>
   );

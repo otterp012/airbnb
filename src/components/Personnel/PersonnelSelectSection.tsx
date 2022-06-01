@@ -11,7 +11,7 @@ import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelT
 
 const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectOptionType) => {
   const personnelState = usePersonnelStateContext();
-  const personnelDispatch = usePersonnelDispatchContext();
+  const dispatchPersonnel = usePersonnelDispatchContext();
 
   return (
     <Container
@@ -25,11 +25,11 @@ const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectO
       </Container>
       <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
-          onClick={() => personnelDispatch({ type: 'DECREASE', payload: target })}
+          onClick={() => dispatchPersonnel({ type: 'DECREASE', payload: target })}
         />
         <SelectionNumber>{personnelState[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
-          onClick={() => personnelDispatch({ type: 'INCREASE', payload: target })}
+          onClick={() => dispatchPersonnel({ type: 'INCREASE', payload: target })}
         />
       </Container>
     </Container>

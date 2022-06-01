@@ -3,13 +3,10 @@ export type YearMonthType = {
   month: number;
 };
 
-const isValidDate = (date: Date | undefined) => date instanceof Date;
+const isValidDate = (date: Date | null) => date instanceof Date;
 
-const isTwoDateSame = (date1: Date | undefined, date2: Date | undefined) => {
-  if (date1 && date2) {
-    return date1.toLocaleDateString() === date2.toLocaleDateString();
-  }
-  return false;
+const isTwoDateSame = (date1: Date, date2: Date) => {
+  return date1?.toLocaleDateString() === date2?.toLocaleDateString();
 };
 
 const getCurrentYearMonth = (): YearMonthType => {

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '../../UI/Container';
 import PersonnelSelectSection from './PersonnelSelectSection';
-import { PersonnelSelectOptionType } from '../../types/types';
+import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 
 const selectOptions: PersonnelSelectOptionType[] = [
   {
