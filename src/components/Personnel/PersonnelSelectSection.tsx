@@ -8,10 +8,34 @@ import {
 } from '../../store/personnelStore/PersonnelContext';
 import Container from '../../UI/Container';
 import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
+import { personnelRange } from '../../constants/constants';
 
 const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectOptionType) => {
   const personnelState = usePersonnelStateContext();
   const dispatchPersonnel = usePersonnelDispatchContext();
+
+  const getMinimumPersonnel = () => {
+    if (target === 'ADULT' && (personnelState.CHILD || personnelState.INFANT)) {
+      return personnelRange.minPersonnel + 1;
+    }
+    return personnelRange.minPersonnel;
+  };
+
+  const isDecreaseButtonActive = () => {
+    const minimum = getMinimumPersonnel();
+    return personnelState[target] > minimum;
+  };
+  const isIncreaseButtonActive = () => personnelState[target] < personnelRange.maxPersonnel;
+
+  const handleDecreaseButtonClick = () => {
+    if (!isDecreaseButtonActive()) return;
+    dispatchPersonnel({ type: 'DECREASE', payload: target });
+  };
+
+  const handleIncreaseButtonClick = () => {
+    if (!isIncreaseButtonActive()) return;
+    dispatchPersonnel({ type: 'INCREASE', payload: target });
+  };
 
   return (
     <Container
@@ -25,11 +49,13 @@ const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectO
       </Container>
       <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
-          onClick={() => dispatchPersonnel({ type: 'DECREASE', payload: target })}
+          color={isDecreaseButtonActive() ? 'primary' : 'disabled'}
+          onClick={handleDecreaseButtonClick}
         />
         <SelectionNumber>{personnelState[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
-          onClick={() => dispatchPersonnel({ type: 'INCREASE', payload: target })}
+          color={isIncreaseButtonActive() ? 'primary' : 'disabled'}
+          onClick={handleIncreaseButtonClick}
         />
       </Container>
     </Container>
