@@ -1,25 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import PersonnelContext from '../../store/personnelStore/PersonnelContext';
-import Container from '../../UI/Container';
 import {
-  PersonnelSelectOptionType,
-  PersonnelContextType,
-} from '../../types/types';
+  usePersonnelStateContext,
+  usePersonnelDispatchContext,
+} from '../../store/personnelStore/PersonnelContext';
+import Container from '../../UI/Container';
+import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 
-const PersonnelSelectSection = ({
-  target,
-  title,
-  description,
-}: PersonnelSelectOptionType) => {
-  const { personnel, dispatchPersonnel } = useContext(PersonnelContext);
+const PersonnelSelectSection = ({ target, title, description }: PersonnelSelectOptionType) => {
+  const personnelState = usePersonnelStateContext();
+  const personnelDispatch = usePersonnelDispatchContext();
 
   return (
     <Container
-      width="calc(100% - 128px)"
-      height="calc(100% - 128px)"
+      width='calc(100% - 128px)'
+      height='calc(100% - 128px)'
       flexInfo={['row', 'space-between', 'space-between', 'wrap']}
     >
       <Container flexInfo={['column', 'space-between', 'center', 'wrap']}>
@@ -28,15 +25,11 @@ const PersonnelSelectSection = ({
       </Container>
       <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
-          onClick={() =>
-            dispatchPersonnel({ type: 'DECREASE', payload: target })
-          }
+          onClick={() => personnelDispatch({ type: 'DECREASE', payload: target })}
         />
-        <SelectionNumber>{personnel[target]}</SelectionNumber>
+        <SelectionNumber>{personnelState[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
-          onClick={() =>
-            dispatchPersonnel({ type: 'INCREASE', payload: target })
-          }
+          onClick={() => personnelDispatch({ type: 'INCREASE', payload: target })}
         />
       </Container>
     </Container>

@@ -9,23 +9,24 @@ const Period = ({
 }: {
   setOpenedModal: Dispatch<React.SetStateAction<ModalType>>;
 }) => {
-  const { checkedDate } = useContext(CalendarContext);
-  const checkInDateString =
-    checkedDate.checkIn?.toLocaleDateString() || '날짜 입력';
-  const checkOutDateString =
-    checkedDate.checkOut?.toLocaleDateString() || '날짜 입력';
+  const { checkedDate, dispatchCheckedDate } = useContext(CalendarContext);
+  const checkInDateString = checkedDate.checkIn?.toLocaleDateString();
+  const checkOutDateString = checkedDate.checkOut?.toLocaleDateString();
+  const test = () => dispatchCheckedDate({ type: 'DELETE' });
 
   return (
     <Container onClick={() => setOpenedModal('CALENDAR')}>
       <SearchBarSection
-        SearchBarSectionInfo={[
+        searchBarSectionInfo={[
           {
             name: '체크인',
+            placeholder: '날짜 입력',
             value: checkInDateString,
           },
-          { name: '체크아웃', value: checkOutDateString },
+          { name: '체크아웃', placeholder: '날짜 입력', value: checkOutDateString },
         ]}
         isLast={false}
+        initSection={() => dispatchCheckedDate({ type: 'DELETE' })}
       />
     </Container>
   );

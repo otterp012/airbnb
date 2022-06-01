@@ -1,24 +1,19 @@
-import {
-  PersonnelStateType,
-  PersonnelType,
-  PersonnelActionType,
-} from '../../types/types';
+import { PersonnelStateType, PersonnelType, PersonnelActionType } from './personnelTypes';
 
 const personnelReducer = (
   state: PersonnelStateType,
   action: PersonnelActionType,
 ): PersonnelStateType => {
-  if (action.type === 'INCREASE')
+  if (action.type === 'INCREASE') {
     return handleIncreseAction(state, action.payload);
-  if (action.type === 'DECREASE')
+  }
+  if (action.type === 'DECREASE') {
     return handleDecreaseAction(state, action.payload);
-  return state;
+  }
+  throw new Error('invalid action');
 };
 
-const handleIncreseAction = (
-  state: PersonnelStateType,
-  target: PersonnelType,
-) => {
+const handleIncreseAction = (state: PersonnelStateType, target: PersonnelType) => {
   const newState = { ...state };
   if (['CHILD', 'INFANT'].includes(target) && state.ADULT === 0) {
     newState.ADULT = 1;
@@ -27,10 +22,7 @@ const handleIncreseAction = (
   return newState;
 };
 
-const handleDecreaseAction = (
-  state: PersonnelStateType,
-  target: PersonnelType,
-) => {
+const handleDecreaseAction = (state: PersonnelStateType, target: PersonnelType) => {
   const newState = { ...state };
   newState[target] = Math.max(state[target] - 1, 0);
   return newState;

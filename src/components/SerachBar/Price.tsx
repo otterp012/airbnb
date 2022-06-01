@@ -10,25 +10,11 @@ const Price = ({
 }) => (
   <Container onClick={() => setOpenedModal('PRICE')}>
     <SearchBarSection
-      SearchBarSectionInfo={[{ name: '요금', value: '금액대 설정' }]}
+      searchBarSectionInfo={[{ name: '요금', placeholder: '금액대 설정', value: '설정 결과 값' }]}
       isLast={false}
     />
   </Container>
 );
 
 export default Price;
-// const Personnel = ({ setOpenedModal }) => {
-//   const { personnel } = useContext(PersonnelContext);
-//   const personnelValue =
-//     personnel.ADULT + personnel.CHILD + personnel.INFANT === 0
-//       ? '게스트 추가'
-//       : `게스트 ${personnel.ADULT + personnel.CHILD}명, 유아 ${personnel.INFANT}명`;
 
-//   return (
-//     <Container onClick={() => setOpenedModal('PERSONNEL')}>
-//       <SearchBarSection SearchBarSectionInfo={[{ name: '인원', value: personnelValue }]} isLast />
-//     </Container>
-//   );
-// };
-
-// export default Personnel;

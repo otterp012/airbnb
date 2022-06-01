@@ -5,34 +5,39 @@ import CalendarContext from '../store/calendarStore/CalendarContext';
 
 type SearchBarSectionTypes = {
   name: string;
-  value: string;
+  placeholder: string;
+  value: string | undefined;
 };
 
 const SearchBarSection = ({
-  SearchBarSectionInfo,
+  searchBarSectionInfo,
   isLast,
 }: {
-  SearchBarSectionInfo: SearchBarSectionTypes[];
+  searchBarSectionInfo: SearchBarSectionTypes[];
   isLast: boolean;
 }) => {
   const { dispatchCheckedDate } = useContext(CalendarContext);
   const onClickHandler = () => {
-    const classified =
-      SearchBarSectionInfo[SearchBarSectionInfo.length - 1].name;
+    const classified = searchBarSectionInfo[searchBarSectionInfo.length - 1].name;
 
     if (classified === '체크아웃') {
       dispatchCheckedDate({ type: 'DELETE' });
     }
   };
+
+  const handleInitButtonClick = () => {};
+
+  const isAnyValueInputed = () => searchBarSectionInfo.some(({ value }) => value);
+
   return (
     <SearchBarSectionContainer isLast={isLast}>
-      {SearchBarSectionInfo.map(({ name, value }) => (
+      {searchBarSectionInfo.map(({ name, placeholder, value }) => (
         <SearchBarSectionItemContainer key={name}>
           <SearchBarName>{name}</SearchBarName>
-          <SearchBarValue>{value}</SearchBarValue>
+          <SearchBarValue data-placeholder={placeholder}>{value}</SearchBarValue>
         </SearchBarSectionItemContainer>
       ))}
-      <InitButton fontSize="small" onClick={onClickHandler} />
+      {isAnyValueInputed() && <InitButton fontSize='small' onClick={handleInitButtonClick} />}
     </SearchBarSectionContainer>
   );
 };
@@ -65,6 +70,11 @@ const SearchBarName = styled.span`
 const SearchBarValue = styled.span`
   color: #4f4f4f;
   line-height: 16px;
+
+  :empty:before {
+    content: attr(data-placeholder);
+    color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 const InitButton = styled(CloseIcon)`

@@ -6,6 +6,6 @@ type CalendarContextType = {
   dispatchCheckedDate: Dispatch<React.SetStateAction<Date>>;
 };
 
-const CalendarContext = createContext<CalendarContextType | any>(null);
+const CalendarContext = createContext<CalendarContextType | null>(null);
 
 export default CalendarContext;
