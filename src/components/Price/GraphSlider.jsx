@@ -5,18 +5,14 @@ import {
   usePriceStateContext,
   usePriceDispatchContext,
 } from '../../store/priceStore/PriceContext';
+import {
+  ONE_PER_UNIT,
+  MIN_BETWEEN_RATIO,
+} from '../../constants/graphConstants';
 
-const GRAPH_WIDTH = 355;
-const MAX_PRICE = 1_000_000;
-const INPUT_MAX_VALUE = 100;
-const ONE_PER_UNIT = MAX_PRICE / INPUT_MAX_VALUE;
-const ONE_PER_GRAPH_WIDTH = GRAPH_WIDTH / INPUT_MAX_VALUE;
-const ONE_PER_PRICE = MAX_PRICE / GRAPH_WIDTH;
-//
-const MIN_BETWEEN_RATIO = 5;
-
-const GraphSlider = ({ setPriceCoord, priceCoord }) => {
+const GraphSlider = ({ minCoord, maxCoord }) => {
   const { minPrice, maxPrice } = usePriceStateContext();
+  const dispatchPrice = usePriceDispatchContext();
 
   const minPriceRef = useRef();
   const maxPriceRef = useRef();
@@ -24,34 +20,32 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
   const onChangeHandler = ({ target }) => {
     const currentMinRatio = Number(minPriceRef.current.value);
     const currentMaxRatio = Number(maxPriceRef.current.value);
+    const isValidRatio = currentMinRatio < currentMaxRatio - MIN_BETWEEN_RATIO;
 
     if (target.id === 'minPrice') {
-      if (currentMinRatio > currentMaxRatio - MIN_BETWEEN_RATIO) {
+      if (!isValidRatio) {
         minPriceRef.current.value = currentMaxRatio - MIN_BETWEEN_RATIO;
         return;
       }
     }
 
     if (target.id === 'maxPrice') {
-      if (currentMinRatio > currentMaxRatio - MIN_BETWEEN_RATIO) {
+      if (!isValidRatio) {
         maxPriceRef.current.value = currentMinRatio + MIN_BETWEEN_RATIO;
         return;
       }
     }
-    setPriceCoord({
-      min: currentMinRatio * ONE_PER_GRAPH_WIDTH,
-      max: currentMaxRatio * ONE_PER_GRAPH_WIDTH,
+
+    dispatchPrice({
+      minPrice: currentMinRatio * ONE_PER_UNIT,
+      maxPrice: currentMaxRatio * ONE_PER_UNIT,
     });
   };
 
   useEffect(() => {
     if (!(minPrice && maxPrice)) return;
-    setPriceCoord({
-      min: minPrice / ONE_PER_PRICE,
-      max: maxPrice / ONE_PER_PRICE,
-    });
-    minPriceRef.current.value = minPrice / 10000;
-    maxPriceRef.current.value = maxPrice / 10000;
+    minPriceRef.current.value = minPrice / ONE_PER_UNIT;
+    maxPriceRef.current.value = maxPrice / ONE_PER_UNIT;
   }, [minPrice, maxPrice]);
 
   return (
@@ -82,8 +76,8 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
         }}
         style={GraphInputStyle}
       />
-      <Thumb left={priceCoord.min} />
-      <Thumb left={priceCoord.max} />
+      <Thumb left={minCoord} />
+      <Thumb left={maxCoord} />
     </Slider>
   );
 };
@@ -116,6 +110,7 @@ const GraphInputStyle = `
   pointer-events: none;
   z-index: 2;
   opacity: 0;
+
   &::-webkit-slider-thumb {
     pointer-events: all;
     width: 20px;

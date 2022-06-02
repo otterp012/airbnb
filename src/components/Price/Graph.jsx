@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { pathCoords } from '../../util/graphUtil';
-import PriceText from './PriceText';
 import GraphSlider from './GraphSlider';
+import { usePriceStateContext } from '../../store/priceStore/PriceContext';
 import {
-  usePriceStateContext,
-  usePriceDispatchContext,
-} from '../../store/priceStore/PriceContext';
-
-const GRAPH_WIDTH = 355;
-const MAX_PRICE = 1_000_000;
-const INPUT_MAX_VALUE = 100;
-const ONE_PER_UNIT = MAX_PRICE / INPUT_MAX_VALUE;
-// 비율 1 당 가격
-const ONE_PER_GRAPH_WIDTH = GRAPH_WIDTH / INPUT_MAX_VALUE;
-const ONE_PER_PRICE = MAX_PRICE / GRAPH_WIDTH;
-//
-const MIN_BETWEEN_RATIO = 5;
+  GRAPH_WIDTH,
+  ONE_PER_UNIT,
+  ONE_PER_GRAPH_WIDTH,
+} from '../../constants/graphConstants';
 
 const Graph = () => {
-  const dispatchPrice = usePriceDispatchContext();
-  const [priceCoord, setPriceCoord] = useState({ min: 0, max: GRAPH_WIDTH });
-
-  useEffect(
-    () =>
-      dispatchPrice({
-        minPrice: priceCoord.min * ONE_PER_PRICE,
-        maxPrice: priceCoord.max * ONE_PER_PRICE,
-      }),
-    [priceCoord],
-  );
+  const { minPrice, maxPrice } = usePriceStateContext();
+  const currentMinCoord =
+    minPrice === null ? 0 : (minPrice * ONE_PER_GRAPH_WIDTH) / ONE_PER_UNIT;
+  const currentMaxCoord = maxPrice
+    ? (maxPrice * ONE_PER_GRAPH_WIDTH) / ONE_PER_UNIT
+    : GRAPH_WIDTH;
 
   return (
     <GraphWrapper>
@@ -38,14 +24,14 @@ const Graph = () => {
           <mask id="mask">
             <rect x="0" y="0" width="355" height="100" fill="grey" />
             <rect
-              x={priceCoord.min}
+              x={currentMinCoord}
               y="0"
               width="355"
               height="100"
               fill="white"
             />
             <rect
-              x={priceCoord.max}
+              x={currentMaxCoord}
               y="0"
               width="355"
               height="100"
@@ -55,7 +41,7 @@ const Graph = () => {
         </defs>
         <path mask="url(#mask)" d={pathCoords} strokeWidth="0.4" />
       </GraphSvg>
-      <GraphSlider setPriceCoord={setPriceCoord} priceCoord={priceCoord} />
+      <GraphSlider minCoord={currentMinCoord} maxCoord={currentMaxCoord} />
     </GraphWrapper>
   );
 };
