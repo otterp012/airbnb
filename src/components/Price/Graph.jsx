@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { pathCoords } from '../../util/graphUtil';
 import PriceText from './PriceText';
 import GraphSlider from './GraphSlider';
-import { GRAPH_WIDTH, ONE_PER_PRICE } from '../../constants/graphConstants';
+import { GRAPH_WIDTH, ONE_PER_PRICE } from '../../constants/graphConstansts';
+import {
+  usePriceStateContext,
+  usePriceDispatchContext,
+} from '../../store/priceStore/PriceContext';
 
 const Graph = () => {
+  const { minPrice, maxPrice } = usePriceStateContext();
+  // todo -> 모달창을 끄더라도 그래프 가 똑같았으면 좋겠다 <<
+  // const initialPriceCoord =
+  //   minPrice === null || maxPrice === null
+  //     ? { min: 0, max: GRAPH_WIDTH }
+  //     : { min: minPrice / ONE_PER_PRICE, max: maxPrice / ONE_PER_PRICE };
+  const dispatchPrice = usePriceDispatchContext();
   const [priceCoord, setPriceCoord] = useState({ min: 0, max: GRAPH_WIDTH });
+
+  useEffect(
+    () =>
+      dispatchPrice({
+        minPrice: priceCoord.min * ONE_PER_PRICE,
+        maxPrice: priceCoord.max * ONE_PER_PRICE,
+      }),
+    [priceCoord],
+  );
+
   return (
     <>
       <PriceText

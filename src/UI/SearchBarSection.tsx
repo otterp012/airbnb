@@ -17,26 +17,38 @@ const SearchBarSection = ({
   isLast: boolean;
   initSection: () => void;
 }) => {
-  const isAnyValueInputed = () => searchBarSectionInfo.some(({ value }) => value);
+  const isAnyValueInputted = () => {
+    return searchBarSectionInfo.some(({ value }) => value);
+  };
+
+  const handleInitButtonClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    e.stopPropagation();
+    initSection();
+  };
 
   return (
     <SearchBarSectionContainer isLast={isLast}>
       {searchBarSectionInfo.map(({ name, placeholder, value }) => (
         <SearchBarSectionItemContainer key={name}>
           <SearchBarName>{name}</SearchBarName>
-          <SearchBarValue data-placeholder={placeholder}>{value}</SearchBarValue>
+          <SearchBarValue data-placeholder={placeholder}>
+            {value}
+          </SearchBarValue>
         </SearchBarSectionItemContainer>
       ))}
-      {isAnyValueInputed() && <InitButton fontSize='small' onClick={initSection} />}
+      {isAnyValueInputted() && (
+        <InitButton fontSize="small" onClick={handleInitButtonClick} />
+      )}
     </SearchBarSectionContainer>
   );
 };
 
 const SearchBarSectionContainer = styled.div<{ isLast: boolean }>`
   position: relative;
-  padding-right: 63px;
+  padding-right: 60px;
   ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
-  ${({ isLast, theme }) => !isLast && `border-right: 1px solid ${theme.colors.lightGrey}`};
+  ${({ isLast, theme }) =>
+    !isLast && `border-right: 1px solid ${theme.colors.lightGrey}`};
 
   span {
     display: block;
@@ -70,7 +82,7 @@ const SearchBarValue = styled.span`
 
 const InitButton = styled(CloseIcon)`
   position: absolute;
-  right: 30px;
+  right: 20px;
   background: ${({ theme }) => theme.colors.grey};
   padding: 4px;
   border-radius: 100%;

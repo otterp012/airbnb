@@ -4,8 +4,9 @@ import Input from '../../UI/Input';
 import {
   ONE_PER_GRAPH_WIDTH,
   MIN_BETWEEN_RATIO,
-} from '../../constants/graphConstants';
+} from '../../constants/graphConstansts';
 
+let init = true;
 const GraphSlider = ({ setPriceCoord, priceCoord }) => {
   const minPriceRef = useRef();
   const maxPriceRef = useRef();
@@ -14,11 +15,13 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
     const currentMinRatio = minPriceRef.current.value;
     const currentMaxRatio = maxPriceRef.current.value;
     if (currentMinRatio > currentMaxRatio - MIN_BETWEEN_RATIO) return;
+
     setPriceCoord({
       min: currentMinRatio * ONE_PER_GRAPH_WIDTH,
       max: currentMaxRatio * ONE_PER_GRAPH_WIDTH,
     });
   };
+
   return (
     <Slider>
       <Input

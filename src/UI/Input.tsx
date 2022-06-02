@@ -1,19 +1,34 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Input = React.forwardRef((props, ref) => {
-  return (
+type RangeInputInfoType = {
+  type: string;
+  min: number;
+  max: number;
+  defaultValue: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+type InputPropType = {
+  info: RangeInputInfoType;
+  label: string;
+  style: string;
+};
+
+const Input = React.forwardRef<HTMLInputElement, InputPropType>(
+  (props, ref) => (
     <>
-      <label htmlFor={props.label}></label>
+      <label htmlFor={props.label} />
       <CustomInput ref={ref} {...props.info} customStyle={props.style} />
     </>
-  );
-});
+  ),
+);
 
-const CustomInput = styled.input`
+const CustomInput = styled.input<{ customStyle: string }>`
   ${({ customStyle }) =>
     css`
       ${customStyle}
     `}
 `;
+
 export default Input;
