@@ -5,12 +5,14 @@ import { v4 as uuid } from 'uuid';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DayLabel from './DayLabel';
 import MonthTable from './MonthTable';
+import Container from '../../UI/Container';
+
 import {
   YearMonthType,
   getCurrentYearMonth,
   calYearMonth,
 } from '../../util/calenderUtil';
-import Container from '../../UI/Container';
+import { calendarConstants } from '../../constants/constants';
 
 type DirectionType = 'FORWARD' | 'BACKWARD' | null;
 
@@ -22,12 +24,12 @@ type TransformInfoType = {
 const CalendarModal = () => {
   const currYearMonth = getCurrentYearMonth();
   const initialTransformInfo: TransformInfoType = {
-    translateX: -380,
+    translateX: -calendarConstants.CALENDAR_WIDTH,
     direction: null,
   };
   const [baseYearMonth, setBaseYearMonth] = useState(currYearMonth);
   const [transformInfo, setTransformInfo] = useState(initialTransformInfo);
-
+  const [isTransitionEnd, setTransitionEnd] = useState(true);
   const calYearMonthByBaseYearMonth = calYearMonth(baseYearMonth);
 
   const getSlideYearMonthArr = (
@@ -41,17 +43,26 @@ const CalendarModal = () => {
     return rangeArr.map((n) => calYearMonthByBaseYearMonth(n));
   };
 
-  const onClickArrowHandler = (direction: DirectionType) =>
+  const onClickArrowHandler = (direction: DirectionType) => {
+    if (!isTransitionEnd) return;
     setTransformInfo((prev) => ({
       translateX:
-        direction === 'FORWARD' ? prev.translateX - 380 : prev.translateX + 380,
+        direction === 'FORWARD'
+          ? prev.translateX - calendarConstants.CALENDAR_WIDTH
+          : prev.translateX + calendarConstants.CALENDAR_WIDTH,
       direction,
     }));
+    setTransitionEnd(false);
+  };
 
   const onTransitionEndHandler = () => {
     const direction = transformInfo.direction === 'FORWARD' ? 1 : -1;
     setBaseYearMonth(calYearMonthByBaseYearMonth(direction));
-    setTransformInfo({ translateX: -380, direction: null });
+    setTransformInfo({
+      translateX: -calendarConstants.CALENDAR_WIDTH,
+      direction: null,
+    });
+    setTransitionEnd(true);
   };
 
   return (
@@ -76,7 +87,10 @@ const CalendarModal = () => {
           direction={transformInfo.direction}
           onTransitionEnd={onTransitionEndHandler}
         >
-          {getSlideYearMonthArr(-1, 2).map((yearMonth) => (
+          {getSlideYearMonthArr(
+            calendarConstants.CALENDAR_MIN,
+            calendarConstants.CALENDAR_MAX,
+          ).map((yearMonth) => (
             <MonthTable key={uuid()} {...yearMonth} />
           ))}
         </Items>
