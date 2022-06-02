@@ -2,11 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Input from '../../UI/Input';
 import {
-  ONE_PER_GRAPH_WIDTH,
-  MIN_BETWEEN_RATIO,
-  ONE_PER_PRICE,
-} from '../../constants/graphConstansts';
-import { usePriceStateContext } from '../../store/priceStore/PriceContext';
+  usePriceStateContext,
+  usePriceDispatchContext,
+} from '../../store/priceStore/PriceContext';
+
+const GRAPH_WIDTH = 355;
+const MAX_PRICE = 1_000_000;
+const INPUT_MAX_VALUE = 100;
+const ONE_PER_UNIT = MAX_PRICE / INPUT_MAX_VALUE;
+const ONE_PER_GRAPH_WIDTH = GRAPH_WIDTH / INPUT_MAX_VALUE;
+const ONE_PER_PRICE = MAX_PRICE / GRAPH_WIDTH;
+//
+const MIN_BETWEEN_RATIO = 5;
 
 const GraphSlider = ({ setPriceCoord, priceCoord }) => {
   const { minPrice, maxPrice } = usePriceStateContext();
@@ -14,11 +21,23 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
   const minPriceRef = useRef();
   const maxPriceRef = useRef();
 
-  const onChangeHandler = () => {
-    const currentMinRatio = minPriceRef.current.value;
-    const currentMaxRatio = maxPriceRef.current.value;
-    if (currentMinRatio > currentMaxRatio - MIN_BETWEEN_RATIO) return;
+  const onChangeHandler = ({ target }) => {
+    const currentMinRatio = Number(minPriceRef.current.value);
+    const currentMaxRatio = Number(maxPriceRef.current.value);
 
+    if (target.id === 'minPrice') {
+      if (currentMinRatio > currentMaxRatio - MIN_BETWEEN_RATIO) {
+        minPriceRef.current.value = currentMaxRatio - MIN_BETWEEN_RATIO;
+        return;
+      }
+    }
+
+    if (target.id === 'maxPrice') {
+      if (currentMinRatio > currentMaxRatio - MIN_BETWEEN_RATIO) {
+        maxPriceRef.current.value = currentMinRatio + MIN_BETWEEN_RATIO;
+        return;
+      }
+    }
     setPriceCoord({
       min: currentMinRatio * ONE_PER_GRAPH_WIDTH,
       max: currentMaxRatio * ONE_PER_GRAPH_WIDTH,
@@ -41,11 +60,12 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
         ref={minPriceRef}
         label="minPrice"
         info={{
+          id: 'minPrice',
           type: 'range',
           min: 0,
           max: 100,
           defaultValue: 0,
-          onChange: onChangeHandler,
+          onInput: onChangeHandler,
         }}
         style={GraphInputStyle}
       />
@@ -53,6 +73,7 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
         ref={maxPriceRef}
         label="maxPrice"
         info={{
+          id: 'maxPrice',
           type: 'range',
           min: 0,
           max: 100,
