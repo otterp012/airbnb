@@ -1,13 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Input from '../../UI/Input';
 import {
   ONE_PER_GRAPH_WIDTH,
   MIN_BETWEEN_RATIO,
+  ONE_PER_PRICE,
 } from '../../constants/graphConstansts';
+import { usePriceStateContext } from '../../store/priceStore/PriceContext';
 
-let init = true;
 const GraphSlider = ({ setPriceCoord, priceCoord }) => {
+  const { minPrice, maxPrice } = usePriceStateContext();
+
   const minPriceRef = useRef();
   const maxPriceRef = useRef();
 
@@ -21,6 +24,16 @@ const GraphSlider = ({ setPriceCoord, priceCoord }) => {
       max: currentMaxRatio * ONE_PER_GRAPH_WIDTH,
     });
   };
+
+  useEffect(() => {
+    if (!(minPrice && maxPrice)) return;
+    setPriceCoord({
+      min: minPrice / ONE_PER_PRICE,
+      max: maxPrice / ONE_PER_PRICE,
+    });
+    minPriceRef.current.value = minPrice / 10000;
+    maxPriceRef.current.value = maxPrice / 10000;
+  }, [minPrice, maxPrice]);
 
   return (
     <Slider>

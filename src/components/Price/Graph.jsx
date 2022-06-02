@@ -11,11 +11,6 @@ import {
 
 const Graph = () => {
   const { minPrice, maxPrice } = usePriceStateContext();
-  // todo -> 모달창을 끄더라도 그래프 가 똑같았으면 좋겠다 <<
-  // const initialPriceCoord =
-  //   minPrice === null || maxPrice === null
-  //     ? { min: 0, max: GRAPH_WIDTH }
-  //     : { min: minPrice / ONE_PER_PRICE, max: maxPrice / ONE_PER_PRICE };
   const dispatchPrice = usePriceDispatchContext();
   const [priceCoord, setPriceCoord] = useState({ min: 0, max: GRAPH_WIDTH });
 
