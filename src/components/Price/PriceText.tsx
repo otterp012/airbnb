@@ -7,11 +7,8 @@ import { MAX_PRICE } from '../../constants/graphConstants';
 
 const PriceText = () => {
   const { minPrice, maxPrice } = usePriceStateContext();
-  const koreanCurrencyConfig = {
-    style: 'currency',
-    currency: 'KRW',
-  };
-  const minPirceString =
+
+  const minPriceString =
     minPrice === null ? numToKOPrice(0) : numToKOPrice(minPrice);
 
   const maxPriceString = maxPrice
@@ -22,7 +19,7 @@ const PriceText = () => {
     <Container width="100%" height="100px" flexInfo={['column']}>
       <Title>가격 범위</Title>
       <span>
-        {minPirceString}~{maxPriceString}
+        {minPriceString}~{maxPriceString}
       </span>
     </Container>
   );

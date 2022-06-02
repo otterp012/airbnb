@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 type RangeInputInfoType = {
+  id: string;
   type: string;
   min: number;
   max: number;
