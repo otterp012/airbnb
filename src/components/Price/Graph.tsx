@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { pathCoords } from '../../util/graphUtil';
-import GraphSlider from './GraphSlider';
 import { usePriceStateContext } from '../../store/priceStore/PriceContext';
+
+import GraphSlider from './GraphSlider';
 import {
   GRAPH_WIDTH,
   ONE_PER_UNIT,
   ONE_PER_GRAPH_WIDTH,
 } from '../../constants/graphConstants';
+import { pathCoords } from '../../util/graphUtil';
 
 const Graph = () => {
   const { minPrice, maxPrice } = usePriceStateContext();

@@ -10,13 +10,16 @@ const PriceText = () => {
 
   const minPriceString =
     minPrice === null ? numToKOPrice(0) : numToKOPrice(minPrice);
-
   const maxPriceString = maxPrice
     ? numToKOPrice(maxPrice)
     : numToKOPrice(MAX_PRICE);
 
   return (
-    <Container width="100%" height="100px" flexInfo={['column']}>
+    <Container
+      width="100%"
+      height="100px"
+      flexInfo={['column', 'center', 'center', 'wrap']}
+    >
       <Title>가격 범위</Title>
       <span>
         {minPriceString}~{maxPriceString}
