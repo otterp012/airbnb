@@ -27,14 +27,16 @@ const GraphSlider = ({
     const currentMaxRatio = Number(maxPriceRef?.current?.value);
     const isValidRatio = currentMinRatio <= currentMaxRatio - MIN_BETWEEN_RATIO;
     if (e.target.id === 'minPrice') {
-      if (!isValidRatio && minPriceRef.current && minPrice) {
-        minPriceRef.current.value = String(minPrice / 10000);
+      if (!isValidRatio && minPriceRef.current) {
+        const currentMinPrice = minPrice || 0;
+        minPriceRef.current.value = String(currentMinPrice / 10000);
         return;
       }
     }
     if (e.target.id === 'maxPrice') {
-      if (!isValidRatio && maxPriceRef.current && maxPrice) {
-        maxPriceRef.current.value = String(maxPrice / 10000);
+      if (!isValidRatio && maxPriceRef.current) {
+        const currentMaxPrice = maxPrice || 1_000_000;
+        maxPriceRef.current.value = String(currentMaxPrice / 10000);
         return;
       }
     }
@@ -90,11 +92,7 @@ export default GraphSlider;
 
 const Slider = styled.div`
   position: relative;
-<<<<<<< HEAD
   width: calc(100% - 10px);
-=======
-  width: calc(100% - 5px);
->>>>>>> 61d51bbceb2631396e8d0c5c2fb67521a4d47c54
   height: 10px;
 `;
 
