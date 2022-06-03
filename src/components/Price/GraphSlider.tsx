@@ -25,16 +25,16 @@ const GraphSlider = ({
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentMinRatio = Number(minPriceRef?.current?.value);
     const currentMaxRatio = Number(maxPriceRef?.current?.value);
-    const isValidRatio = currentMinRatio < currentMaxRatio - MIN_BETWEEN_RATIO;
+    const isValidRatio = currentMinRatio <= currentMaxRatio - MIN_BETWEEN_RATIO;
     if (e.target.id === 'minPrice') {
-      if (!isValidRatio && minPriceRef.current) {
-        minPriceRef.current.value = String(currentMaxRatio - MIN_BETWEEN_RATIO);
+      if (!isValidRatio && minPriceRef.current && minPrice) {
+        minPriceRef.current.value = String(minPrice / 10000);
         return;
       }
     }
     if (e.target.id === 'maxPrice') {
-      if (!isValidRatio && maxPriceRef.current) {
-        maxPriceRef.current.value = String(currentMinRatio + MIN_BETWEEN_RATIO);
+      if (!isValidRatio && maxPriceRef.current && maxPrice) {
+        maxPriceRef.current.value = String(maxPrice / 10000);
         return;
       }
     }
@@ -90,7 +90,11 @@ export default GraphSlider;
 
 const Slider = styled.div`
   position: relative;
+<<<<<<< HEAD
+  width: calc(100% - 10px);
+=======
   width: calc(100% - 5px);
+>>>>>>> 61d51bbceb2631396e8d0c5c2fb67521a4d47c54
   height: 10px;
 `;
 
@@ -107,20 +111,20 @@ const Thumb = styled.div<{ left: number }>`
 
 const GraphInputStyle = `
   position: absolute;
-  top: -1px;
+  top: -6px;
   left: -1.5px;
-  height: 0;
   width: 100%;
   pointer-events: none;
   z-index: 2;
   opacity: 0;
-
+  -webkit-appearance: none;
   &::-webkit-slider-thumb {
+    -webkit-appearance: none;
     pointer-events: all;
     width: 20px;
     height: 20px;
+    background: red;
     border-radius: 50%;
     cursor: pointer;
-    -webkit-appearance: none;
   }
 `;
