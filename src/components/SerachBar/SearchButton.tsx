@@ -29,7 +29,7 @@ const SearchButton = () => {
   };
 
   return (
-    <Link to='/search' style={{ textDecoration: 'none' }}>
+    <Link to="/search" style={{ textDecoration: 'none' }}>
       <SearchButtonWrapper onClick={handleSearchButtonClick}>
         <SearchIcon />
         <span>검색</span>

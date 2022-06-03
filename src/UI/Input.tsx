@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 type RangeInputInfoType = {
+  id: string;
   type: string;
   min: number;
   max: number;
@@ -15,6 +16,7 @@ type InputPropType = {
   style: string;
 };
 
+// eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, InputPropType>(
   (props, ref) => (
     <>

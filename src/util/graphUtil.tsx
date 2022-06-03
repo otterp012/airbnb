@@ -1,6 +1,6 @@
 const smoothing = 0.2;
 
-const points = [
+const pointsArray = [
   [0, 0],
   [20, 10],
   [40, 40],
@@ -25,16 +25,21 @@ const points = [
   [355.1, 0],
 ];
 // 0~ 355까지 맞춰야함
-const line = (pointA, pointB) => {
+const line = (pointA: number[], pointB: number[]) => {
   const lengthX = pointB[0] - pointA[0];
   const lengthY = pointB[1] - pointA[1];
   return {
-    length: Math.sqrt(Math.pow(lengthX, 2) + Math.pow(lengthY, 2)),
+    length: Math.sqrt(lengthX ** 2 + lengthY ** 2),
     angle: Math.atan2(lengthY, lengthX),
   };
 };
 
-const controlPoint = (current, previous, next, reverse) => {
+const controlPoint = (
+  current: number[],
+  previous: number[],
+  next: number[],
+  reverse?: boolean,
+) => {
   const p = previous || current;
   const n = next || current;
 
@@ -47,23 +52,15 @@ const controlPoint = (current, previous, next, reverse) => {
   return [x, y];
 };
 
-const bezierCommand = (point, i, a) => {
+const bezierCommand = (point: number[], i: number, a: number[][]) => {
   const cps = controlPoint(a[i - 1], a[i - 2], point);
   const cpe = controlPoint(point, a[i - 1], a[i + 1], true);
   return `C ${cps[0]},${cps[1]} ${cpe[0]},${cpe[1]} ${point[0]},${point[1]}`;
 };
 
-const svgPath = (points, command) => {
-  // build the d attributes by looping over the points
-  const d = points.reduce(
-    (acc, point, i, a) =>
-      i === 0 ? `M ${point[0]},${point[1]}` : `${acc} ${command(point, i, a)}`,
-    '',
-  );
-  return d;
-};
-
-export const pathCoords = points.reduce((acc, cur, i, a) => {
+const pathCoords = pointsArray.reduce((acc, cur, i, a) => {
   if (!i) return `M ${cur[0]},${cur[1]}`;
   return `${acc} ${bezierCommand(cur, i, a)}`;
 }, '');
+
+export { pathCoords };

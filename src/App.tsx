@@ -21,9 +21,9 @@ const App = () => (
         <SearchDataProvider>
           <Router>
             <Routes>
-              <Route path='/'>
+              <Route path="/">
                 <Route index element={<MainPage />} />
-                <Route path='search' element={<SearchPage />} />
+                <Route path="search" element={<SearchPage />} />
               </Route>
             </Routes>
           </Router>
