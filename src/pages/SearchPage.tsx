@@ -1,16 +1,11 @@
 import React from 'react';
-import { useSearchDataStateContext } from '../store/searchDataStore/SearchDataContext';
+import Map from '../components/Map/Map';
 
-const SearchPage = () => {
-  const searchDataState = useSearchDataStateContext();
-  return (
-    <div>
-      {`${searchDataState.calendar.checkIn}
-    ${searchDataState.calendar.checkOut}
-    ${searchDataState.personnel.ADULT}
-    ${searchDataState.personnel.CHILD}
-    ${searchDataState.personnel.INFANT}`}
-    </div>
-  );
-};
+const SearchPage = () => (
+  <>
+    <Map />
+  </>
+);
+
+
 export default SearchPage;
