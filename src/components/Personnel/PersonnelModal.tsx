@@ -4,6 +4,7 @@ import Container from '../../UI/Container';
 import PersonnelSelectSection from './PersonnelSelectSection';
 import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 
+// this is TEST
 const selectOptions: PersonnelSelectOptionType[] = [
   {
     target: 'ADULT',
