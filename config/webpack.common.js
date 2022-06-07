@@ -1,6 +1,6 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
-const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: `${path.resolve(__dirname, '../src')}/index.tsx`,
@@ -20,9 +20,12 @@ module.exports = {
     new webpack.ProvidePlugin({}),
   ],
   resolve: {
+    modules: [path.resolve(__dirname, '../src'), 'node_modules'],
+
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
-      '@': path.resolve(__dirname, '..src/'),
+      '@UI': path.resolve(__dirname, '../src/UI'),
+      '@components': path.resolve(__dirname, '../src/components'),
     },
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
 };

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { PriceStateContext, PriceDispatchContext } from './PriceContext';
-import { useSearchDataStateContext } from '../searchDataStore/SearchDataContext';
+import { PriceStateType } from './priceTypes';
+
+export const initialPriceState: PriceStateType = {
+  minPrice: null,
+  maxPrice: null,
+};
 
 const PriceProvider = ({ children }: { children: React.ReactNode }) => {
-  const initialPriceState = useSearchDataStateContext().price;
   const [priceState, setPriceState] = useState(initialPriceState);
 
   return (
