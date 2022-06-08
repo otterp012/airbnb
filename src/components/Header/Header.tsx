@@ -31,7 +31,7 @@ const HeaderContainer = styled.div<{ path: string }>`
   ${({ path }) =>
     path === '/search' &&
     css`
-      background: black;
+      background: blue;
     `};
 `;
 

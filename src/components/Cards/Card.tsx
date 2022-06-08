@@ -4,7 +4,6 @@ import CardText from './CardsTexts';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const Card = ({ img, price, name }) => {
-  const pr = 1;
   return (
     <CardContainer>
       <CardImage src={img} />
