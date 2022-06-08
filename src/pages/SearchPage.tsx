@@ -1,19 +1,18 @@
 import React from 'react';
-import { useSearchDataStateContext } from '../store/searchDataStore/SearchDataContext';
-import Header from '../components/Header/Header';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from '../components/Header/Header';
 import Cards from '../components/Cards/Cards';
 import Map from '../components/map/Map';
+
 const SearchPage = () => {
   const { pathname } = useLocation();
-  const searchDataState = useSearchDataStateContext();
   return (
     <SearchPageContainer>
       <Header path={pathname} />
       <CardsMapContainer>
-        <Cards />
-        <Map />
+        {/* <Cards /> */}
+        {/* <Map /> */}
       </CardsMapContainer>
     </SearchPageContainer>
   );

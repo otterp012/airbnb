@@ -8,6 +8,9 @@ import CalendarModal from '../calendar/CalendarModal';
 import PersonnelModal from '../Personnel/PersonnelModal';
 import CustomModal from '../../UI/Modal';
 import PriceModal from '../Price/PriceModal';
+import CalendarProvider from '../../store/calendarStore/CalendarProvider';
+import PersonnelProvider from '../../store/personnelStore/PersonnelProvider';
+import PriceProvider from '../../store/priceStore/PriceProvider';
 import { ModalType } from '../../types/types';
 
 const SearchBar = ({ path }: { path: string }) => {
@@ -30,17 +33,23 @@ const SearchBar = ({ path }: { path: string }) => {
   };
 
   return (
-    <SearchBarContainer>
-      <Period setOpenedModal={setOpenedModal} />
-      <Price setOpenedModal={setOpenedModal} />
-      <Personnel setOpenedModal={setOpenedModal} />
-      <SearchButton />
-      {openedModal && (
-        <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
-          {ModalContents[openedModal]}
-        </CustomModal>
-      )}
-    </SearchBarContainer>
+    <CalendarProvider>
+      <PriceProvider>
+        <PersonnelProvider>
+          <SearchBarContainer>
+            <Period setOpenedModal={setOpenedModal} />
+            <Price setOpenedModal={setOpenedModal} />
+            <Personnel setOpenedModal={setOpenedModal} />
+            <SearchButton />
+            {openedModal && (
+              <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
+                {ModalContents[openedModal]}
+              </CustomModal>
+            )}
+          </SearchBarContainer>
+        </PersonnelProvider>
+      </PriceProvider>
+    </CalendarProvider>
   );
 };
 

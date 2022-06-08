@@ -1,10 +1,8 @@
 import React, { useReducer } from 'react';
 import { CalendarStateContext, CalendarDispatchContext } from './CalendarContext';
-import calendarReducer from './calendarReducer';
-import { useSearchDataStateContext } from '../searchDataStore/SearchDataContext';
+import calendarReducer, { initialCalendarState } from './calendarReducer';
 
 const CalendarProvider = ({ children }: { children: React.ReactNode }) => {
-  const initialCalendarState = useSearchDataStateContext().calendar;
   const [calendarState, dispatchCalendar] = useReducer(calendarReducer, initialCalendarState);
 
   return (

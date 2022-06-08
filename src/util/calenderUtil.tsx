@@ -52,6 +52,8 @@ const calYearMonth = (baseYearMonth: YearMonthType) => (changedMonth: number) =>
 
 const getIsPastDate = (now: Date, target: Date) => target < now && !isTwoDateSame(target, now);
 
+const getMonthDateString = (date: Date) => `${date.getMonth() + 1}월 ${date.getDate()}일`;
+
 export {
   getCurrentYearMonth,
   getFirstDayIdx,
@@ -60,4 +62,5 @@ export {
   calYearMonth,
   isTwoDateSame,
   getIsPastDate,
+  getMonthDateString,
 };

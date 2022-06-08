@@ -1,10 +1,8 @@
 import React, { useReducer } from 'react';
 import { PersonnelStateContext, PersonnelDispatchContext } from './PersonnelContext';
-import personnelReducer from './personnelReducer';
-import { useSearchDataStateContext } from '../searchDataStore/SearchDataContext';
+import personnelReducer, { initialPersonnelState } from './personnelReducer';
 
 const PersonnelProvider = ({ children }: { children: React.ReactNode }) => {
-  const initialPersonnelState = useSearchDataStateContext().personnel;
   const [personnelState, dispatchPersonnel] = useReducer(personnelReducer, initialPersonnelState);
 
   return (
