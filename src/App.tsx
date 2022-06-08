@@ -11,8 +11,7 @@ import dotenv from 'dotenv';
 const AppContainer = styled.div`
   position: relative;
   width: 1440px;
-  height: 100vh;
-  overflow: none;
+  height: 100%;
   margin: 0 auto;
 `;
 
