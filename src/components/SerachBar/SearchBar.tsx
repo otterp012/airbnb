@@ -10,7 +10,7 @@ import CustomModal from '../../UI/Modal';
 import PriceModal from '../Price/PriceModal';
 import { ModalType } from '../../types/types';
 
-const SearchBar = () => {
+const SearchBar = ({ path }: { path: string }) => {
   const [openedModal, setOpenedModal] = useState<ModalType>(null);
 
   const closeModal = () => {
@@ -44,7 +44,7 @@ const SearchBar = () => {
   );
 };
 
-const SearchBarContainer = styled.form`
+const SearchBarContainer = styled.form<{ path: string }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
   width: 916px;
   height: 76px;

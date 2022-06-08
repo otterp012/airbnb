@@ -1,6 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+<<<<<<< HEAD
+const Dotenv = require('dotenv-webpack');
+=======
+>>>>>>> 6c514f0fb590d48337adfebc3262ecd6cee384f5
 
 module.exports = {
   entry: `${path.resolve(__dirname, '../src')}/index.tsx`,
@@ -18,6 +22,7 @@ module.exports = {
       template: `${path.resolve(__dirname, '../public')}/index.html`,
     }),
     new webpack.ProvidePlugin({}),
+    new Dotenv(),
   ],
   resolve: {
     modules: [path.resolve(__dirname, '../src'), 'node_modules'],
