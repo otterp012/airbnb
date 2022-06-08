@@ -6,31 +6,36 @@ import SearchPage from './pages/SearchPage';
 import SearchDataProvider from './store/searchDataStore/SearchDataProvider';
 import GlobalStyle from './style/GlobalStyle';
 import theme from './style/theme';
+import dotenv from 'dotenv';
 
 const AppContainer = styled.div`
   position: relative;
   width: 1440px;
+  height: 100vh;
+  overflow: none;
   margin: 0 auto;
 `;
 
-const App = () => (
-  <>
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <AppContainer>
-        <SearchDataProvider>
-          <Router>
-            <Routes>
-              <Route path="/">
-                <Route index element={<MainPage />} />
-                <Route path="search" element={<SearchPage />} />
-              </Route>
-            </Routes>
-          </Router>
-        </SearchDataProvider>
-      </AppContainer>
-    </ThemeProvider>
-  </>
-);
+const App = () => {
+  return (
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <AppContainer>
+          <SearchDataProvider>
+            <Router>
+              <Routes>
+                <Route path="/">
+                  <Route index element={<MainPage />} />
+                  <Route path="search" element={<SearchPage />} />
+                </Route>
+              </Routes>
+            </Router>
+          </SearchDataProvider>
+        </AppContainer>
+      </ThemeProvider>
+    </>
+  );
+};
 
 export default App;
