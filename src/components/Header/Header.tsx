@@ -1,70 +1,41 @@
 import React from 'react';
-import styled from 'styled-components';
-import MenuIcon from '@mui/icons-material/Menu';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import styled, { css } from 'styled-components';
 import HeaderBackdrop from './HeaderBackdrop';
+import HeaderGNB from './HeaderGNB';
+import HeaderSideMenu from './HeaderSideMenu';
+import SearchBar from '../SerachBar/SearchBar';
+import PATH_NAME from '../../constants/pathnames';
 
-const Header = () => (
-  <HeaderContainer>
-    <Logo>OL-bnb</Logo>
-    <GNB>
-      <ul>
-        <li>숙소</li>
-        <li>체험</li>
-        <li>온라인 체험</li>
-      </ul>
-    </GNB>
-    <SideMenuContainer>
-      <MenuIcon />
-      <PersonIcon />
-    </SideMenuContainer>
-    <HeaderBackdrop />
-  </HeaderContainer>
-);
+const Header = ({ path }: { path: string }) => {
+  const { MAIN, SEARCH } = PATH_NAME;
+  return (
+    <>
+      <HeaderContainer path={path}>
+        <Logo>OL-bnb</Logo>
+        <HeaderGNB />
+        <HeaderSideMenu />
+        {path === MAIN && <HeaderBackdrop />}
+      </HeaderContainer>
+      {/* {path === SEARCH && <SearchBar path={path} />} */}
+    </>
+  );
+};
 
 export default Header;
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{ path: string }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')};
   width: calc(1440px - 160px);
   padding: 0 80px;
   height: 94px;
+  ${({ path }) =>
+    path === '/search' &&
+    css`
+      background: black;
+    `};
 `;
 
 const Logo = styled.h1`
   font-size: 32px;
   font-weight: 900;
-`;
-
-const GNB = styled.nav`
-  ul {
-    ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
-  }
-
-  li {
-    margin: 0 12px;
-    color: ${({ theme }) => theme.colors.black};
-  }
-
-  li:hover {
-    color: ${({ theme }) => theme.colors.orange};
-  }
-`;
-
-const SideMenuContainer = styled.span`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
-  width: 66px;
-  height: 40px;
-  background:  ${({ theme }) => theme.colors.white}
-  padding: 0 5px;
-  border-radius: 20px;
-`;
-
-const PersonIcon = styled(PersonOutlineOutlinedIcon)`
-  background: #828282;
-  border-radius: 50%;
-  margin-left: 5px;
-  color: #fff;
-  padding: 3px;
-  font-size: 8px;
 `;
