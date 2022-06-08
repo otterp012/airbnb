@@ -2,8 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Container from '../../UI/Container';
 
-const CardTexts = ({ name, price }) => {
-  const x = 1;
+const CardTexts = ({ name, price }: { name: string; price: number }) => {
   return (
     <Container width="400px" height="200px">
       <CardInfoUpside>

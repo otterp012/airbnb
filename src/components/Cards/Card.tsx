@@ -1,12 +1,42 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import CardText from './CardsTexts';
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import styled from 'styled-components';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CardText from './CardsTexts';
+import { SkeletonAnimation } from './SkeletonCard';
 
-const Card = ({ img, price, name }) => {
+const Card = ({
+  img,
+  price,
+  name,
+}: {
+  img: string;
+  price: number;
+  name: string;
+}) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const imgRef = useRef<HTMLImageElement>(null);
+  const observer = useRef<IntersectionObserver>();
+
+  useLayoutEffect(() => {
+    observer.current = new IntersectionObserver(intersectionObserver);
+    observer.current.observe(imgRef.current);
+  }, []);
+
+  const intersectionObserver = (
+    entries: IntersectionObserverEntry[],
+    io: IntersectionObserver,
+  ) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        io.unobserve(entry.target);
+        setIsVisible(true);
+      }
+    });
+  };
   return (
     <CardContainer>
-      <CardImage src={img} />
+      <CardImage src={isVisible ? img : undefined} alt="hotels" ref={imgRef} />
       <CardText price={price} name={name} />
       <HeartIcon />
     </CardContainer>
@@ -28,9 +58,9 @@ const CardContainer = styled.div`
 const CardImage = styled.img`
   width: 330px;
   height: 200px;
-  background: blue;
   border-radius: 10px;
   margin-right: 10px;
+  ${SkeletonAnimation}
 `;
 
 const HeartIcon = styled(FavoriteBorderIcon)`

@@ -80,11 +80,12 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
     return () => {
       cancelRequest.current = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   return state;
 }
 
 // https://usehooks-ts.com/react-hook/use-fetch
+// todo useFetch 직접 만들어보기
+
 export default useFetch;

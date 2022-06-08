@@ -1,61 +1,77 @@
 import React from 'react';
-import styled from 'styled-components';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import styled, { css, keyframes } from 'styled-components';
 import Container from '../../UI/Container';
 
 const SkeletonCard = () => (
-  <CardContainer>
-    <CardImage />
+  <SkeletonCardContainer>
+    <SkeletonCardImage />
     <Container width="400px" height="200px">
-      <CardInfoUpside>
-        <CardText />
-        <HashTags />
-        <CardText />
-        <CardText />
-      </CardInfoUpside>
-      <CardInfoDownSide>
-        <CardText />
-        <TotalAmount />
-      </CardInfoDownSide>
+      <SkeletonCardInfoUpside>
+        <SkeletonCardText />
+        <SkeletonHashTags />
+        <SkeletonCardText />
+        <SkeletonCardText />
+      </SkeletonCardInfoUpside>
+      <SkeletonCardInfoDownSide>
+        <SkeletonCardText />
+        <SkeletonTotalAmount />
+      </SkeletonCardInfoDownSide>
     </Container>
-    <HeartIcon />
-  </CardContainer>
+  </SkeletonCardContainer>
 );
 
 export default SkeletonCard;
 
-const CardInfoUpside = styled.div`
+const SkeletonGradient = keyframes`
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+`;
+
+export const SkeletonAnimation = css`
+  animation: ${SkeletonGradient} 1.8s infinite ease-in-out;
+`;
+
+const SkeletonCardInfoUpside = styled.div`
   height: 85%;
   width: 268px;
   margin-top: 5px;
 `;
 
-const CardInfoDownSide = styled.div`
+const SkeletonCardInfoDownSide = styled.div`
   ${({ theme }) => theme.mixin.flexMixin('column', 'end', 'flex-start')}
   width: 100%;
 `;
 
-const HashTags = styled.div`
+const SkeletonHashTags = styled.div`
   width: 100%;
   height: 14px;
-  background: ${({ theme }) => theme.colors.lightGrey2};
   margin: 10px 0;
+  ${SkeletonAnimation}
 `;
 
-const TotalAmount = styled.div`
+const SkeletonTotalAmount = styled.div`
   width: 30%;
   height: 10px;
-  background: ${({ theme }) => theme.colors.lightGrey2};
+  ${SkeletonAnimation}
 `;
 
-const CardText = styled.div`
+const SkeletonCardText = styled.div`
   width: 50%;
   height: 12px;
-  background: ${({ theme }) => theme.colors.lightGrey2};
   margin-bottom: 3px;
+  ${SkeletonAnimation}
 `;
 
-const CardContainer = styled.div`
+const SkeletonCardContainer = styled.div`
   position: relative;
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
   padding: 20px 0;
@@ -65,16 +81,10 @@ const CardContainer = styled.div`
   border-bottom: 1px solid #e0e0e0;
 `;
 
-const CardImage = styled.img`
+const SkeletonCardImage = styled.img`
   width: 330px;
   height: 200px;
-  background: ${({ theme }) => theme.colors.lightGrey2};
   border-radius: 10px;
   margin-right: 10px;
-`;
-
-const HeartIcon = styled(FavoriteBorderIcon)`
-  position: absolute;
-  top: 30px;
-  right: 10px;
+  ${SkeletonAnimation}
 `;
