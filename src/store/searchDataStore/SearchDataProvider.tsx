@@ -4,7 +4,9 @@ import {
   SearchDataDispatchContext,
   SearchDataStateType,
 } from './SearchDataContext';
-import { initialCalendarState, initialPriceState, initialPersonnelState } from '../initialValues';
+import { initialCalendarState } from '../calendarStore/calendarReducer';
+import { initialPriceState } from '../priceStore/PriceProvider';
+import { initialPersonnelState } from '../personnelStore/personnelReducer';
 
 const initialSearchData: SearchDataStateType = {
   calendar: initialCalendarState,
