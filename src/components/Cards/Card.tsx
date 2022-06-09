@@ -8,10 +8,12 @@ const Card = ({
   img,
   price,
   name,
+  id,
 }: {
   img: string;
   price: number;
   name: string;
+  id: string;
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -35,7 +37,7 @@ const Card = ({
     });
   };
   return (
-    <CardContainer>
+    <CardContainer id={id}>
       <CardImage src={isVisible ? img : undefined} alt="hotels" ref={imgRef} />
       <CardText price={price} name={name} />
       <HeartIcon />
