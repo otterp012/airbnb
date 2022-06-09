@@ -4,11 +4,12 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import SearchButton from './SearchButton';
 import { getMonthDateString } from '../../util/calenderUtil';
 
-const MiniSearchBar = () => {
+const MiniSearchBar = ({ onClick }) => {
   const [searchParams] = useSearchParams();
 
   const getPeriodString = () => {
     const checkInValue = searchParams.get('checkIn');
+    console.log(new Date(checkInValue));
     const checkOutValue = searchParams.get('checkOut');
     if (!checkInValue && !checkOutValue) return '날짜 선택';
     const checkInString = checkInValue ? getMonthDateString(new Date(checkInValue.split('.'))) : '';
@@ -22,8 +23,8 @@ const MiniSearchBar = () => {
     const minPriceValue = searchParams.get('minPrice');
     const maxPriceValue = searchParams.get('maxPrice');
     if (!minPriceValue && !maxPriceValue) return '금액 범위 설정';
-    const minPriceString = minPriceValue ? `₩${minPriceValue.toLocaleString()}` : '';
-    const maxPriceString = maxPriceValue ? `₩${maxPriceValue.toLocaleString()}` : '';
+    const minPriceString = minPriceValue ? `₩${Number(minPriceValue).toLocaleString()}` : '';
+    const maxPriceString = maxPriceValue ? `₩${Number(maxPriceValue).toLocaleString()}` : '';
     return `${minPriceString}~${maxPriceString}`;
   };
 
@@ -35,7 +36,7 @@ const MiniSearchBar = () => {
   };
 
   return (
-    <MiniSearchBarContainer>
+    <MiniSearchBarContainer onClick={onClick}>
       <ItemContainer>{getPeriodString()}</ItemContainer>
       <ItemDivider />
       <ItemContainer>{getPriceString()}</ItemContainer>

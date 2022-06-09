@@ -4,7 +4,7 @@ import {
   CalendarActionType,
 } from './calendarType';
 
-export const initialCalendarState: CalendarStateType = {
+const initialCalendarState: CalendarStateType = {
   checkIn: null,
   checkOut: null,
   hoveredDate: null,
@@ -32,10 +32,7 @@ const hoverActionCreator = (hoveredDate: DateType) => ({
 
 const deleteActionCreator = () => ({ type: DELETE });
 
-const calendarReducer = (
-  state = initialCalendarState,
-  action: CalendarActionType,
-) => {
+const calendarReducer = (action: CalendarActionType, state = initialCalendarState) => {
   const { type, payload } = action;
   switch (type) {
     case CHECK_IN: {

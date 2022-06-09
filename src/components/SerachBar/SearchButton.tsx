@@ -8,7 +8,7 @@ import { usePriceStateContext } from '../../store/priceStore/PriceContext';
 
 const SearchButton = ({ type = 'MAIN' }: { type: 'MAIN' | 'MINI' }) => {
   const { checkIn, checkOut } = useCalendarStateContext();
-  const { ADULT, CHILD, INFANT } = usePersonnelStateContext();
+  const { ADULT, CHILD } = usePersonnelStateContext();
   const { minPrice, maxPrice } = usePriceStateContext();
 
   const collectQuerySources = () => {

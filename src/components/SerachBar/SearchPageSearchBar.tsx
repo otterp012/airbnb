@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MiniSearchBar from './MiniSearchBar';
+import SearchBar from './SearchBar';
 
 const SearchPageSearchBar = () => {
-  const [clicked, setClicked] = useState(false);
-  return <MiniSearchBar></MiniSearchBar>;
+  const [extended, setExtended] = useState(false);
+
+  useEffect(() => {
+    setExtended(false);
+  }, []);
+
+  const toggleExtended = () => {
+    setExtended((prev) => !prev);
+  };
+  return <>{extended ? <SearchBar /> : <MiniSearchBar onClick={toggleExtended} />}</>;
 };
 
 export default SearchPageSearchBar;
