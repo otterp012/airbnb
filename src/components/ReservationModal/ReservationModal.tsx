@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 import CustomModal from '@UI/Modal';
 import PricePerDay from './PricePerDay';
 import ReservationInfos from './ReservationInfos';
+import ReservationButton from './ReservationButton';
+import ReservationFeeInfo from './ReservationFeeInfo';
 
 const sampleData = {
   lng: 127.10646784388724,
@@ -29,6 +31,8 @@ const ReservationModal = ({ accommInfo = sampleData }) => (
   <CustomModal style={reservationModalStyle}>
     <PricePerDay priceData={accommInfo.price} />
     <ReservationInfos />
+    <ReservationButton />
+    <ReservationFeeInfo accomInfo={accommInfo} />
   </CustomModal>
 );
 
@@ -36,9 +40,10 @@ export default ReservationModal;
 
 const reservationModalStyle = css`
   width: calc(400px - 24px);
-  height: 542px;
   left: 520px;
   top: 241px;
   border: 2px solid black;
+  border-radius: 10px;
   padding: 24px;
+  background: ${({ theme }) => theme.colors.white};
 `;

@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import styled from 'styled-components';
 import Container from '@UI/Container';
 import { useCalendarStateContext } from '../../store/calendarStore/CalendarContext';
 import InfoContainer from './InfoContainer';
+import { ModalType } from '../../types/types';
 
-const PeriodInfo = () => {
+const PeriodInfo = ({
+  setOpenedModal,
+}: {
+  setOpenedModal: Dispatch<React.SetStateAction<ModalType>>;
+}) => {
   const calendarState = useCalendarStateContext();
 
   return (
-    <Container width='100%' height='53px' flexInfo={['row', 'center', 'space-bewteen', 'no-wrap']}>
+    <Container
+      onClick={() => setOpenedModal('CALENDAR')}
+      width='100%'
+      height='53px'
+      flexInfo={['row', 'center', 'space-bewteen', 'no-wrap']}
+    >
       <InfoContainer
         title='체크인'
         content={calendarState.checkIn?.toLocaleDateString() || '미지정'}

@@ -32,7 +32,6 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  color: ${({ theme }) => theme.colors.lightGrey};
   height: 20px;
   margin-left: 16px;
 `;
