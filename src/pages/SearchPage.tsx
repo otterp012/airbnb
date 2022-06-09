@@ -26,14 +26,13 @@ const SearchPage = () => (
 );
 const SearchPageContainer = styled.div`
   width: 1440px;
-  height: 100%;
+  height: 100vh;
 `;
 
 const CardsMapContainer = styled.div`
   position: absolute;
   top: 94px;
-  z-index: 2;
-  width: calc(100%);
+  width: 100%;
   height: calc(100% - 94px);
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
 `;
