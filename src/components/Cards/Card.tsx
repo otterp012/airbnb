@@ -26,24 +26,16 @@ type CardDataType = {
 
 const Card = ({ accommInfo }: { accommInfo: CardDataType }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isReservationModalOpened, setIsReservationModalOpened] =
-    useState<boolean>(false);
+  const [isReservationModalOpened, setIsReservationModalOpened] = useState<boolean>(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const observer = useRef<IntersectionObserver>();
-
-  useEffect(() => {
-    console.log(isReservationModalOpened);
-  }, [isReservationModalOpened]);
 
   useLayoutEffect(() => {
     observer.current = new IntersectionObserver(intersectionObserver);
     imgRef.currnet && observer.current.observe(imgRef.current);
   }, []);
 
-  const intersectionObserver = (
-    entries: IntersectionObserverEntry[],
-    io: IntersectionObserver,
-  ) => {
+  const intersectionObserver = (entries: IntersectionObserverEntry[], io: IntersectionObserver) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         io.unobserve(entry.target);
@@ -51,23 +43,19 @@ const Card = ({ accommInfo }: { accommInfo: CardDataType }) => {
       }
     });
   };
+
+  const closeModal = (e: React.MouseEvent<SVGSVGElement>) => {
+    e.stopPropagation();
+    setIsReservationModalOpened(false);
+  };
+
   return (
-    <CardContainer
-      id={accommInfo.roomId}
-      onClick={() => setIsReservationModalOpened(true)}
-    >
-      <CardImage
-        src={isVisible ? accommInfo.imgSrc : undefined}
-        alt="hotels"
-        ref={imgRef}
-      />
+    <CardContainer id={accommInfo.roomId} onClick={() => setIsReservationModalOpened(true)}>
+      <CardImage src={isVisible ? accommInfo.imgSrc : undefined} alt='hotels' ref={imgRef} />
       <CardText price={accommInfo.price} name={accommInfo.name} />
       <HeartIcon />
       {isReservationModalOpened && (
-        <ReservationModal
-          accommInfo={accommInfo}
-          closeModal={() => setIsReservationModalOpened(false)}
-        />
+        <ReservationModal accommInfo={accommInfo} closeModal={closeModal} />
       )}
     </CardContainer>
   );
