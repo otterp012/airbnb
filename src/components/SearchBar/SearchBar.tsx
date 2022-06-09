@@ -37,15 +37,19 @@ const SearchBar = ({
 
   return (
     <SearchBarContainer pageType={pageType}>
+      {openedModal && (
+        <CustomModal
+          style={ModalStyles[openedModal]}
+          closeModal={closeModal}
+          backdropStyle={backdropStyle}
+        >
+          {ModalContents[openedModal]}
+        </CustomModal>
+      )}
       <Period setOpenedModal={setOpenedModal} />
       <Price setOpenedModal={setOpenedModal} />
       <Personnel setOpenedModal={setOpenedModal} />
       <SearchButton pageType={pageType} onClick={buttonClickHandler} />
-      {openedModal && (
-        <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
-          {ModalContents[openedModal]}
-        </CustomModal>
-      )}
     </SearchBarContainer>
   );
 };
@@ -92,6 +96,10 @@ const PriceModalStyle = css`
   top: 182px;
   left: 500px;
   ${CommonModalStyle};
+`;
+
+const backdropStyle = css`
+  display: transparent;
 `;
 
 export default SearchBar;

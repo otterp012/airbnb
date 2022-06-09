@@ -22,7 +22,6 @@ export default CustomModal;
 
 const StyledModal = styled.div<{ modalStyle: CSSProp }>`
   position: absolute;
-  z-index: 101;
   ${({ modalStyle }) => modalStyle};
 `;
 
@@ -30,8 +29,7 @@ const ModalBackground = styled.div<{ backdropStyle: CSSProp }>`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  z-index: 1;
   ${({ backdropStyle }) => backdropStyle};
 `;

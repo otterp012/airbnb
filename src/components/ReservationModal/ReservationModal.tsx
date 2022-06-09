@@ -31,7 +31,6 @@ const reservationModalStyle = css`
   border: 2px solid black;
   border-radius: 10px;
   padding: 24px;
-  z-index: 100;
   background: ${({ theme }) => theme.colors.white};
 `;
 
