@@ -1,28 +1,29 @@
 import React from 'react';
-import { useSearchDataStateContext } from '../store/searchDataStore/SearchDataContext';
-import Header from '../components/Header/Header';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import SearchPageHeader from '../components/Header/SearchPageHeader';
+import ReservationModal from '@components/ReservationModal/ReservationModal';
 import Cards from '../components/Cards/Cards';
 import Map from '../components/map/Map';
-import { RecoilRoot } from 'recoil';
+import CalendarProvider from '../store/calendarStore/CalendarProvider';
+import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
+import PriceProvider from '../store/priceStore/PriceProvider';
 
-const SearchPage = () => {
-  const { pathname } = useLocation();
-  const searchDataState = useSearchDataStateContext();
-  return (
-    <SearchPageContainer>
-      <Header path={pathname} />
-      <CardsMapContainer>
-        <RecoilRoot>
-          <Cards />
-          <Map />
-        </RecoilRoot>
-      </CardsMapContainer>
-    </SearchPageContainer>
-  );
-};
-
+const SearchPage = () => (
+  <CalendarProvider>
+    <PriceProvider>
+      <PersonnelProvider>
+        <SearchPageContainer>
+          <SearchPageHeader />
+          <ReservationModal />
+          {/* <CardsMapContainer>
+            <Cards />
+            <Map />
+          </CardsMapContainer> */}
+        </SearchPageContainer>
+      </PersonnelProvider>
+    </PriceProvider>
+  </CalendarProvider>
+);
 const SearchPageContainer = styled.div`
   width: 1440px;
   height: 100vh;
