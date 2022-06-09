@@ -7,6 +7,7 @@ import Map from '../components/map/Map';
 import CalendarProvider from '../store/calendarStore/CalendarProvider';
 import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
 import PriceProvider from '../store/priceStore/PriceProvider';
+import { RecoilRoot } from 'recoil';
 
 const SearchPage = () => (
   <CalendarProvider>
@@ -15,10 +16,12 @@ const SearchPage = () => (
         <SearchPageContainer>
           <SearchPageHeader />
           <ReservationModal />
-          {/* <CardsMapContainer>
-            <Cards />
-            <Map />
-          </CardsMapContainer> */}
+          <RecoilRoot>
+            <CardsMapContainer>
+              <Cards />
+              <Map />
+            </CardsMapContainer>
+          </RecoilRoot>
         </SearchPageContainer>
       </PersonnelProvider>
     </PriceProvider>
