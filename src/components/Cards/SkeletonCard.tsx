@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import Container from '../../UI/Container';
+import { SkeletonAnimation } from '../../UI/Skeleton';
 
 const SkeletonCard = () => (
   <SkeletonCardContainer>
@@ -25,24 +26,6 @@ const SkeletonCards = () =>
   Array.from({ length: 5 }).map((_, i) => <SkeletonCard key={uuid()} />);
 
 export default SkeletonCards;
-
-const SkeletonGradient = keyframes`
-  0% {
-    background-color: rgba(165, 165, 165, 0.1);
-  }
-
-  50% {
-    background-color: rgba(165, 165, 165, 0.3);
-  }
-
-  100% {
-    background-color: rgba(165, 165, 165, 0.1);
-  }
-`;
-
-export const SkeletonAnimation = css`
-  animation: ${SkeletonGradient} 1.8s infinite ease-in-out;
-`;
 
 const SkeletonCardInfoUpside = styled.div`
   height: 85%;
