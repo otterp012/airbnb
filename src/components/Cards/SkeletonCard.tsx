@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { v4 as uuid } from 'uuid';
 import Container from '../../UI/Container';
 
 const SkeletonCard = () => (
@@ -20,7 +21,10 @@ const SkeletonCard = () => (
   </SkeletonCardContainer>
 );
 
-export default SkeletonCard;
+const SkeletonCards = () =>
+  Array.from({ length: 5 }).map((_, i) => <SkeletonCard key={uuid()} />);
+
+export default SkeletonCards;
 
 const SkeletonGradient = keyframes`
   0% {

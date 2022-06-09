@@ -1,30 +1,71 @@
-import React, { useLayoutEffect, useState, useRef, useEffect } from 'react';
+/* global kakao */
+
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import styled from 'styled-components';
-const { kakao } = window;
+import { useRecoilState } from 'recoil';
+import { coordState } from '../../store/searchPageStore/searchPageStore';
+import { kakaoEventCallback, kakaoUrl } from './mapUtils';
 
 const Map = () => {
-  const kakaoMapRef = useRef<HTMLInputElement>(null);
-  const [coord, setCoord] = useState([37.365264512305174, 127.10676860117488]);
-  //   console.log(process.env.REACT_APP_NEXT_PUBLIC_KAKAOMAP_APPKEY);
+  const [coord, setCoord] = useRecoilState(coordState);
+  const [currentCoord, setCurrentCoord] = useState({
+    minLatitude: 37.44025954159828,
+    minLongitude: 126.97649607139127,
+    latitude: 37.50649849229814,
+    longitude: 127.03655373306772,
+  });
+
+  const kakaoMapContainer = useRef<HTMLDivElement>(null);
+  const kakaoMap = useRef(null);
+
   useLayoutEffect(() => {
-    const options = {
-      center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-      level: 3,
+    const scriptTag = document.createElement('script');
+    scriptTag.src = `${kakaoUrl}&autoload=false`;
+    scriptTag.type = 'text/javascript';
+    document.head.appendChild(scriptTag);
+
+    scriptTag.onload = () => {
+      window.kakao.maps.load(() => {
+        const center = new kakao.maps.LatLng(
+          currentCoord.latitude,
+          currentCoord.longitude,
+        );
+        const options = {
+          center,
+          level: 6,
+        };
+        const map = new kakao.maps.Map(kakaoMapContainer.current, options);
+
+        kakaoMap.current = map;
+        window.kakao.maps.event.addListener(kakaoMap.current, 'dragend', () => {
+          kakaoEventCallback(kakaoMap.current, setCurrentCoord);
+        });
+        window.kakao.maps.event.addListener(
+          kakaoMap.current,
+          'zoom_changed',
+          () => {
+            kakaoEventCallback(kakaoMap.current, setCurrentCoord);
+          },
+        );
+      });
     };
-    // 초기 중심값
-    const map = new kakao.maps.Map(kakaoMapRef.current, options);
-    kakao.maps.event.addListener(map, 'dragend', () => {
-      const { Ma, La } = map.getCenter();
-      setCoord([Ma, La]);
-    });
-    // 드래그 이벤트 할때마다 중심좌표 새로 등록됨
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCoord(currentCoord);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [currentCoord]);
 
   return (
     <MapContainer>
       <StyledMap
         id="map"
-        ref={kakaoMapRef}
+        ref={kakaoMapContainer}
         style={{ width: '100%', height: '100%' }}
       />
     </MapContainer>
@@ -34,11 +75,11 @@ const Map = () => {
 const MapContainer = styled.div`
   width: 50%;
   height: 100%;
-  background: green;
 `;
 
 const StyledMap = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 export default Map;
