@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { getSearchParams } from '../../util/urlUtil';
-import SearchButton from './SearchButton';
 import { getMonthDateString } from '../../util/calenderUtil';
 
 const MiniSearchBar = ({ onClick }) => {

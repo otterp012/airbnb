@@ -14,10 +14,12 @@ const Price = ({
 }) => {
   const priceState = usePriceStateContext();
   const dispatchPrice = usePriceDispatchContext();
-
+  console.log(priceState);
   const priceValue =
-    priceState.minPrice !== null && priceState.maxPrice !== null
-      ? `${priceState.minPrice.toLocaleString()}~${priceState.maxPrice.toLocaleString()}`
+    priceState.minPrice !== null || priceState.maxPrice !== null
+      ? `${priceState.minPrice?.toLocaleString() || ''}~${
+          priceState.maxPrice?.toLocaleString() || ''
+        }`
       : undefined;
   return (
     <Container onClick={() => setOpenedModal('PRICE')}>
