@@ -9,7 +9,7 @@ export type CalendarStateType = {
 
 export type CalendarActionType = {
   type: string;
-  payload?: Date | null;
+  payload: Date | null;
 };
 
 export type CalendarDispatchType = Dispatch<CalendarActionType>;

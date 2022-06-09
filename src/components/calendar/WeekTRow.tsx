@@ -101,8 +101,7 @@ const DateBox = styled.td<{ date: number; boxStyle: DateStyleType }>`
   visibility: ${({ date }) => (date <= 0 ? 'hidden' : 'visible')};
   width: 48px;
   height: 48px;
-  background: ${({ boxStyle, theme }) =>
-    boxStyle === 'BETWEEN' ? theme.colors.lightGrey2 : theme.colors.white};
+  background: ${({ boxStyle, theme }) => (boxStyle ? theme.colors.lightGrey2 : theme.colors.white)};
   border-radius: ${({ boxStyle }) => {
     if (boxStyle === 'CHECK_IN') return '50% 0 0 50%';
     if (boxStyle === 'CHECK_OUT') return '0 50% 50% 0';

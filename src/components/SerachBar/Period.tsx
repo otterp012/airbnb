@@ -7,6 +7,7 @@ import {
 import { calendarActions } from '../../store/calendarStore/calendarReducer';
 import Container from '../../UI/Container';
 import { ModalType } from '../../types/types';
+import { getMonthDateString } from '../../util/calenderUtil';
 
 const Period = ({
   setOpenedModal,
@@ -16,8 +17,12 @@ const Period = ({
   const calendarState = useCalendarStateContext();
   const dispatchCalendar = useCalendarDispatchContext();
   const { deleteActionCreator } = calendarActions;
-  const checkInDateString = calendarState.checkIn?.toLocaleDateString();
-  const checkOutDateString = calendarState.checkOut?.toLocaleDateString();
+  const checkInDateString = calendarState.checkIn
+    ? getMonthDateString(calendarState.checkIn)
+    : null;
+  const checkOutDateString = calendarState.checkOut
+    ? getMonthDateString(calendarState.checkOut)
+    : null;
 
   return (
     <Container onClick={() => setOpenedModal('CALENDAR')}>
