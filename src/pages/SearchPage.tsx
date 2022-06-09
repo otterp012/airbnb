@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Cards from '../components/Cards/Cards';
 import Map from '../components/map/Map';
+import { RecoilRoot } from 'recoil';
 
 const SearchPage = () => {
   const { pathname } = useLocation();
@@ -13,8 +14,10 @@ const SearchPage = () => {
     <SearchPageContainer>
       <Header path={pathname} />
       <CardsMapContainer>
-        <Cards />
-        <Map />
+        <RecoilRoot>
+          <Cards />
+          <Map />
+        </RecoilRoot>
       </CardsMapContainer>
     </SearchPageContainer>
   );
