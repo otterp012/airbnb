@@ -26,7 +26,6 @@ const filterByPrice = ({queries, db}) => {
 
 const filterByPersonnel = ({queries, db}) => {
     const targetPersonnel = queries.personnel || 0;
-    console.log(targetPersonnel)
     return {queries, db: Room.filterByPersonnel(db, targetPersonnel)};
 }
 

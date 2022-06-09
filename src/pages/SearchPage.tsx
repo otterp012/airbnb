@@ -1,23 +1,29 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../components/Header/Header';
+import SearchPageHeader from '../components/Header/SearchPageHeader';
+import ReservationModal from '@components/ReservationModal/ReservationModal';
 import Cards from '../components/Cards/Cards';
 import Map from '../components/map/Map';
+import CalendarProvider from '../store/calendarStore/CalendarProvider';
+import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
+import PriceProvider from '../store/priceStore/PriceProvider';
 
-const SearchPage = () => {
-  const { pathname } = useLocation();
-  return (
-    <SearchPageContainer>
-      <Header path={pathname} />
-      <CardsMapContainer>
-        {/* <Cards /> */}
-        {/* <Map /> */}
-      </CardsMapContainer>
-    </SearchPageContainer>
-  );
-};
-
+const SearchPage = () => (
+  <CalendarProvider>
+    <PriceProvider>
+      <PersonnelProvider>
+        <SearchPageContainer>
+          <SearchPageHeader />
+          <ReservationModal />
+          {/* <CardsMapContainer>
+            <Cards />
+            <Map />
+          </CardsMapContainer> */}
+        </SearchPageContainer>
+      </PersonnelProvider>
+    </PriceProvider>
+  </CalendarProvider>
+);
 const SearchPageContainer = styled.div`
   width: 1440px;
   height: 100%;

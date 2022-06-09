@@ -32,7 +32,7 @@ const hoverActionCreator = (hoveredDate: DateType) => ({
 
 const deleteActionCreator = () => ({ type: DELETE });
 
-const calendarReducer = (action: CalendarActionType, state = initialCalendarState) => {
+const calendarReducer = (state = initialCalendarState, action: CalendarActionType) => {
   const { type, payload } = action;
   switch (type) {
     case CHECK_IN: {

@@ -8,12 +8,15 @@ import CalendarModal from '../calendar/CalendarModal';
 import PersonnelModal from '../Personnel/PersonnelModal';
 import CustomModal from '../../UI/Modal';
 import PriceModal from '../Price/PriceModal';
-import CalendarProvider from '../../store/calendarStore/CalendarProvider';
-import PersonnelProvider from '../../store/personnelStore/PersonnelProvider';
-import PriceProvider from '../../store/priceStore/PriceProvider';
 import { ModalType } from '../../types/types';
 
-const SearchBar = ({ path }: { path: string }) => {
+const SearchBar = ({
+  pageType,
+  buttonClickHandler,
+}: {
+  pageType: 'MAIN' | 'SEARCH';
+  buttonClickHandler: () => void | undefined;
+}) => {
   const [openedModal, setOpenedModal] = useState<ModalType>(null);
 
   const closeModal = () => {
@@ -33,27 +36,21 @@ const SearchBar = ({ path }: { path: string }) => {
   };
 
   return (
-    <CalendarProvider>
-      <PriceProvider>
-        <PersonnelProvider>
-          <SearchBarContainer>
-            <Period setOpenedModal={setOpenedModal} />
-            <Price setOpenedModal={setOpenedModal} />
-            <Personnel setOpenedModal={setOpenedModal} />
-            <SearchButton />
-            {openedModal && (
-              <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
-                {ModalContents[openedModal]}
-              </CustomModal>
-            )}
-          </SearchBarContainer>
-        </PersonnelProvider>
-      </PriceProvider>
-    </CalendarProvider>
+    <SearchBarContainer pageType={pageType}>
+      <Period setOpenedModal={setOpenedModal} />
+      <Price setOpenedModal={setOpenedModal} />
+      <Personnel setOpenedModal={setOpenedModal} />
+      <SearchButton pageType={pageType} onClick={buttonClickHandler} />
+      {openedModal && (
+        <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
+          {ModalContents[openedModal]}
+        </CustomModal>
+      )}
+    </SearchBarContainer>
   );
 };
 
-const SearchBarContainer = styled.form<{ path: string }>`
+const SearchBarContainer = styled.form<{ pageType: string }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
   width: 916px;
   height: 76px;
@@ -61,7 +58,15 @@ const SearchBarContainer = styled.form<{ path: string }>`
   border-radius: 60px;
   background: ${({ theme }) => theme.colors.white};
   -webkit-user-select: none;
-  box-shadow: ${({ theme }) => theme.boxShadow.normal};
+  ${({ pageType, theme }) =>
+    pageType === 'MAIN'
+      ? css`
+          box-shadow: ${theme.boxShadow.normal};
+        `
+      : css`
+          border: 1px solid ${theme.colors.grey};
+          margin: 0 auto;
+        `};
 `;
 
 const CommonModalStyle = css`

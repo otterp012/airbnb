@@ -6,7 +6,13 @@ import { useCalendarStateContext } from '../../store/calendarStore/CalendarConte
 import { usePersonnelStateContext } from '../../store/personnelStore/PersonnelContext';
 import { usePriceStateContext } from '../../store/priceStore/PriceContext';
 
-const SearchButton = ({ type = 'MAIN' }: { type: 'MAIN' | 'MINI' }) => {
+const SearchButton = ({
+  pageType = 'MAIN',
+  onClick,
+}: {
+  pageType: 'MAIN' | 'SEARCH';
+  onClick: () => void | undefined;
+}) => {
   const { checkIn, checkOut } = useCalendarStateContext();
   const { ADULT, CHILD } = usePersonnelStateContext();
   const { minPrice, maxPrice } = usePriceStateContext();
@@ -35,9 +41,9 @@ const SearchButton = ({ type = 'MAIN' }: { type: 'MAIN' | 'MINI' }) => {
 
   return (
     <Link to={getURIQuery()} style={{ textDecoration: 'none' }}>
-      <SearchButtonWrapper type={type}>
+      <SearchButtonWrapper pageType={pageType} onClick={onClick}>
         <SearchIcon />
-        {type === 'MAIN' && <span>검색</span>}
+        {pageType === 'MAIN' && <span>검색</span>}
       </SearchButtonWrapper>
     </Link>
   );
