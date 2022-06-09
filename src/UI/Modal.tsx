@@ -20,7 +20,6 @@ export default CustomModal;
 
 const StyledModal = styled.div<{ modalStyle: CSSProp }>`
   position: absolute;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')};
   ${({ modalStyle }) => modalStyle};
 `;
 

@@ -4,7 +4,7 @@ import {
   PersonnelActionType,
 } from './personnelTypes';
 
-export const initialPersonnelState: PersonnelStateType = {
+const initialPersonnelState: PersonnelStateType = {
   ADULT: 0,
   CHILD: 0,
   INFANT: 0,
