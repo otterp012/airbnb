@@ -7,19 +7,22 @@ export const searchInfoState = atom({
     checkOut: null,
     minPrice: null,
     maxPrice: null,
-    peopleNum: null,
+    personnel: null,
+    minLatitude: 37.474643190801984,
+    minLongitude: 127.0177264600349,
+    latitude: 37.507322742120685,
+    longitude: 127.0494023698062,
   },
 });
 
 const cardsDataQuery = selector({
   key: 'CardsDataQuery',
-  get: async ({ get }) => {
-    const currentCardsState = get(searchInfoState);
+  get: async () => {
     const response = await fetch(
       'https://test-234b2-default-rtdb.firebaseio.com/.json',
     );
     const cardsData = await response.json();
-    return [cardsData, currentCardsState];
+    return cardsData;
   },
 });
 
@@ -28,42 +31,68 @@ const cardsDataQuery = selector({
 // 백엔드가 없어 500여개의 데이터를 한번에 불러와야 하는 상황이라
 // 아래 selector을 추가하면서 변경했습니다.
 
-export const parsedCardsDataQuery = selector({
-  key: 'ParsedCardsDataQuery',
+export const filteredCardsData = selector({
+  key: 'FilteredCardsData',
   get: ({ get }) => {
-    const [cardsData, currentCardsState] = get(cardsDataQuery);
+    const fetchedCardsData = get(cardsDataQuery);
+    const currentSearchInfo = get(searchInfoState);
+    const initialCondition = {
+      filteredData: fetchedCardsData,
+      currentSearchInfo,
+    };
 
-    const currentCards = cardsData.filter((v) =>
-      getCoordsIsVaild(v, currentCardsState),
-    );
+    const { filteredData } = filteredBySearchInfo(
+      filteredByPrice,
+      filteredByCoords,
+      filteredByPeopleNum,
+    )(initialCondition);
 
-    // const hasPrice = priceInit(currentCards, currentCardsState);
-    // console.log(hasPrice);
-    return currentCards;
+    return filteredData;
   },
 });
 
-const getCoordsIsVaild = (dataCardCoords, searchedCoords) => {
-  if (
-    dataCardCoords.lat >= searchedCoords.minLatitude &&
-    dataCardCoords.lat <= searchedCoords.latitude
-  ) {
-    if (
-      dataCardCoords.lng >= searchedCoords.minLongitude &&
-      dataCardCoords.lng <= searchedCoords.longitude
-    ) {
-      return true;
-    }
-  }
-  return false;
+const filteredByCoords = ({ filteredData, currentSearchInfo }) => {
+  const { minLatitude, latitude, minLongitude, longitude } = currentSearchInfo;
+  const filteredDataByCoords = filteredData.filter(
+    ({ lat, lng }) =>
+      lat >= minLatitude &&
+      lat <= latitude &&
+      lng >= minLongitude &&
+      lng <= longitude,
+  );
+
+  return { filteredData: filteredDataByCoords, currentSearchInfo };
 };
 
-// const priceInit = (array, state) => {
-//   state.minPrice
-//     ? array
-//     : array.map((v) => {
-//         v.minPrice = 0;
-//         v.maxPrice = 1_000_000;
-//         return;
-//       });
-// };
+const filteredByPrice = ({ filteredData, currentSearchInfo }) => {
+  const { minPrice, maxPrice } = currentSearchInfo;
+  const priceFilterCondition = {
+    minPrice: minPrice || 0,
+    maxPrice: maxPrice || 1_000_000,
+  };
+  const dataFilteredByPrice = filteredData.filter(
+    ({ price }) =>
+      price >= priceFilterCondition.minPrice &&
+      price <= priceFilterCondition.maxPrice,
+  );
+  return { filteredData: dataFilteredByPrice, currentSearchInfo };
+};
+
+const filteredByPeopleNum = ({ filteredData, currentSearchInfo }) => {
+  const { personnel } = currentSearchInfo;
+
+  const dataFilteredByPeopleNum = filteredData.filter(
+    ({ maxPersonnel }) => maxPersonnel >= personnel,
+  );
+
+  return { filteredData: dataFilteredByPeopleNum, currentSearchInfo };
+};
+
+const compose =
+  (f, g) =>
+  (...args) =>
+    f(g(...args));
+
+const filteredBySearchInfo = (...fns) => {
+  return fns.reduce(compose);
+};

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { useCalendarStateContext } from '../../store/calendarStore/CalendarContext';
 import { usePersonnelStateContext } from '../../store/personnelStore/PersonnelContext';
 import { usePriceStateContext } from '../../store/priceStore/PriceContext';
-import { useRecoilState } from 'recoil';
 import { searchInfoState } from '../../store/searchPageStore/searchPageStore';
 
 const SearchButton = ({
@@ -15,7 +15,7 @@ const SearchButton = ({
   pageType: 'MAIN' | 'SEARCH';
   onClick: () => void | undefined;
 }) => {
-  const [searchInfo, setSearchInfo] = useRecoilState(searchInfoState);
+  const [_, setSearchInfo] = useRecoilState(searchInfoState);
   const { checkIn, checkOut } = useCalendarStateContext();
   const { ADULT, CHILD } = usePersonnelStateContext();
   const { minPrice, maxPrice } = usePriceStateContext();
@@ -43,17 +43,26 @@ const SearchButton = ({
   const makeQueryString = (keyword, value) =>
     value !== null ? `${keyword}=${value}` : '';
 
-  const onClikcHandler = () => {
+  const onClickHandler = () => {
     const peopleNum = ADULT + CHILD;
-    setSearchInfo((prev) => {
-      return { ...prev, checkIn, checkOut, minPrice, maxPrice, peopleNum };
-    });
+    const currentSearchInfo = {
+      checkIn,
+      checkOut,
+      minPrice,
+      maxPrice,
+      peopleNum,
+    };
+    setSearchInfo((prev) => ({ ...prev, ...currentSearchInfo }));
   };
 
   return (
-    <Link to={getURIQuery()} style={{ textDecoration: 'none' }}>
+    <Link
+      to={getURIQuery()}
+      style={{ textDecoration: 'none' }}
+      onClick={onClickHandler}
+    >
       <SearchButtonWrapper pageType={pageType} onClick={onClick}>
-        <CustomSearchIncon onClick={onClikcHandler} />
+        <CustomSearchIncon />
         {pageType === 'MAIN' && <span>검색</span>}
       </SearchButtonWrapper>
     </Link>
