@@ -1,15 +1,15 @@
-export const kakaoEventCallback = (
-  Map: unknown,
-  setState: React.Dispatch<React.SetStateAction<t>>,
-) => {
+export const boundsCoordParser = (Map: unknown) => {
   const { ha, qa, oa, pa } = Map.getBounds();
+  const { La, Ma } = Map.getCenter();
   const newCurrentBounds = {
     minLatitude: qa,
     latitude: pa,
     minLongitude: ha,
     longitude: oa,
+    centerLatitude: La,
+    centerLongtitude: Ma,
   };
-  setState(newCurrentBounds);
+  return newCurrentBounds;
 };
 
 const KAKAO_API_KEY = process.env.REACT_APP_KAKAO_API;

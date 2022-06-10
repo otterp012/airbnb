@@ -5,7 +5,7 @@ import ReservationModal from '@components/ReservationModal/ReservationModal';
 import CardText from './CardsTexts';
 import { SkeletonAnimation } from '../../UI/Skeleton';
 
-type CardDataType = {
+export type CardDataType = {
   lng: number;
   lat: number;
   roomId: number;
@@ -28,16 +28,13 @@ const Card = ({ accommInfo }: { accommInfo: CardDataType }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isReservationModalOpened, setIsReservationModalOpened] =
     useState<boolean>(false);
+
   const imgRef = useRef<HTMLImageElement>(null);
   const observer = useRef<IntersectionObserver>();
 
-  useEffect(() => {
-    console.log(isReservationModalOpened);
-  }, [isReservationModalOpened]);
-
   useLayoutEffect(() => {
     observer.current = new IntersectionObserver(intersectionObserver);
-    imgRef.currnet && observer.current.observe(imgRef.current);
+    observer.current.observe(imgRef.current);
   }, []);
 
   const intersectionObserver = (
@@ -51,6 +48,7 @@ const Card = ({ accommInfo }: { accommInfo: CardDataType }) => {
       }
     });
   };
+
   return (
     <CardContainer
       id={accommInfo.roomId}
@@ -75,7 +73,7 @@ const Card = ({ accommInfo }: { accommInfo: CardDataType }) => {
 
 export default Card;
 
-const CardContainer = styled.div`
+const CardContainer = styled.div<{ id: number }>`
   position: relative;
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
   padding: 20px 0;

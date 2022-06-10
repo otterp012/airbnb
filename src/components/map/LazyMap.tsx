@@ -1,98 +1,99 @@
 /* global kakao */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   searchInfoState,
-  parsedCardsDataQuery,
+  filteredCardsData,
 } from '../../store/searchPageStore/searchPageStore';
-import { kakaoEventCallback, kakaoUrl, initialCoordState } from './mapUtils';
-import { PermDeviceInformation } from '@mui/icons-material';
+import { boundsCoordParser } from './mapUtils';
+
+const { kakao } = window;
 
 const LazyMap = () => {
-  const [_, setSearchInfo] = useRecoilState(searchInfoState);
-  const cards = useRecoilValue(parsedCardsDataQuery);
-  const [currentCoord, setCurrentCoord] = useState(initialCoordState);
-  const kakaoMapContainer = useRef<HTMLDivElement>(null);
-  const kakaoMap = useRef(null);
+  const [searchInfo, setSearchInfoState] = useRecoilState(searchInfoState);
+  const filteredData = useRecoilValue(filteredCardsData);
+  const [map, setMap] = useState(null);
+  const coordRef = useRef();
+  const [markerPositions, setMarkerPositions] = useState([]);
 
   useEffect(() => {
-    const scriptTag = document.createElement('script');
-    scriptTag.src = `${kakaoUrl}&autoload=false`;
-    scriptTag.type = 'text/javascript';
-    document.head.appendChild(scriptTag);
+    const container = document.getElementById('map');
 
-    scriptTag.onload = () => {
-      window.kakao.maps.load(() => {
-        const center = new kakao.maps.LatLng(
-          currentCoord.latitude,
-          currentCoord.longitude,
-        );
-        const options = {
-          center,
-          level: 5,
-        };
-        const map = new kakao.maps.Map(kakaoMapContainer.current, options);
-
-        kakaoMap.current = map;
-        window.kakao.maps.event.addListener(kakaoMap.current, 'dragend', () => {
-          kakaoEventCallback(kakaoMap.current, setCurrentCoord);
-        });
-        window.kakao.maps.event.addListener(
-          kakaoMap.current,
-          'zoom_changed',
-          () => {
-            kakaoEventCallback(kakaoMap.current, setCurrentCoord);
-          },
-        );
-      });
+    const center = new kakao.maps.LatLng(
+      37.490839924878536,
+      127.03344217026263,
+    );
+    const options = {
+      center,
+      level: 5,
     };
+    const kakaoMap = new kakao.maps.Map(container, options);
+    setMap(kakaoMap);
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearchInfo((prev) => {
-        return { currentCoord, ...prev };
+    if (!map) return;
+    window.kakao.maps.event.addListener(map, 'dragend', () => {
+      coordRef.current = map.getCenter();
+      const newCurrentBounds = boundsCoordParser(map);
+      setSearchInfoState((prev) => {
+        const newState = newCurrentBounds;
+        return { ...prev, ...newState };
       });
-    }, 1000);
+    });
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [currentCoord]);
+    kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      coordRef.current = map.getCenter();
+      const newCurrentBounds = boundsCoordParser(map);
+      setSearchInfoState((prev) => {
+        const newState = newCurrentBounds;
+        return { ...prev, ...newState };
+      });
+    });
+  }, [map]);
 
   useEffect(() => {
-    const overlayInfos = cards.map(({ price, lat, lng }) => {
-      return {
-        price,
-        lat,
-        lng,
-      };
-    });
-    overlayInfos.forEach((el: { price: number; lat: number; lng: number }) => {
-      const position = new kakao.maps.LatLng(el.lat, el.lng);
+    if (!map) return;
+
+    markerPositions.forEach(({ lat, lng }) => {
+      const position = new kakao.maps.LatLng(lat, lng);
       const marker = new kakao.maps.Marker({
         position,
       });
-
-      const content = `<span class="kakao_overlay">${el.price}</span>`;
-      new kakao.maps.CustomOverlay({
-        map: kakaoMap.current,
-        position,
-        content,
-      });
-      marker.setMap();
+      marker.setMap(null);
     });
-  }, [currentCoord]);
+
+    setMarkerPositions([]);
+    const overlayInfos = filteredData.map(({ price, lat, lng }) => ({
+      price,
+      lat,
+      lng,
+    }));
+
+    overlayInfos.forEach(
+      ({ price, lat, lng }: { price: number; lat: number; lng: number }) => {
+        const position = new kakao.maps.LatLng(lat, lng);
+        setMarkerPositions((prev) => [...prev, { lat, lng }]);
+        const marker = new kakao.maps.Marker({
+          position,
+        });
+
+        const content = `<div class="kakao_overlay">${price}</div>`;
+        new kakao.maps.CustomOverlay({
+          map,
+          position,
+          content,
+        });
+        marker.setMap();
+      },
+    );
+  }, [filteredData, searchInfo]);
 
   return (
     <MapContainer>
-      <StyledMap
-        id="map"
-        ref={kakaoMapContainer}
-        style={{ width: '100%', height: '100%' }}
-      />
+      <StyledMap id="map" style={{ width: '100%', height: '100%' }} />
     </MapContainer>
   );
 };
@@ -107,7 +108,4 @@ const StyledMap = styled.div`
   height: 100%;
 `;
 
-const StyledSapn = styled.span`
-  background: #fff;
-`;
 export default LazyMap;

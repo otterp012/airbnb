@@ -9,7 +9,6 @@ const Cards = () => {
     <CardsContainer>
       <Suspense fallback={<SkeletonCards />}>
         <CardsTitle />
-
         <LazyCards />
       </Suspense>
     </CardsContainer>
