@@ -6,6 +6,7 @@ import CustomModal from '@UI/Modal';
 import { ModalType } from '../../types/types';
 import CalendarModal from '../calendar/CalendarModal';
 import PersonnelModal from '../Personnel/PersonnelModal';
+import Portal from '../../util/portal';
 
 const ReservationInfos = () => {
   const [openedModal, setOpenedModal] = useState<ModalType>(null);
@@ -25,7 +26,15 @@ const ReservationInfos = () => {
       <Border />
       <PersonnelInfo setOpenedModal={setOpenedModal} />
       {openedModal && (
-        <CustomModal style={ModalStyles[openedModal]}>{ModalContents[openedModal]}</CustomModal>
+        <Portal elementId='modal-root'>
+          <CustomModal
+            style={ModalStyles[openedModal]}
+            backdropStyle={backdropStyle}
+            closeModal={() => setOpenedModal(null)}
+          >
+            {ModalContents[openedModal]}
+          </CustomModal>
+        </Portal>
       )}
     </ReservationInfoContainer>
   );
@@ -51,13 +60,17 @@ const CommonModalStyle = css`
 `;
 
 const CalendarModalStyle = css`
-  top: 182px;
-  left: 250px;
+  top: 50vh;
+  left: 25vw;
   ${CommonModalStyle};
 `;
 
 const PersonnelModalStyle = css`
-  top: 182px;
-  right: 250px;
+  top: 25vh;
+  left: 60vw;
   ${CommonModalStyle};
+`;
+
+const backdropStyle = css`
+  background: transparent;
 `;

@@ -1,7 +1,7 @@
 import { atom, selector } from 'recoil';
 
-export const coordState = atom({
-  key: 'CoordState',
+export const searchInfoState = atom({
+  key: 'SearchInfoState',
   default: {
     minLatitude: 37.44025954159828,
     minLongitude: 126.97649607139127,
@@ -13,12 +13,11 @@ export const coordState = atom({
 const cardsDataQuery = selector({
   key: 'CardsDataQuery',
   get: async ({ get }) => {
-    const currentCardsState = get(coordState);
+    const currentCardsState = get(searchInfoState);
     const response = await fetch(
       'https://test-234b2-default-rtdb.firebaseio.com/.json',
     );
     const cardsData = await response.json();
-    console.log(currentCardsState);
     return [cardsData, currentCardsState];
   },
 });

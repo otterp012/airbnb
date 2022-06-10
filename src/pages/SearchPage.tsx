@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RecoilRoot } from 'recoil';
 import SearchPageHeader from '../components/Header/SearchPageHeader';
 import ReservationModal from '@components/ReservationModal/ReservationModal';
 import Cards from '../components/Cards/Cards';
-import Map from '../components/map/Map';
 import CalendarProvider from '../store/calendarStore/CalendarProvider';
 import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
 import PriceProvider from '../store/priceStore/PriceProvider';
-import { RecoilRoot } from 'recoil';
+import Map from '../components/map/Map';
 
 const SearchPage = () => (
   <CalendarProvider>
@@ -15,18 +15,16 @@ const SearchPage = () => (
       <PersonnelProvider>
         <SearchPageContainer>
           <SearchPageHeader />
-          <ReservationModal />
-          <RecoilRoot>
-            <CardsMapContainer>
-              <Cards />
-              <Map />
-            </CardsMapContainer>
-          </RecoilRoot>
+          <CardsMapContainer>
+            <Cards />
+            <Map />
+          </CardsMapContainer>
         </SearchPageContainer>
       </PersonnelProvider>
     </PriceProvider>
   </CalendarProvider>
 );
+
 const SearchPageContainer = styled.div`
   width: 1440px;
   height: 100vh;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
 import GlobalStyle from './style/GlobalStyle';
@@ -18,14 +19,16 @@ const App = () => (
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <AppContainer>
-        <Router>
-          <Routes>
-            <Route path='/'>
-              <Route index element={<MainPage />} />
-              <Route path='search' element={<SearchPage />} />
-            </Route>
-          </Routes>
-        </Router>
+        <RecoilRoot>
+          <Router>
+            <Routes>
+              <Route path="/">
+                <Route index element={<MainPage />} />
+                <Route path="search" element={<SearchPage />} />
+              </Route>
+            </Routes>
+          </Router>
+        </RecoilRoot>
       </AppContainer>
     </ThemeProvider>
   </>

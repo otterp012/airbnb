@@ -5,45 +5,36 @@ import PricePerDay from './PricePerDay';
 import ReservationInfos from './ReservationInfos';
 import ReservationButton from './ReservationButton';
 import ReservationFeeInfo from './ReservationFeeInfo';
+import Portal from '../../util/portal';
 
-const sampleData = {
-  lng: 127.10646784388724,
-  lat: 37.544549059226995,
-  roomId: 1,
-  name: '나무호텔',
-  address: '서울특별시 광진구 광장동 327-1',
-  imgSrc: 'https://loremflickr.com/320/240/hotel,room?lock=1',
-  maxPersonnel: 5,
-  price: 897647,
-  cleaningCostRatio: 0.02,
-  serviceCostRatio: 0.05,
-  taxRatio: 0.01,
-  alreadyReserved: [
-    { year: 2022, month: 6, date: 12 },
-    { year: 2022, month: 7, date: 1 },
-    { year: 2022, month: 6, date: 14 },
-    { year: 2022, month: 7, date: 6 },
-    { year: 2022, month: 6, date: 26 },
-  ],
-};
-
-const ReservationModal = ({ accommInfo = sampleData }) => (
-  <CustomModal style={reservationModalStyle}>
-    <PricePerDay priceData={accommInfo.price} />
-    <ReservationInfos />
-    <ReservationButton />
-    <ReservationFeeInfo accomInfo={accommInfo} />
-  </CustomModal>
+const ReservationModal = ({ accommInfo, closeModal }) => (
+  <Portal elementId="modal-root">
+    <CustomModal
+      style={reservationModalStyle}
+      backdropStyle={backDropStyle}
+      closeModal={closeModal}
+    >
+      <PricePerDay priceData={accommInfo.price} />
+      <ReservationInfos />
+      <ReservationButton />
+      <ReservationFeeInfo accomInfo={accommInfo} />
+    </CustomModal>
+  </Portal>
 );
 
 export default ReservationModal;
 
 const reservationModalStyle = css`
   width: calc(400px - 24px);
-  left: 520px;
-  top: 241px;
+  left: calc(50vw - 188px);
+  top: 25vh;
   border: 2px solid black;
   border-radius: 10px;
   padding: 24px;
   background: ${({ theme }) => theme.colors.white};
+`;
+
+const backDropStyle = css`
+  background-color: #e5e5e5;
+  opacity: 0.5;
 `;

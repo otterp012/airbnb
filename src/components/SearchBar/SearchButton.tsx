@@ -5,6 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useCalendarStateContext } from '../../store/calendarStore/CalendarContext';
 import { usePersonnelStateContext } from '../../store/personnelStore/PersonnelContext';
 import { usePriceStateContext } from '../../store/priceStore/PriceContext';
+import { useRecoilState } from 'recoil';
+import { searchInfoState } from '../../store/searchPageStore/searchPageStore';
 
 const SearchButton = ({
   pageType = 'MAIN',
@@ -37,7 +39,8 @@ const SearchButton = ({
     return `/search?${queryString}`;
   };
 
-  const makeQueryString = (keyword, value) => (value !== null ? `${keyword}=${value}` : '');
+  const makeQueryString = (keyword, value) =>
+    value !== null ? `${keyword}=${value}` : '';
 
   return (
     <Link to={getURIQuery()} style={{ textDecoration: 'none' }}>

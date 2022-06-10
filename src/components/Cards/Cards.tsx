@@ -7,8 +7,9 @@ const Cards = () => {
   const LazyCards = lazy(() => import('./LazyCards'));
   return (
     <CardsContainer>
-      <CardsTitle />
       <Suspense fallback={<SkeletonCards />}>
+        <CardsTitle />
+
         <LazyCards />
       </Suspense>
     </CardsContainer>
