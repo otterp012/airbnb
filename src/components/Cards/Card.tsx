@@ -49,23 +49,18 @@ const Card = ({ accommInfo }: { accommInfo: CardDataType }) => {
     });
   };
 
+  const closeModal = (e: React.MouseEvent<SVGSVGElement>) => {
+    e.stopPropagation();
+    setIsReservationModalOpened(false);
+  };
+
   return (
-    <CardContainer
-      id={accommInfo.roomId}
-      onClick={() => setIsReservationModalOpened(true)}
-    >
-      <CardImage
-        src={isVisible ? accommInfo.imgSrc : undefined}
-        alt="hotels"
-        ref={imgRef}
-      />
+    <CardContainer id={accommInfo.roomId} onClick={() => setIsReservationModalOpened(true)}>
+      <CardImage src={isVisible ? accommInfo.imgSrc : undefined} alt='hotels' ref={imgRef} />
       <CardText price={accommInfo.price} name={accommInfo.name} />
       <HeartIcon />
       {isReservationModalOpened && (
-        <ReservationModal
-          accommInfo={accommInfo}
-          closeModal={() => setIsReservationModalOpened(false)}
-        />
+        <ReservationModal accommInfo={accommInfo} closeModal={closeModal} />
       )}
     </CardContainer>
   );
