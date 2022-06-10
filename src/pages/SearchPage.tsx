@@ -6,40 +6,8 @@ import CalendarProvider from '../store/calendarStore/CalendarProvider';
 import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
 import PriceProvider from '../store/priceStore/PriceProvider';
 import Map from '../components/map/Map';
-import { useSearchParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { searchInfoState } from '../store/searchPageStore/searchPageStore';
-
-const getSearchParams = (targetName: string) => {
-  const [searchParams] = useSearchParams();
-  return searchParams.get(targetName);
-};
 
 const SearchPage = () => {
-  const [currSearchInfoState, setCurrSearchInfoState] =
-    useRecoilState(searchInfoState);
-  const searchParams = useSearchParams();
-  const [isInit, setIsInit] = useState(false);
-
-  const currSearchInfo = {
-    ...currSearchInfoState,
-    minPrice: getSearchParams('minPrice'),
-    maxPrice: getSearchParams('maxPrice'),
-    personnel: Number(getSearchParams('personnel')) || null,
-  };
-
-  useEffect(() => {
-    console.log(currSearchInfo);
-    if (
-      !(JSON.stringify(currSearchInfo) === JSON.stringify(currSearchInfoState))
-    ) {
-      console.log('??');
-      return;
-    }
-    setCurrSearchInfoState(currSearchInfo);
-    console.log('??');
-  }, [searchParams]);
-
   return (
     <CalendarProvider>
       <PriceProvider>
