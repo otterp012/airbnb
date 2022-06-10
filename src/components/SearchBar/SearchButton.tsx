@@ -15,6 +15,7 @@ const SearchButton = ({
   pageType: 'MAIN' | 'SEARCH';
   onClick: () => void | undefined;
 }) => {
+  const [searchInfo, setSearchInfo] = useRecoilState(searchInfoState);
   const { checkIn, checkOut } = useCalendarStateContext();
   const { ADULT, CHILD } = usePersonnelStateContext();
   const { minPrice, maxPrice } = usePriceStateContext();
@@ -42,10 +43,17 @@ const SearchButton = ({
   const makeQueryString = (keyword, value) =>
     value !== null ? `${keyword}=${value}` : '';
 
+  const onClikcHandler = () => {
+    const peopleNum = ADULT + CHILD;
+    setSearchInfo((prev) => {
+      return { ...prev, checkIn, checkOut, minPrice, maxPrice, peopleNum };
+    });
+  };
+
   return (
     <Link to={getURIQuery()} style={{ textDecoration: 'none' }}>
       <SearchButtonWrapper pageType={pageType} onClick={onClick}>
-        <SearchIcon />
+        <CustomSearchIncon onClick={onClikcHandler} />
         {pageType === 'MAIN' && <span>검색</span>}
       </SearchButtonWrapper>
     </Link>
@@ -68,4 +76,8 @@ const SearchButtonWrapper = styled.div<type>`
     font-weight: 700;
     margin-left: 5px;
   }
+`;
+
+const CustomSearchIncon = styled(SearchIcon)`
+  z-index: 2;
 `;

@@ -8,11 +8,11 @@ import {
   parsedCardsDataQuery,
 } from '../../store/searchPageStore/searchPageStore';
 import { kakaoEventCallback, kakaoUrl, initialCoordState } from './mapUtils';
-import { PermDeviceInformation } from '@mui/icons-material';
 
+let init = true;
 const LazyMap = () => {
-  const [_, setSearchInfo] = useRecoilState(searchInfoState);
-  const cards = useRecoilValue(parsedCardsDataQuery);
+  const [searchInfo, setSearchInfo] = useRecoilState(searchInfoState);
+  // const cards = useRecoilValue(parsedCardsDataQuery);
   const [currentCoord, setCurrentCoord] = useState(initialCoordState);
   const kakaoMapContainer = useRef<HTMLDivElement>(null);
   const kakaoMap = useRef(null);
@@ -50,41 +50,46 @@ const LazyMap = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearchInfo((prev) => {
-        return { currentCoord, ...prev };
-      });
-    }, 1000);
+  // useEffect(() => {
+  //   // if (init) {
+  //   //   init = false;
+  //   //   return;
+  //   // }
+  //   console.log(1);
+  //   const timer = setTimeout(() => {
+  //     setSearchInfo((prev) => {
+  //       return { ...prev, currentCoord };
+  //     });
+  //   }, 1000);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [currentCoord]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [currentCoord]);
 
-  useEffect(() => {
-    const overlayInfos = cards.map(({ price, lat, lng }) => {
-      return {
-        price,
-        lat,
-        lng,
-      };
-    });
-    overlayInfos.forEach((el: { price: number; lat: number; lng: number }) => {
-      const position = new kakao.maps.LatLng(el.lat, el.lng);
-      const marker = new kakao.maps.Marker({
-        position,
-      });
+  // useEffect(() => {
+  //   const overlayInfos = cards.map(({ price, lat, lng }) => {
+  //     return {
+  //       price,
+  //       lat,
+  //       lng,
+  //     };
+  //   });
+  //   overlayInfos.forEach((el: { price: number; lat: number; lng: number }) => {
+  //     const position = new kakao.maps.LatLng(el.lat, el.lng);
+  //     const marker = new kakao.maps.Marker({
+  //       position,
+  //     });
 
-      const content = `<span class="kakao_overlay">${el.price}</span>`;
-      new kakao.maps.CustomOverlay({
-        map: kakaoMap.current,
-        position,
-        content,
-      });
-      marker.setMap();
-    });
-  }, [currentCoord]);
+  //     const content = `<span class="kakao_overlay">${el.price}</span>`;
+  //     new kakao.maps.CustomOverlay({
+  //       map: kakaoMap.current,
+  //       position,
+  //       content,
+  //     });
+  //     marker.setMap();
+  //   });
+  // }, [currentCoord]);
 
   return (
     <MapContainer>

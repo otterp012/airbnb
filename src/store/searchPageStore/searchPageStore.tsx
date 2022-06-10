@@ -3,10 +3,11 @@ import { atom, selector } from 'recoil';
 export const searchInfoState = atom({
   key: 'SearchInfoState',
   default: {
-    minLatitude: 37.44025954159828,
-    minLongitude: 126.97649607139127,
-    latitude: 37.50649849229814,
-    longitude: 127.03655373306772,
+    checkIn: null,
+    checkOut: null,
+    minPrice: null,
+    maxPrice: null,
+    peopleNum: null,
   },
 });
 
@@ -35,6 +36,9 @@ export const parsedCardsDataQuery = selector({
     const currentCards = cardsData.filter((v) =>
       getCoordsIsVaild(v, currentCardsState),
     );
+
+    // const hasPrice = priceInit(currentCards, currentCardsState);
+    // console.log(hasPrice);
     return currentCards;
   },
 });
@@ -53,3 +57,13 @@ const getCoordsIsVaild = (dataCardCoords, searchedCoords) => {
   }
   return false;
 };
+
+// const priceInit = (array, state) => {
+//   state.minPrice
+//     ? array
+//     : array.map((v) => {
+//         v.minPrice = 0;
+//         v.maxPrice = 1_000_000;
+//         return;
+//       });
+// };
