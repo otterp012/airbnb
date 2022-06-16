@@ -24,7 +24,11 @@ const selectOptions: PersonnelSelectOptionType[] = [
 ];
 
 const PersonnelModal = () => (
-  <Container width='400px' height='355px' flexInfo={['column', 'center', 'flex-start', 'wrap']}>
+  <Container
+    width="400px"
+    height="355px"
+    flexInfo={['column', 'center', 'flex-start', 'wrap']}
+  >
     <SelectSectionWrapper>
       {selectOptions.map((selectOption, idx) => (
         <PersonnelSelectSection
