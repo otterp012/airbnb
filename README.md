@@ -4,9 +4,9 @@
 기간 : 2022. 05. 30. - 2022. 06. 10.
 
 ## 배포 사이트 및 블로그 기록
-[배포 사이트](http://otterp.s3-website.ap-northeast-2.amazonaws.com/)
-[협업규칙과, 매일 팀원간의 회의를 진행했던 페이지](https://www.notion.so/5fbf236e78d34110b740ce47e5f2509a)
-[프로젝트 진행 중 있었던 일](https://otter-log.world/projects/airbnb-clone)
+[배포 사이트](http://otterp.s3-website.ap-northeast-2.amazonaws.com/)  
+[협업규칙과, 매일 팀원간의 회의를 진행했던 페이지](https://www.notion.so/5fbf236e78d34110b740ce47e5f2509a)  
+[프로젝트 진행 중 있었던 일](https://otter-log.world/projects/airbnb-clone)  
 
 ## 화면 구성
 ![스크린샷 2022-06-15 오전 11 14 42](https://user-images.githubusercontent.com/87624756/189676342-691a9156-7849-4ac9-ad6a-a4482e53d4dc.png)
@@ -24,4 +24,4 @@ npm run dev
 
 - React
 - Styled Component
-- tailwind CSS
+- Recoil
