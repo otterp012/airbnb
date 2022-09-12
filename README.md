@@ -1,7 +1,10 @@
 # airbnb
 코드스쿼드 팀프로젝트 4번째, airbnb clone프로젝트. 
+
 팀원 : 코드스쿼드 프론트엔드 alan, otter. 
+
 기간 : 2022. 05. 30. - 2022. 06. 10.  
+
 
 ## 배포 사이트 및 블로그 기록
 [배포 사이트](http://otterp.s3-website.ap-northeast-2.amazonaws.com/)  
